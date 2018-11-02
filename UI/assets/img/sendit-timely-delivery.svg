@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 181.8 181.8" style="enable-background:new 0 0 181.8 181.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F1F2F3;}
+	.st1{fill:#CAD7FE;stroke:#1F3379;stroke-width:4.2188;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;stroke:#263879;stroke-width:4.2188;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#263879;stroke-width:4.2188;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<circle class="st0" cx="90.9" cy="90.9" r="90.9"/>
+	<g>
+		<polygon class="st1" points="76.6,37.9 76.6,48.2 76.6,56.6 106.6,56.6 106.6,48.2 106.6,37.9 		"/>
+		<rect x="76.6" y="54.6" class="st1" width="30" height="10.3"/>
+		<rect x="76.6" y="64.9" class="st1" width="30" height="8.3"/>
+		<rect x="76.6" y="73.2" class="st1" width="30" height="8.3"/>
+		<rect x="76.6" y="81.6" class="st1" width="30" height="8.3"/>
+		<rect x="76.6" y="89.9" class="st1" width="30" height="8.3"/>
+		<rect x="76.6" y="98.2" class="st1" width="30" height="8.3"/>
+		<rect x="76.6" y="106.6" class="st1" width="30" height="8.3"/>
+		<rect x="76.6" y="114.9" class="st1" width="30" height="10.3"/>
+		<polygon class="st1" points="76.6,125.2 76.6,131.6 76.6,143.9 106.6,143.9 106.6,131.6 106.6,125.2 		"/>
+	</g>
+	<g>
+		<circle class="st2" cx="91.6" cy="89.9" r="28.6"/>
+	</g>
+	<line class="st3" x1="91.6" y1="61.3" x2="91.6" y2="67.5"/>
+	<line class="st3" x1="77.3" y1="65.2" x2="80.4" y2="70.5"/>
+	<line class="st3" x1="66.8" y1="75.6" x2="72.2" y2="78.7"/>
+	<line class="st3" x1="63" y1="89.9" x2="69.2" y2="89.9"/>
+	<line class="st3" x1="66.8" y1="104.2" x2="72.2" y2="101.1"/>
+	<line class="st3" x1="77.3" y1="114.7" x2="80.4" y2="109.3"/>
+	<line class="st3" x1="91.6" y1="118.5" x2="91.6" y2="112.3"/>
+	<line class="st3" x1="105.9" y1="114.7" x2="102.8" y2="109.3"/>
+	<line class="st3" x1="116.3" y1="104.2" x2="111" y2="101.1"/>
+	<line class="st3" x1="120.2" y1="89.9" x2="114" y2="89.9"/>
+	<line class="st3" x1="116.3" y1="75.6" x2="111" y2="78.7"/>
+	<line class="st3" x1="105.9" y1="65.2" x2="102.8" y2="70.5"/>
+	<line class="st3" x1="91.6" y1="75.4" x2="91.6" y2="89.9"/>
+	<line class="st3" x1="91.6" y1="89.9" x2="101.3" y2="95.5"/>
+</g>
+</svg>
