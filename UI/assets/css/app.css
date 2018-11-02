@@ -1,0 +1,504 @@
+/**
+ * Raleway
+================================================================================ */
+@font-face {
+  font-family: 'raleway-thin';
+  src: url("../fonts/raleway/raleway-thin-webfont.eot");
+  src: url("../fonts/raleway/raleway-thin-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-thin-webfont.woff") format("woff"), url("../fonts/raleway/raleway-thin-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-thin-webfont.svg#ralewaythin") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-extra-light';
+  src: url("../fonts/raleway/raleway-extralight-webfont.eot");
+  src: url("../fonts/raleway/raleway-extralight-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-extralight-webfont.woff") format("woff"), url("../fonts/raleway/raleway-extralight-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-extralight-webfont.svg#ralewayextralight") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-light';
+  src: url("../fonts/raleway/raleway-light-webfont.eot");
+  src: url("../fonts/raleway/raleway-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-light-webfont.woff") format("woff"), url("../fonts/raleway/raleway-light-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-light-webfont.svg#ralewaylight") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-regular';
+  src: url("../fonts/raleway/raleway-regular-webfont.eot");
+  src: url("../fonts/raleway/raleway-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-regular-webfont.woff") format("woff"), url("../fonts/raleway/raleway-regular-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-regular-webfont.svg#ralewayregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-medium';
+  src: url("../fonts/raleway/raleway-medium-webfont.eot");
+  src: url("../fonts/raleway/raleway-medium-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-medium-webfont.woff") format("woff"), url("../fonts/raleway/raleway-medium-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-medium-webfont.svg#ralewaymedium") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-semibold';
+  src: url("../fonts/raleway/raleway-semibold-webfont.eot");
+  src: url("../fonts/raleway/raleway-semibold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-semibold-webfont.woff") format("woff"), url("../fonts/raleway/raleway-semibold-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-semibold-webfont.svg#ralewaysemibold") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-bold';
+  src: url("../fonts/raleway/raleway-bold-webfont.eot");
+  src: url("../fonts/raleway/raleway-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-bold-webfont.woff") format("woff"), url("../fonts/raleway/raleway-bold-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-bold-webfont.svg#ralewaybold") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'raleway-heavy';
+  src: url("../fonts/raleway/raleway-heavy-webfont.eot");
+  src: url("../fonts/raleway/raleway-heavy-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/raleway/raleway-heavy-webfont.woff") format("woff"), url("../fonts/raleway/raleway-heavy-webfont.ttf") format("truetype"), url("../fonts/raleway/raleway-heavy-webfont.svg#ralewayheavy") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/**
+ * Merriweather
+================================================================================ */
+@font-face {
+  font-family: 'merriweather-heavy';
+  src: url("../fonts/merriweather/merriweather-black-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-black-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-black-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-black-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-black-webfont.svg#merriweatherheavy") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-bold';
+  src: url("../fonts/merriweather/merriweather-bold-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-bold-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-bold-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-bold-webfont.svg#merriweatherbold") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-bold-italic';
+  src: url("../fonts/merriweather/merriweather-bolditalic-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-bolditalic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-bolditalic-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-bolditalic-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-bolditalic-webfont.svg#merriweatherbold_italic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-heavy-italic';
+  src: url("../fonts/merriweather/merriweather-heavyitalic-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-heavyitalic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-heavyitalic-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-heavyitalic-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-heavyitalic-webfont.svg#merriweatherheavy_italic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-italic';
+  src: url("../fonts/merriweather/merriweather-italic-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-italic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-italic-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-italic-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-italic-webfont.svg#merriweatheritalic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-light';
+  src: url("../fonts/merriweather/merriweather-light-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-light-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-light-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-light-webfont.svg#merriweatherlight") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-light-italic';
+  src: url("../fonts/merriweather/merriweather-lightitalic-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-lightitalic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-lightitalic-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-lightitalic-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-lightitalic-webfont.svg#merriweatherlight_italic") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'merriweather-regular';
+  src: url("../fonts/merriweather/merriweather-regular-webfont.eot");
+  src: url("../fonts/merriweather/merriweather-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/merriweather/merriweather-regular-webfont.woff") format("woff"), url("../fonts/merriweather/merriweather-regular-webfont.ttf") format("truetype"), url("../fonts/merriweather/merriweather-regular-webfont.svg#merriweatherregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'proximanovalight';
+  src: url("../fonts/proximanovalight.eot");
+  src: local("proximanovalight"), url("../fonts/proximanovalight.woff") format("woff"), url("../fonts/proximanovalight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'ProximaNovaRegular';
+  src: url("../fonts/ProximaNovaRegular.eot");
+  src: local("ProximaNovaRegular"), url("../fonts/ProximaNovaRegular.woff") format("woff"), url("../fonts/ProximaNovaRegular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'LatoLig';
+  src: url("../fonts/LatoLig.eot");
+  src: local("LatoLig"), url("../fonts/LatoLig.woff") format("woff"), url("../fonts/LatoLig.ttf") format("truetype");
+}
+
+body {
+  background-color: #ffffff;
+  font-size: 15px;
+  font-family: 'LatoLig';
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mast {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #f1f2f3;
+  color: orange;
+}
+
+.mast.theme-dark {
+  background-color: #000000;
+  color: orange;
+}
+
+img {
+  max-width: 100%;
+}
+
+.logo-text-group {
+  width: 200px;
+  margin: auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.logo-text-group .logo {
+  width: 60px;
+  display: inline-block;
+}
+
+.logo-text-group .logo img {
+  width: 100%;
+}
+
+.logo-text-group .text {
+  font-size: 40px;
+  font-family: 'raleway-heavy';
+  margin-left: 10px;
+}
+
+.landing-intro {
+  padding: 80px 30px;
+  background-color: #f1f2f3;
+}
+
+.landing-intro .image {
+  height: 230px;
+  width: 230px;
+  margin: auto;
+  background: #f1f2f3;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.landing-intro .image img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.landing-intro .landing-text {
+  font-size: 25px;
+  text-align: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 30px;
+}
+
+.landing-intro .landing-text .text-1 {
+  font-family: 'raleway-semibold';
+  margin-bottom: 20px;
+}
+
+.landing-intro .landing-text .text-3 {
+  font-family: 'raleway-semibold';
+  margin-top: 20px;
+}
+
+.landing-intro .actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.button {
+  padding: 10px;
+  display: inline-block;
+  background: orange;
+  color: #000000;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: all 300ms ease;
+}
+
+.button.cta {
+  background: orange;
+  color: #000000;
+  padding: 15px;
+  font-weight: bold;
+  font-family: 'lato';
+}
+
+.button:hover,
+.button:active {
+  color: orange;
+  background: #000000;
+}
+
+.value-props {
+  padding: 0px 10%;
+  margin: 40px 0px;
+  text-align: center;
+}
+
+.value-props .item {
+  margin-bottom: 40px;
+  font-size: 20px;
+}
+
+.value-props .item .image {
+  width: 200px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.value-props .item .text {
+  font-family: 'raleway-regular';
+}
+
+.action-banners {
+  padding: 20px;
+}
+
+.action-banners .item .container {
+  text-align: center;
+  background-color: #f1f2f3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 300ms cubic-bezier(0.33, 0.99, 1, 1);
+}
+
+.action-banners .item .bg {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.action-banners .item .text {
+  font-size: 30px;
+  height: 100px;
+  color: white;
+  padding: 40px 20px;
+  font-family: 'raleway-bold';
+}
+
+.action-banners .item .cta {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width: 200px;
+  padding: 15px 15px;
+}
+
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.column {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .col-1 {
+    -ms-flex-preferred-size: 8.33%;
+    flex-basis: 8.33%;
+  }
+
+  .col-2 {
+    -ms-flex-preferred-size: 16.66%;
+    flex-basis: 16.66%;
+  }
+
+  .col-3 {
+    -ms-flex-preferred-size: 25%;
+    flex-basis: 25%;
+  }
+
+  .col-4 {
+    -ms-flex-preferred-size: 33.33%;
+    flex-basis: 33.33%;
+  }
+
+  .col-5 {
+    -ms-flex-preferred-size: 41.66%;
+    flex-basis: 41.66%;
+  }
+
+  .col-6 {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+  }
+
+  .col-7 {
+    -ms-flex-preferred-size: 58.33%;
+    flex-basis: 58.33%;
+  }
+
+  .col-8 {
+    -ms-flex-preferred-size: 66.66%;
+    flex-basis: 66.66%;
+  }
+
+  .col-9 {
+    -ms-flex-preferred-size: 75%;
+    flex-basis: 75%;
+  }
+
+  .col-10 {
+    -ms-flex-preferred-size: 83.33%;
+    flex-basis: 83.33%;
+  }
+
+  .col-11 {
+    -ms-flex-preferred-size: 91.66%;
+    flex-basis: 91.66%;
+  }
+
+  .col-12 {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .mast-banner {
+    background-image: url("../img/package-landing-image.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .mast {
+    padding-top: 100px;
+  }
+
+  .mast.theme-dark {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .landing-intro {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+  }
+
+  .landing-intro .container {
+    display: -ms-flexbox;
+    display: flex;
+    margin: auto;
+    max-width: 600px;
+  }
+
+  .landing-intro .image {
+    display: none;
+  }
+
+  .landing-intro .landing-text {
+    font-size: 40px;
+    text-align: center;
+    padding-top: 30px;
+  }
+
+  .landing-intro .landing-text .text-1 {
+    font-family: 'raleway-semibold';
+    margin-bottom: 20px;
+  }
+
+  .landing-intro .actions {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .value-props {
+    padding: 80px 10%;
+    margin: 40px 0px;
+    text-align: center;
+  }
+
+  .value-props .item {
+    margin-bottom: 40px;
+    font-size: 20px;
+  }
+
+  .value-props .item .image {
+    width: 200px;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  .value-props .item .text {
+    font-family: 'raleway-regular';
+  }
+
+  .action-banners .item .container {
+    background-size: 105%;
+  }
+
+  .action-banners .item .container:hover {
+    background-size: 140%;
+  }
+
+  .action-banners .item .bg {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .action-banners .item .text {
+    font-size: 30px;
+    height: 100px;
+    color: white;
+    padding: 40px 20px;
+    font-family: 'raleway-bold';
+  }
+
+  .action-banners .item .cta {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 200px;
+    padding: 15px 15px;
+  }
+}
