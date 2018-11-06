@@ -15,10 +15,8 @@ app.use('*', (req, res) => {
   res.status(404);
   res.json({
     status: 'Failed',
-    message: 'Page Not Found'
+    message: 'Page Not Found',
   });
 });
 
 export default app;
-
-

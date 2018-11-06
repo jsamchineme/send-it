@@ -5,7 +5,7 @@ import app from '../app';
 
 const request = supertest(app);
 
-describe("Test case for the API", () => {
+describe('Test case for the API', () => {
   it('Should load the Home Route', (done) => {
     request.get('/')
       .set('Content-Type', 'application/json')
