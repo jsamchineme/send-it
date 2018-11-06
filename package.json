@@ -1,0 +1,62 @@
+{
+  "name": "send-it",
+  "version": "1.0.0",
+  "description": "SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.",
+  "scripts": {
+    "start": "babel-node server",
+    "start:dev": "nodemon --exec babel-node server",
+    "test": "set NODE_ENV=test&& nyc mocha --timeout 500000 --exit server/**/specs/*.js",
+    "lint": "eslint --fix server",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "engines": {
+    "node": "10.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsamchineme/send-it.git"
+  },
+  "author": "Samuel Osuh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsamchineme/send-it/issues"
+  },
+  "nyc": {
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
+    "reporter": [
+      "lcov",
+      "html",
+      "text"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "dependencies": {
+    "babel-polyfill": "6.26.0",
+    "babel-register": "6.26.0",
+    "body-parser": "1.18.3",
+    "chai": "4.2.0",
+    "debug": "4.1.0",
+    "dotenv": "6.1.0",
+    "express": "4.16.4",
+    "jsonwebtoken": "8.3.0",
+    "mocha": "5.2.0",
+    "supertest": "3.3.0",
+    "validator": "10.8.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-istanbul": "5.1.0",
+    "babel-preset-env": "1.7.0",
+    "coveralls": "3.0.2",
+    "cross-env": "5.2.0",
+    "eslint": "5.8.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "nodemon": "1.18.5",
+    "nyc": "13.1.0"
+  }
+}
