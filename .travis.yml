@@ -1,0 +1,27 @@
+sudo: required
+language: node_js
+node_js:
+  - "10.12.0"
+cache:
+  directories:
+    - "node_modules"
+services:
+  - postgresql
+env:
+  global:
+  - CC_TEST_REPORTER_ID=5c1c64ea6750a5b25ea64441ce66d630440648e3e0f946ad2619a7e910fc81b2
+  - NODE_ENV=test
+before_script:
+  - npm install
+  - npm install mocha-lcov-reporter --save-dev
+  - npm install -g nyc
+  - npm install -g babel-cli
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - nyc --reporter=lcov npm run test
+
+after_success:
+  - npm run coverage
+  - ./cc-test-reporter after-build --exit code $TRAVIS_TEST_RESULT
