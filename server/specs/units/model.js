@@ -30,8 +30,11 @@ const modelTests = () => {
     });
     describe('Model.create()', () => {
       it('should create records when data is supplied', () => {
+        const lastRecord = allRecords[allRecords.length - 1];
         const newRecordData = { name: 'New Name' };
-        expect(model.create(newRecordData).name).to.equal('New Name');
+        const result = model.create(newRecordData);
+        expect(result.name).to.equal('New Name');
+        expect(result.id).to.equal(lastRecord.id + 1);
       });
     });
     describe('Model.delete()', () => {

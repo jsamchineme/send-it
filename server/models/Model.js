@@ -48,7 +48,7 @@ class Model {
       }
     }
     const lastRecord = this.allRecords[this.allRecords.length - 1];
-    newRecord.id = lastRecord.id;
+    newRecord.id = lastRecord.id + 1;
 
     this.allRecords.push(newRecord);
 
