@@ -1,56 +1,102 @@
+/**
+ * This makes CRUD and other data related methods available to the entities
+ * that will inherit this class
+ * @export
+ * @class Model
+ */
 class Model {
+  /**
+   * @param {Array} entityAttributes - the attributes of an entity
+   * @param {Array} allRecords - all the records available for an entity
+   */
   constructor(entityAttributes, allRecords) {
     this.attributes = entityAttributes;
     this.allRecords = allRecords;
   }
 
+  /**
+   * @returns {Array} - all the records available for an entity
+   */
   getAll() {
     return this.allRecords;
   }
 
-  findById(id = null) {
+  /**
+   * @param {Number} id - the id of the record to be selected
+   * @returns {Object} - the selected record
+   */
+  findById(id) {
     return this.allRecords.find(item => item.id === id);
   }
 
+  /**
+   * @param {Object} data - an object of attributes: value
+   * @returns {Object} - the just created record
+   */
   create(data) {
-    const newEntity = {};
+    const newRecord = {};
 
-    for (const attribute in this.attributes) {
+    for (const attribute in data) {
       if (this.attributes.includes(attribute)) {
-        newEntity[attribute] = data[attribute];
+        newRecord[attribute] = data[attribute];
         if (attribute === 'createdAt') {
-          newEntity[attribute] = new Date();
+          newRecord[attribute] = new Date();
         }
         if (attribute === 'updatedAt') {
-          newEntity[attribute] = new Date();
+          newRecord[attribute] = new Date();
         }
       }
     }
     const lastRecord = this.allRecords[this.allRecords.length - 1];
-    newEntity.id = lastRecord.id;
+    newRecord.id = lastRecord.id;
 
-    return newEntity;
+    this.allRecords.push(newRecord);
+
+    return newRecord;
   }
 
-  update(id, data) {
-    const entity = this.allRecords.find(item => item.id === id);
+  /**
+   * @param {Number} id - the id of the record to be updated
+   * @param {Object} newAttributesData - object of attributes: new value
+   * @returns {Object} - the updated record
+   */
+  update(id, newAttributesData) {
+    const record = this.allRecords.find(item => item.id === id);
 
-    this.attributes.forEach((attribute) => {
-      if (attribute !== 'id') {
-        entity[attribute] = data[attribute] || entity[attribute];
+    for (const attribute in newAttributesData) {
+      if (this.attributes.includes(attribute)) {
+        if (attribute !== 'createdAt' && attribute !== 'updatedAt' && attribute !== 'id') {
+          record[attribute] = newAttributesData[attribute];
+        }
       }
-    });
+    }
 
-    return entity;
+    record.updateAt = new Date();
+
+    return record;
   }
 
+  /**
+   * @param {Number} id - the id of the record to be deleted
+   * @returns {Boolean} - success or failure flag
+   */
   delete(id) {
-    const newRecords = this.allRecords.filter(item => item.id !== id);
-
-    if (this.allRecords === newRecords.length) {
+    if (typeof id === 'undefined') {
       return false;
     }
-    this.allRecords = newRecords;
+    // fetch the records skipping the single one to be deleted
+    const remainingRecords = this.allRecords.filter(item => item.id !== id);
+
+    /**
+     * this will be true if nothing was matched in the filter above,
+     * and hence nothing was deleted
+     */
+    if (this.allRecords === remainingRecords.length) {
+      return false;
+    }
+
+    // update the allRecords property of the Entity to reflect the current state
+    this.allRecords = remainingRecords;
     return true;
   }
 }
