@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import Model from '../Model';
 
 const allRecords = [
-  { id: 1, name: 'Attribute Name'},
-  { id: 2, name: 'Attribute Name'}
+  { id: 1, name: 'Attribute Name' },
+  { id: 2, name: 'Attribute Name' },
 ];
 
 const entityAttributes = ['id', 'name'];
@@ -22,5 +22,4 @@ describe('Test Case for the Model Class', () => {
       expect(model.findById()).to.equal(undefined);
     });
   });
-  
 });

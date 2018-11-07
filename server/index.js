@@ -6,7 +6,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
+// eslint-disable-next-line no-console
 server.listen(port, () => { console.log(`Application is running on port ${port}`); });
 
-// module.exports = app;
 export default app;
