@@ -3,11 +3,12 @@ import { expect } from 'chai';
 import Model from '../../models/Model';
 
 const allRecords = [
-  { id: 1, name: 'Attribute Name' },
-  { id: 2, name: 'Attribute Name' },
+  { id: 1, name: 'Attribute Name', state: 'lagos' },
+  { id: 2, name: 'Attribute Name', state: 'lagos' },
+  { id: 3, name: 'Attribute Name', state: 'imo' },
 ];
 
-const entityAttributes = ['id', 'name'];
+const entityAttributes = ['id', 'name', 'state'];
 
 const modelTests = () => {
   describe('Test Case for the Model Class', () => {
@@ -24,8 +25,14 @@ const modelTests = () => {
       });
     });
     describe('Model.getAll()', () => {
+      const allReturnedRecords = model.getAll();
       it('should return all records', () => {
-        expect(model.allRecords.length > 0).to.equal(true);
+        expect(model.allRecords.length).to.equal(allReturnedRecords.length);
+      });
+      it('should return selected records when where constraints are set', () => {
+        const demoRecords = model.allRecords.filter(item => item.state === 'lagos');
+        const records = model.where({ state: 'lagos' }).getAll();
+        expect(records.length).to.equal(demoRecords.length);
       });
     });
     describe('Model.create()', () => {
@@ -44,6 +51,33 @@ const modelTests = () => {
       });
       it('should return false when no parameter is supplied', () => {
         expect(model.delete()).to.equal(false);
+      });
+      it('should return false when no item is found to be deleted', () => {
+        expect(model.delete(0)).to.equal(false);
+      });
+    });
+    describe('Model.where()', () => {
+      it('should set the where constraints', () => {
+        model.where({ name: 'Attribute Name' });
+        const constraintAttributes = Object.keys(model.whereConstraints);
+        expect(constraintAttributes.length).to.equal(1);
+      });
+    });
+    describe('Model.resetConstraints()', () => {
+      it('should reset the where constraints', () => {
+        model.where({ name: 'Attribute Name' }).resetConstraints();
+        const constraintAttributes = Object.keys(model.whereConstraints);
+        expect(constraintAttributes.length).to.equal(0);
+      });
+    });
+    describe('Model.findByAttribute()', () => {
+      const record = model.allRecords[0];
+      const result = model.findByAttribute('id', record.id);
+      it('should return a record when valid attribute is supplied', () => {
+        expect(result.id).to.equal(record.id);
+      });
+      it('should return undefined when no attribute is supplied', () => {
+        expect(model.findByAttribute()).to.equal(undefined);
       });
     });
   });
