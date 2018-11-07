@@ -3,7 +3,8 @@ import ParcelModel from '../../models/Parcel';
 const Parcel = new ParcelModel();
 
 /**
- * Parcel
+ * @export
+ * @class ParcelController
  */
 class ParcelController {
   /**
@@ -14,6 +15,23 @@ class ParcelController {
    */
   static list(req, res) {
     const allRecords = Parcel.getAll();
+
+    return res.status(200).json({
+      message: 'success',
+      data: allRecords,
+    });
+  }
+
+  /**
+   *
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static listForUser(req, res) {
+    let { userId } = req.params;
+    userId = Number(userId);
+    const allRecords = Parcel.where({ userId }).getAll();
 
     return res.status(200).json({
       message: 'success',

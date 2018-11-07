@@ -2,8 +2,8 @@ const parcels = [
   {
     id: 1,
     userId: 1,
-    description: 'some description of the item in the order',
-    status: 'pending_delivery',
+    description: 'description for delivered item',
+    status: 'delivered',
     deliveryLocation: '5 pack street, Lagos',
     presentLocation: '5 Victoria Land Street, Ikeja',
     pickupLocation: '5 Victoria Land Street, Ikeja',

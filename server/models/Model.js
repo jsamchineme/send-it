@@ -12,13 +12,63 @@ class Model {
   constructor(entityAttributes, allRecords) {
     this.attributes = entityAttributes;
     this.allRecords = allRecords;
+    this.whereConstraints = {};
   }
 
   /**
    * @returns {Array} - all the records available for an entity
    */
   getAll() {
-    return this.allRecords;
+    const constraintsExist = Object.keys(this.whereConstraints).length > 0;
+    let records = this.allRecords;
+    if (constraintsExist) {
+      // iterate over the object keys available on the whereConstraint object
+      // and check if the values of the attributes equal to the values of any items in
+      // array of records
+      records = this.allRecords.filter((item) => {
+        let constraintsPassed = 0;
+        for (const attribute in this.whereConstraints) {
+          if (this.attributes.includes(attribute)) {
+            if (item[attribute] === this.whereConstraints[attribute]) {
+              constraintsPassed = constraintsPassed + 1;
+            }
+          }
+        }
+        // after the iteration and checks, if the number of passed constraints
+        // is equal to the length of the keys in this.whereConstraints
+        // then, the item can be added to the found records
+        if (constraintsPassed === Object.keys(this.whereConstraints).length) {
+          return true;
+        }
+        return false;
+      });
+    }
+
+    // reset the constraints for other queries
+    this.resetConstraints();
+    return records;
+  }
+
+  /**
+   * reset the constraints
+   * @returns {Model} - the instance of this Model class facilitating method chainability
+   */
+  resetConstraints() {
+    this.whereConstraints = {};
+    return this;
+  }
+
+  /**
+   * @param {Object} constraints - an object of attributes: values
+   * @returns {Model} - the instance of this Model class facilitating method chainability
+   */
+  where(constraints) {
+    for (const attribute in constraints) {
+      if (this.attributes.includes(attribute)) {
+        this.whereConstraints[attribute] = constraints[attribute];
+      }
+    }
+    return this;
   }
 
   /**
@@ -30,6 +80,18 @@ class Model {
   }
 
   /**
+   * @param {*} attribute - the name of the attribute to be used for selecting record
+   * @param {*} value - the value of the attribute
+   * @returns {Object} - the selected record
+   */
+  findByAttribute(attribute, value) {
+    if (attribute === undefined || value === undefined) {
+      return undefined;
+    }
+    return this.allRecords.find(item => item[attribute] === value);
+  }
+
+  /**
    * @param {Object} data - an object of attributes: value
    * @returns {Object} - the just created record
    */
@@ -37,6 +99,7 @@ class Model {
     const newRecord = {};
 
     for (const attribute in data) {
+      /* istanbul ignore else  */
       if (this.attributes.includes(attribute)) {
         newRecord[attribute] = data[attribute];
       }
@@ -62,6 +125,7 @@ class Model {
     const record = this.allRecords.find(item => item.id === id);
 
     for (const attribute in newAttributesData) {
+      /* istanbul ignore else  */
       if (this.attributes.includes(attribute)) {
         if (attribute !== 'createdAt' && attribute !== 'updatedAt' && attribute !== 'id') {
           record[attribute] = newAttributesData[attribute];
@@ -79,7 +143,6 @@ class Model {
     });
 
     this.allRecords = currentAllRecords;
-
 
     return record;
   }
@@ -99,7 +162,7 @@ class Model {
      * this will be true if nothing was matched in the filter above,
      * and hence nothing was deleted
      */
-    if (this.allRecords === remainingRecords.length) {
+    if (this.allRecords.length === remainingRecords.length) {
       return false;
     }
 

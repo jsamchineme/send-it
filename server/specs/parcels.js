@@ -1,4 +1,4 @@
-import { describe, it } from 'mocha';
+import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../app';
@@ -35,7 +35,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
       });
   });
   it('should get a specific parcel delivery order', (done) => {
-    request.get('/api/v1/parcels/1')
+    const parcelId = 1;
+    request.get(`/api/v1/parcels/${parcelId}`)
       .expect(200)
       .end((err, res) => {
         expect(res.body.data.id !== undefined).to.equal(true);
@@ -64,6 +65,15 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .expect(400)
       .end((err, res) => {
         expect(res.body.message).to.equal('NotFound');
+        done();
+      });
+  });
+  it('should return records for seleted user', (done) => {
+    request.get('/api/v1/users/2/parcels')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.data.length > 0).to.equal(true);
+        expect(res.body.message).to.equal('success');
         done();
       });
   });
