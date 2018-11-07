@@ -36,11 +36,34 @@ describe('Test case for the "parcel" resource endpoints', () => {
   });
   it('should get a specific parcel delivery order', (done) => {
     request.get('/api/v1/parcels/1')
-      // .set('Content-Type', 'application/json')
       .expect(200)
       .end((err, res) => {
         expect(res.body.data.id !== undefined).to.equal(true);
         expect(res.body.message).to.equal('success');
+        done();
+      });
+  });
+  it('should return message when record is not found for GET parcels/:orderId end point', (done) => {
+    request.get('/api/v1/parcels/0')
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('NotFound');
+        done();
+      });
+  });
+  it('should cancel a specific parcel delivery order', (done) => {
+    request.delete('/api/v1/parcels/1')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('success');
+        done();
+      });
+  });
+  it('should return message when record is not found for DELETE parcels/:orderId end point', (done) => {
+    request.delete('/api/v1/parcels/0')
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('NotFound');
         done();
       });
   });

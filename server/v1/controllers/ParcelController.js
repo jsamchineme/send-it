@@ -48,9 +48,41 @@ class ParcelController {
     orderId = Number(orderId);
     const parcel = Parcel.findById(orderId);
 
+    if (!parcel) {
+      return res.status(400).json({
+        message: 'NotFound',
+      });
+    }
+
     return res.status(200).json({
       message: 'success',
       data: parcel,
+    });
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static cancel(req, res) {
+    let { orderId } = req.params;
+    orderId = Number(orderId);
+    const parcel = Parcel.findById(orderId);
+
+    if (!parcel) {
+      return res.status(400).json({
+        message: 'NotFound',
+      });
+    }
+
+    // orders are never deleted, the status is only changed to "cancelled"
+    parcel.status = 'cancelled';
+    const cancelledParcel = Parcel.update(orderId, parcel);
+
+    return res.status(200).json({
+      message: 'success',
+      data: cancelledParcel,
     });
   }
 }

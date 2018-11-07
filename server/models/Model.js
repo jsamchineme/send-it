@@ -61,6 +61,7 @@ class Model {
    * @returns {Object} - the updated record
    */
   update(id, newAttributesData) {
+    // record to be updated
     const record = this.allRecords.find(item => item.id === id);
 
     for (const attribute in newAttributesData) {
@@ -70,8 +71,18 @@ class Model {
         }
       }
     }
+    record.updatedAt = new Date();
 
-    record.updateAt = new Date();
+    // load the updated record back into the into "allRecords" property for the Entity
+    const currentAllRecords = this.allRecords.map((item) => {
+      if (item.id === record.id) {
+        return record;
+      }
+      return item;
+    });
+
+    this.allRecords = currentAllRecords;
+
 
     return record;
   }
