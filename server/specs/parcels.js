@@ -34,4 +34,14 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
+  it('should get a specific parcel delivery order', (done) => {
+    request.get('/api/v1/parcels/1')
+      // .set('Content-Type', 'application/json')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.data.id !== undefined).to.equal(true);
+        expect(res.body.message).to.equal('success');
+        done();
+      });
+  });
 });
