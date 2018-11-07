@@ -85,6 +85,17 @@ const parcels = [
   },
 ];
 
-export const attributes = ['id', 'username', 'email', 'password', 'createdAt', 'updatedAt'];
+export const attributes = [
+  'id',
+  'userId',
+  'description',
+  'status',
+  'deliveryLocation',
+  'presentLocation',
+  'pickupLocation',
+  'presentMapPointer',
+  'createdAt',
+  'updatedAt',
+];
 
 export default parcels;

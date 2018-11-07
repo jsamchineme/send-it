@@ -3,6 +3,7 @@ import ParcelController from '../controllers/ParcelController';
 
 const parcelRoutes = Router();
 
-parcelRoutes.get('/', ParcelController.getAll);
+parcelRoutes.get('/', ParcelController.list);
+parcelRoutes.post('/', ParcelController.store);
 
 export default parcelRoutes;

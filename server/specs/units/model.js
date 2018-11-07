@@ -15,7 +15,7 @@ const modelTests = () => {
     it('should Instantiate Model', () => {
       expect(model.allRecords.length).to.equal(allRecords.length);
     });
-    describe('Test cases for Model.findById()', () => {
+    describe('Model.findById()', () => {
       it('should return a record when valid id is supplied', () => {
         expect(model.findById(1).id).to.equal(1);
       });
@@ -23,9 +23,27 @@ const modelTests = () => {
         expect(model.findById()).to.equal(undefined);
       });
     });
-    describe('Test cases for Model.getAll()', () => {
+    describe('Model.getAll()', () => {
       it('should return all records', () => {
         expect(model.allRecords.length > 0).to.equal(true);
+      });
+    });
+    describe('Model.create()', () => {
+      it('should create records when data is supplied', () => {
+        const lastRecord = allRecords[allRecords.length - 1];
+        const newRecordData = { name: 'New Name' };
+        const result = model.create(newRecordData);
+        expect(result.name).to.equal('New Name');
+        expect(result.id).to.equal(lastRecord.id + 1);
+      });
+    });
+    describe('Model.delete()', () => {
+      it('should delete records when data is supplied', () => {
+        const record = allRecords[0];
+        expect(model.delete(record.id)).to.equal(true);
+      });
+      it('should return false when no parameter is supplied', () => {
+        expect(model.delete()).to.equal(false);
       });
     });
   });

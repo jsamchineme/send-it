@@ -13,14 +13,14 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/v1', routes);
-
-app.use('/api/v1', (req, res) => {
+app.get('/api/v1', (req, res) => {
   res.status(404);
   res.json({
     message: 'Send-IT API v1',
   });
 });
+
+app.use('/api/v1', routes);
 
 app.use('*', (req, res) => {
   res.status(404);
