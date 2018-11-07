@@ -39,14 +39,11 @@ class Model {
     for (const attribute in data) {
       if (this.attributes.includes(attribute)) {
         newRecord[attribute] = data[attribute];
-        if (attribute === 'createdAt') {
-          newRecord[attribute] = new Date();
-        }
-        if (attribute === 'updatedAt') {
-          newRecord[attribute] = new Date();
-        }
       }
     }
+    newRecord.createdAt = new Date();
+    newRecord.updatedAt = new Date();
+
     const lastRecord = this.allRecords[this.allRecords.length - 1];
     newRecord.id = lastRecord.id + 1;
 
