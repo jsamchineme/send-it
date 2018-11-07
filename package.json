@@ -10,7 +10,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
-    "node": "10.12.0"
+    "node": "8.11.2"
   },
   "repository": {
     "type": "git",
