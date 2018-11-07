@@ -37,6 +37,22 @@ class ParcelController {
       data: newParcel,
     });
   }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static show(req, res) {
+    let { orderId } = req.params;
+    orderId = Number(orderId);
+    const parcel = Parcel.findById(orderId);
+
+    return res.status(200).json({
+      message: 'success',
+      data: parcel,
+    });
+  }
 }
 
 export default ParcelController;
