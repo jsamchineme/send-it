@@ -39,14 +39,11 @@ class Model {
     for (const attribute in data) {
       if (this.attributes.includes(attribute)) {
         newRecord[attribute] = data[attribute];
-        if (attribute === 'createdAt') {
-          newRecord[attribute] = new Date();
-        }
-        if (attribute === 'updatedAt') {
-          newRecord[attribute] = new Date();
-        }
       }
     }
+    newRecord.createdAt = new Date();
+    newRecord.updatedAt = new Date();
+
     const lastRecord = this.allRecords[this.allRecords.length - 1];
     newRecord.id = lastRecord.id + 1;
 
@@ -61,6 +58,7 @@ class Model {
    * @returns {Object} - the updated record
    */
   update(id, newAttributesData) {
+    // record to be updated
     const record = this.allRecords.find(item => item.id === id);
 
     for (const attribute in newAttributesData) {
@@ -70,8 +68,18 @@ class Model {
         }
       }
     }
+    record.updatedAt = new Date();
 
-    record.updateAt = new Date();
+    // load the updated record back into the into "allRecords" property for the Entity
+    const currentAllRecords = this.allRecords.map((item) => {
+      if (item.id === record.id) {
+        return record;
+      }
+      return item;
+    });
+
+    this.allRecords = currentAllRecords;
+
 
     return record;
   }

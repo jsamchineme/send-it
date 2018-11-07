@@ -31,4 +31,16 @@ describe('Test cases for the API landing routes', () => {
         done();
       });
   });
+  it('should return not found when any unspecified routes are caught', (done) => {
+    request.get('/andela')
+      .set('Content-Type', 'application/json')
+      .expect(404)
+      .end((err, res) => {
+        expect(res.body).deep.equal({
+          status: 'Failed',
+          message: 'Route Not Found',
+        });
+        done();
+      });
+  });
 });
