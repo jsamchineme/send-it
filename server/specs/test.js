@@ -17,7 +17,7 @@ describe('Test cases for the API landing routes', () => {
         done();
       });
   });
-  it('Should load the API home route', (done) => {
+  it('should load the API home route', (done) => {
     request.get('/api/v1')
       .set('Content-Type', 'application/json')
       .expect(200)
