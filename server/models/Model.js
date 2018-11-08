@@ -28,6 +28,7 @@ class Model {
       records = this.allRecords.filter((item) => {
         let constraintsPassed = 0;
         for (const attribute in this.whereConstraints) {
+          /* istanbul ignore else  */
           if (this.attributes.includes(attribute)) {
             if (item[attribute] === this.whereConstraints[attribute]) {
               constraintsPassed = constraintsPassed + 1;
@@ -64,6 +65,7 @@ class Model {
    */
   where(constraints) {
     for (const attribute in constraints) {
+      /* istanbul ignore else  */
       if (this.attributes.includes(attribute)) {
         this.whereConstraints[attribute] = constraints[attribute];
       }
@@ -127,6 +129,7 @@ class Model {
     for (const attribute in newAttributesData) {
       /* istanbul ignore else  */
       if (this.attributes.includes(attribute)) {
+        /* istanbul ignore else  */
         if (attribute !== 'createdAt' && attribute !== 'updatedAt' && attribute !== 'id') {
           record[attribute] = newAttributesData[attribute];
         }
