@@ -1,4 +1,4 @@
-# Store Manager
+# Send IT
 [![Build Status](https://travis-ci.org/jsamchineme/send-it.svg?branch=develop)](https://travis-ci.org/jsamchineme/send-it)
 [![Coverage Status](https://coveralls.io/repos/github/jsamchineme/send-it/badge.svg)](https://coveralls.io/github/jsamchineme/send-it)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fb9ed5da54bcd9bf509e/maintainability)](https://codeclimate.com/github/jsamchineme/send-it/maintainability)
