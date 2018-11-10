@@ -443,6 +443,28 @@ img {
   height: 100%;
 }
 
+.line-input {
+  background: none;
+  display: block;
+  outline: none;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid orange;
+  font-size: 15px;
+  padding: 0px 0px 5px;
+  margin-top: 10px;
+  width: 100%;
+  font-family: 'LatoLig';
+}
+
+textarea.line-input {
+  background: #ffffff;
+  min-height: 150px;
+  border: 1px solid #f1f2f3;
+  resize: none;
+  padding: 10px;
+}
+
 .login-box {
   max-width: 400px;
   padding: 0px 20px;
@@ -551,6 +573,25 @@ a {
   font-size: 12px;
   padding: 10px 10px;
   min-width: unset;
+}
+
+.btn.bg-light-orange {
+  background: #f7cf84;
+  border: 1px solid orange;
+}
+
+.btn.danger {
+  background: #c32536;
+  color: #ffffff;
+}
+
+.text-num {
+  margin-top: 20px;
+}
+
+.text-num span {
+  font-weight: bold;
+  color: #c32536;
 }
 
 .icons {
@@ -767,6 +808,10 @@ a {
   padding-bottom: 10px;
 }
 
+.main-content .header .inset-text {
+  color: #c32536;
+}
+
 .summary-card {
   background: #f1f2f3;
   border-radius: 3px;
@@ -839,7 +884,7 @@ a {
   color: orange;
 }
 
-.items-list .header {
+.page-section>.header {
   margin-top: 30px;
   margin-bottom: 20px;
   padding: 0px 15px;
@@ -868,6 +913,15 @@ a {
   padding: 15px 10px;
 }
 
+.items-list .body .lower-section .quick-info span.field {
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.items-list .body .lower-section .quick-info .inset-text {
+  color: #c32536;
+}
+
 .items-list .body .actions {
   margin-top: 10px;
 }
@@ -883,6 +937,56 @@ a {
 
 .page-right {
   padding: 0px;
+}
+
+.single-view {
+  background: #f7f7f7;
+  border: 1px solid #cccccc;
+}
+
+.single-view .header {
+  font-size: 20px;
+  background: #ffffff;
+  padding: 15px;
+}
+
+.single-view .title {
+  color: #000000;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.single-view .stats-info {
+  margin-bottom: 10px;
+  font-size: 80%;
+}
+
+.single-view .stats-info .inset-text {
+  color: #c32536;
+}
+
+.single-view .body {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.single-view .info-sections .item {
+  margin-bottom: 30px;
+}
+
+.single-view .info-sections .item .field {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.single-view .info-sections .item .value {
+  margin-bottom: 10px;
+}
+
+.single-view .images .image img {
+  border: 1px solid #f1f2f3;
 }
 
 @media screen and (min-width: 768px) {
