@@ -83,8 +83,9 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static cancel(req, res) {
+  static update(req, res) {
     let { orderId } = req.params;
+    const updateData = req.body;
     orderId = Number(orderId);
     const parcel = Parcel.findById(orderId);
 
@@ -94,13 +95,11 @@ class ParcelController {
       });
     }
 
-    // orders are never deleted, the status is only changed to "cancelled"
-    parcel.status = 'cancelled';
-    const cancelledParcel = Parcel.update(orderId, parcel);
+    const updatedParcel = Parcel.update(orderId, updateData);
 
     return res.status(200).json({
       message: 'success',
-      data: cancelledParcel,
+      data: updatedParcel,
     });
   }
 }

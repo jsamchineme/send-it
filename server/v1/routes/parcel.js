@@ -6,6 +6,6 @@ const parcelRoutes = Router();
 parcelRoutes.get('/', ParcelController.list);
 parcelRoutes.post('/', ParcelController.store);
 parcelRoutes.get('/:orderId', ParcelController.show);
-parcelRoutes.delete('/:orderId', ParcelController.cancel);
+parcelRoutes.put('/:orderId', ParcelController.update);
 
 export default parcelRoutes;

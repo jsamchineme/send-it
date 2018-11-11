@@ -53,15 +53,17 @@ describe('Test case for the "parcel" resource endpoints', () => {
       });
   });
   it('should cancel a specific parcel delivery order', (done) => {
-    request.delete('/api/v1/parcels/1')
+    request.put('/api/v1/parcels/1')
+      .send({ status: 'cancelled' })
       .expect(200)
       .end((err, res) => {
         expect(res.body.message).to.equal('success');
+        expect(res.body.data.status).to.equal('cancelled');
         done();
       });
   });
-  it('should return message when record is not found for DELETE parcels/:orderId end point', (done) => {
-    request.delete('/api/v1/parcels/0')
+  it('should return message when record is not found for PUT parcels/:orderId end point', (done) => {
+    request.put('/api/v1/parcels/0')
       .expect(400)
       .end((err, res) => {
         expect(res.body.message).to.equal('NotFound');
