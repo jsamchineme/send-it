@@ -6,8 +6,8 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking</title>
-  <link rel="stylesheet" href="assets/css/app.css">
-  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -42,12 +42,9 @@
         </div>
         <div class="mobile-side-menu" id="mobile-side-menu">
           <ul class="side-links">
-            <li><a href="make-order.html"><i class="fa fa-user"></i>Make an Order</a></li>
-            <li><a href="invite-users.html"><i class="fa fa-ambulance"></i>Invite Users</a></li>
-            <li><a href="all-parcels.html"><i class="fa fa-user"></i>See Your Parcels</a></li>
-            <li><a href="track-parcels.html"><i class="fa fa-user"></i>Track Parcels</a></li>
+            <li><a href="track-parcels.html"><i class="fa fa-user"></i>Pending Orders</a></li>
             <li><a href="delivered-parcels.html"><i class="fa fa-user"></i>Delivered Parcels</a></li>
-            <li><a href="user-profile.html"><i class="fa fa-user"></i>My Profile</a></li>
+            <li><a href="cancelled-parcels.html"><i class="fa fa-user"></i>Cancelled Orders</a></li>
           </ul>
         </div>
       </div>
@@ -55,19 +52,16 @@
         <div class="column col-3 page-left">
           <aside class='actions-sidebar show-for-large'>
             <div class="header">
-              <a href="index.html" class='logo-text-group'>
-                <div class="logo"><img src="assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
+              <a href="../index.html" class='logo-text-group'>
+                <div class="logo"><img src="../assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
                 <div class="text">Send<span>IT</span></div>
               </a>
             </div>
             <div class="content">
               <ul class="side-links">
-                <li><a href="make-order.html"><i class=""></i>Make an Order</a></li>
-                <li><a href="invite-users.html"><i class=""></i>Invite Users</a></li>
-                <li><a href="all-parcels.html"><i class=""></i>See Your Parcels</a></li>
-                <li><a href="track-parcels.html"><i class=""></i>Track Parcels</a></li>
-                <li><a href="delivered-parcels.html"><i class=""></i>Delivered Parcels</a></li>
-                <li><a href="user-profile.html"><i class=""></i>My Profile</a></li>
+                <li><a href="track-parcels.html"><i class="fa fa-user"></i>Pending Orders</a></li>
+                <li><a href="delivered-parcels.html"><i class="fa fa-user"></i>Delivered Parcels</a></li>
+                <li><a href="cancelled-parcels.html"><i class="fa fa-user"></i>Cancelled Orders</a></li>
               </ul>
             </div>
           </aside>
@@ -104,48 +98,56 @@
               <section class="page-section single">
                 <div class="header">
                   <div class="order-info heading">
-                    <!-- <span>Order ID <span class="inset-text">#182323</span></span> -->
-                    <span>New Order </span>
+                    <span>Order ID <span class="inset-text">#182323</span></span>
                   </div>
                 </div>
 
                 <div class="single-view">
                   <div class="container">
+                    <div class="header">
+                      <span class='title'>PostPak Clear Bubble Wrap Roll, 3m 37749</span>
+                      <div class="stats-info">
+                        <div>
+                          Created on <span class="inset-text">29-12-2018</span>
+                        </div>
+                        <div>
+                          Status on <span class="inset-text">pending</span>
+                        </div>
+                      </div>
+                    </div>
                     <div class="body row">
-                      <form class='' action="">
-                        <div class="info-sections column col-7">
-                          <div class="item">
-                            <div class="field">Pickup Location</div>
-                            <div class="value">
-                              Where do you want us to come pick up the parcel?
-                              <input class='line-input' type="text" id='destination' placeholder="type here" />
-                            </div>
+                      <div class="info-sections column col-7">
+                        <div class="item">
+                          <div class="field">Present Location</div>
+                          <div class="value">
+                            9, Lag Crescent, Gbagada Road, Ikeja, Lagos
                           </div>
-                          <div class="item">
-                            <div class="field">Delivery Location</div>
-                            <div class="value">
-                              Where should the parcel be delivered?
-                              <input class='line-input' type="text" id='deliveryLocation' placeholder="Type here" />
-                            </div>
-                          </div>
-                          <div class="item">
-                            <div class="field">Parcel Description</div>
-                            <div class="value">
-                              Describe the parcel
-                              <textarea class='line-input' id='description' placeholder="Type here"></textarea>
-                            </div>
-                          </div>
-
-                          <div class="item actions">
-                            <a href="#map-modal" class="btn bg-light-orange medium-btn">Save Order</a>
+                          <div class="actions">
+                            <a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>
                           </div>
                         </div>
-                        <div class="images column col-5">
-                          <div class="image">
-                            <img src="assets/img/packages/package-1.png" alt="">
+                        <div class="item">
+                          <div class="field">Delivery Location</div>
+                          <div class="value">
+                            9, Lag Crescent, Gbagada Road, Ikeja, Lagos
                           </div>
                         </div>
-                      </form>
+                        <div class="item">
+                          <div class="field">Pickup Location</div>
+                          <div class="value">
+                            9, Alibaba Road, Ogba, Lagos
+                          </div>
+                        </div>
+                        <div class="item actions">
+                          <a href="#modal" class="btn danger medium-btn">Cancel Order</a>
+                          <a href="edit-order.html" class="btn medium-btn bg-light-orange">Edit Order</a>
+                        </div>
+                      </div>
+                      <div class="images column col-5">
+                        <div class="image">
+                          <img src="../assets/img/packages/package-1.png" alt="">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -161,9 +163,7 @@
     <div class="" id="menu-active-overlay"></div>
   </div>
 
-  <script src='assets/js/main.js'></script>
-
-  
+  <script src='../assets/js/main.js'></script>
 </body>
 
 </html>

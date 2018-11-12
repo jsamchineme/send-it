@@ -430,7 +430,7 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: url("../img/package-landing-image.jpg");
+  background-image: url("../img/sending-package.jpg");
   background-position: top left;
   background-size: cover;
   background-repeat: no-repeat;
@@ -458,11 +458,7 @@ img {
 }
 
 textarea.line-input {
-  background: #ffffff;
-  min-height: 150px;
-  border: 1px solid #f1f2f3;
-  resize: none;
-  padding: 10px;
+  min-height: 120px;
 }
 
 .login-box {
@@ -583,6 +579,12 @@ a {
 .btn.danger {
   background: #c32536;
   color: #ffffff;
+}
+
+.btn.success {
+  background: #c32536;
+  background: #f7cf84;
+  border: 1px solid orange;
 }
 
 .text-num {
