@@ -17,7 +17,7 @@
       <div class="mobile-header hide-for-large">
         <div class="top-bar">
           <div class="text">
-            <div class="name">John Doe</div>
+            <div class="name">Username</div>
           </div>
           <div class="icons">
             <a class="icon-group notification">
@@ -31,7 +31,7 @@
                 <ul>
                   <li><a href="#">Settings</a></li>
                   <li><a href="#">Profile</a></li>
-                  <li><a href="login.html">Logout</a></li>
+                  <li><a href="admin-login.html">Logout</a></li>
                 </ul>
               </div>
             </span>
@@ -42,12 +42,9 @@
         </div>
         <div class="mobile-side-menu" id="mobile-side-menu">
           <ul class="side-links">
-            <li><a href="make-order.html"><i class="fa fa-user"></i>Make an Order</a></li>
-            <li><a href="invite-users.html"><i class="fa fa-ambulance"></i>Invite Users</a></li>
-            <li><a href="all-parcels.html"><i class="fa fa-user"></i>See Your Parcels</a></li>
-            <li><a href="track-parcels.html"><i class="fa fa-user"></i>Track Parcels</a></li>
+            <li><a href="all-parcels.html"><i class="fa fa-user"></i>See Pending Orders</a></li>
+            <li><a href="track-parcels.html"><i class="fa fa-user"></i>Track Orders</a></li>
             <li><a href="delivered-parcels.html"><i class="fa fa-user"></i>Delivered Parcels</a></li>
-            <li><a href="user-profile.html"><i class="fa fa-user"></i>My Profile</a></li>
           </ul>
         </div>
       </div>
@@ -62,12 +59,9 @@
             </div>
             <div class="content">
               <ul class="side-links">
-                <li><a href="make-order.html"><i class=""></i>Make an Order</a></li>
-                <li><a href="invite-users.html"><i class=""></i>Invite Users</a></li>
-                <li><a href="all-parcels.html"><i class=""></i>See Your Parcels</a></li>
-                <li><a href="track-parcels.html"><i class=""></i>Track Parcels</a></li>
-                <li><a href="delivered-parcels.html"><i class=""></i>Delivered Parcels</a></li>
-                <li><a href="user-profile.html"><i class=""></i>My Profile</a></li>
+                <li><a href="all-parcels.html"><i class="fa fa-user"></i>See Pending Orders</a></li>
+                <li><a href="track-parcels.html"><i class="fa fa-user"></i>Track Orders</a></li>
+                <li><a href="delivered-parcels.html"><i class="fa fa-user"></i>Delivered Parcels</a></li>
               </ul>
             </div>
           </aside>
@@ -102,8 +96,34 @@
           <div class="main-content">
             <div class="container">
               <!-- <div class="screen-title">
-                  <span class="text">All Parcels</span>
-                </div> -->
+                    <span class="text">My Profile</span>
+                  </div> -->
+              <div class="summary-card row">
+                <div class="left column col-8">
+                  <div class="image round">
+                    <img src="assets/img/users/amilolo.jpg" alt="Profile Picture">
+                  </div>
+                  <div class="text-info">
+                    <div class="text-1">Solomonowen Jalamiaweyes</div>
+                    <div class="text-2">solomonowenjalamiaweyes@gmail.com</div>
+                    <div class="v-gap-1"></div>
+                    <!-- <div class="text-3"><span class='inset-text'>joined</span> 24th Dec 2018</div> -->
+                    <div>
+                      <button class='btn small-btn'>Edit</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="right column col-4">
+                  <div class="activity-summary">
+                    <div class="container">
+                      <span class="text-1 declined"><span class="num">15</span>Delivered</span>
+                      <span class="text-2 pending"><span class="num">1</span>In Transit</span>
+                      <!-- <span class="text-2 pending"><span class="num">1</span>Pending</span> -->
+                      <!-- <span class="text-2 pending"><span class="num">1</span>Pending</span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <section class="page-section items-list all-parcels">
                 <div class="header"><span>All Parcels</span></div>
