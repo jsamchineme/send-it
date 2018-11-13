@@ -1,4 +1,4 @@
-import { describe, it, before } from 'mocha';
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../app';
@@ -44,7 +44,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should return message when record is not found for GET parcels/:orderId end point', (done) => {
+  it('should return message when record is not found for GET parcels/:id end point', (done) => {
     request.get('/api/v1/parcels/0')
       .expect(400)
       .end((err, res) => {
@@ -53,8 +53,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
       });
   });
   it('should cancel a specific parcel delivery order', (done) => {
-    request.put('/api/v1/parcels/1')
-      .send({ status: 'cancelled' })
+    request.put('/api/v1/parcels/1/cancel')
       .expect(200)
       .end((err, res) => {
         expect(res.body.message).to.equal('success');
@@ -62,7 +61,25 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should return message when record is not found for PUT parcels/:orderId end point', (done) => {
+  it('should return message when record is not found for PUT parcels/:id/cancel end point', (done) => {
+    request.put('/api/v1/parcels/0/cancel')
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('NotFound');
+        done();
+      });
+  });
+  it('should update a specific parcel delivery order', (done) => {
+    request.put('/api/v1/parcels/1')
+      .send({ status: 'delivered' })
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.message).to.equal('success');
+        expect(res.body.data.status).to.equal('delivered');
+        done();
+      });
+  });
+  it('should return message when record is not found for PUT parcels/:id end point', (done) => {
     request.put('/api/v1/parcels/0')
       .expect(400)
       .end((err, res) => {
