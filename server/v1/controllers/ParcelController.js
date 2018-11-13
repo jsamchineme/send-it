@@ -102,6 +102,32 @@ class ParcelController {
       data: updatedParcel,
     });
   }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static cancel(req, res) {
+    let { orderId } = req.params;
+    const updateData = req.body;
+    orderId = Number(orderId);
+    const parcel = Parcel.findById(orderId);
+
+    if (!parcel) {
+      return res.status(400).json({
+        message: 'NotFound',
+      });
+    }
+
+    updateData.status = 'cancelled';
+    const updatedParcel = Parcel.update(orderId, updateData);
+
+    return res.status(200).json({
+      message: 'success',
+      data: updatedParcel,
+    });
+  }
 }
 
 export default ParcelController;
