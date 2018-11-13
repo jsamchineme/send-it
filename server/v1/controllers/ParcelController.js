@@ -13,7 +13,7 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static list(req, res) {
+  static getAll(req, res) {
     const allRecords = Parcel.getAll();
 
     return res.status(200).json({
@@ -44,7 +44,7 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static store(req, res) {
+  static create(req, res) {
     const newParcelData = req.body;
     // as parcel orders are created, they are initially given a status of 'pending'
     newParcelData.status = 'pending';
@@ -61,7 +61,7 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static show(req, res) {
+  static getOne(req, res) {
     let { orderId } = req.params;
     orderId = Number(orderId);
     const parcel = Parcel.findById(orderId);

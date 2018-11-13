@@ -3,9 +3,9 @@ import ParcelController from '../controllers/ParcelController';
 
 const parcelRoutes = Router();
 
-parcelRoutes.get('/', ParcelController.list);
-parcelRoutes.post('/', ParcelController.store);
-parcelRoutes.get('/:orderId', ParcelController.show);
+parcelRoutes.get('/', ParcelController.getAll);
+parcelRoutes.post('/', ParcelController.create);
+parcelRoutes.get('/:orderId', ParcelController.getOne);
 parcelRoutes.put('/:orderId', ParcelController.update);
 
 export default parcelRoutes;
