@@ -464,10 +464,9 @@ textarea.line-input {
 .login-box {
   max-width: 400px;
   padding: 0px 20px;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 100px;
 }
 
 .login-box form {
@@ -485,7 +484,7 @@ textarea.line-input {
 
 form .form-header {
   background: #dadada;
-  padding: 20px;
+  padding: 20px 15px;
   font-family: 'raleway-bold';
   font-size: 20px;
 }
@@ -534,6 +533,14 @@ form .form-body {
 .input-group .info .error {
   color: #e63434;
   font-size: 13px;
+}
+
+.input-group.transparent-box label {
+  color: #000000;
+  background: #ffffff;
+  display: block;
+  padding: 0px 15px;
+  padding-bottom: 5px;
 }
 
 a {
@@ -1063,6 +1070,10 @@ a {
 
   .mast {
     padding-top: 100px;
+  }
+
+  .mast.paddless {
+    padding-top: 50px;
   }
 
   .mast.theme-dark {
