@@ -14,7 +14,7 @@
 
   <div class="wrapper">
     <section class="page-content">
-      <section class="mast no-bg">
+      <section class="mast no-bg paddless">
         <a href="index.html" class='logo-text-group'>
           <div class="logo"><img src="assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
           <div class="text">Send<span>IT</span></div>
@@ -26,17 +26,13 @@
             Admin Login
           </div>
           <div class="form-body">
-            <div class="input-group">
-              <!-- <div class="info">
-                  <span class="error">This is a required field</span>
-                </div> -->
-              <input type="email" placeholder='email' required />
+            <div class="input-group transparent-box">
+              <label for="email">Email</label>
+              <input type="email" placeholder='you@email.com' required/>
             </div>
-            <div class="input-group">
-              <!-- <div class="info">
-                  <span class="error">This is a required field</span>
-                </div> -->
-              <input type="password" placeholder='password' required />
+            <div class="input-group transparent-box">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder='your password' required/> 
             </div>
             <div class="input-footer"></div>
             <!-- <div class="v-gap-2"></div> -->
@@ -47,10 +43,11 @@
               <div class="actions column text-center">
                 <div class="v-gap-2"></div>
                 <div class="">
-                  <a href="signup.html">Sign up</a>
-                  <!-- | -->
-                  <!-- <a href="admin-login.html">Admin Login</a> -->
-                  <div class="v-gap-2"></div>
+                  <a href="signup.html">Sign up</a> 
+                  <!-- temporarily enable admin login -->
+                  <span style="margin-right: 10px; display: inline-block;"></span>
+                  <a href="admin-login.html">Admin Login</a> 
+                  <span style="margin-right: 10px; display: inline-block;"></span>
                   <a href="forgot-password.html">Forgot password</a>
                 </div>
               </div>
