@@ -1,7 +1,5 @@
 import { connection } from '../database/config';
 
-const debug = require('debug')('database');
-
 /**
  * This makes CRUD and other data related methods available to the entities
  * that will inherit this class
@@ -38,7 +36,6 @@ class Model {
       this.resetConstraints();
       return resultSet.rows;
     } catch (err) {
-      debug('ERROR--', err.stack);
       return err.stack;
     }
   }
@@ -73,7 +70,6 @@ class Model {
       }
     }
 
-    debug('WHERE STRING', whereString);
 
     return whereString;
   }
@@ -114,7 +110,6 @@ class Model {
 
       return resultSet.rows[0];
     } catch (err) {
-      debug('ERROR--', err.stack);
       return err.stack;
     }
   }
@@ -131,7 +126,6 @@ class Model {
 
       return resultSet.rows[0];
     } catch (err) {
-      debug('ERROR--', err.stack);
       return err.stack;
     }
   }
@@ -148,10 +142,8 @@ class Model {
       const resultSet = await this.connection.query(query);
 
       const newRecord = resultSet.rows[0];
-      debug('new Record', newRecord);
       return newRecord;
     } catch (err) {
-      debug('ERROR--', err.stack);
       return err.stack;
     }
   }
@@ -227,7 +219,6 @@ class Model {
       const updatedRecord = resultSet.rows[0];
       return updatedRecord;
     } catch (err) {
-      debug('ERROR--', err.stack);
       return err.stack;
     }
   }
@@ -247,7 +238,6 @@ class Model {
       }
       return false;
     } catch (err) {
-      debug('ERROR--', err.stack);
       return err.stack;
     }
   }
