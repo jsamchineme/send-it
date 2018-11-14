@@ -12,6 +12,7 @@ env:
   - CC_TEST_REPORTER_ID=5c1c64ea6750a5b25ea64441ce66d630440648e3e0f946ad2619a7e910fc81b2
   - NODE_ENV=test
   - MODE=online
+  - JWT_SECRET_KEY=CdxLE.EWW@$$WGGjzwbsswCT
   - TEST_DATABASE_URL=postgres://fjwmupwoecntsv:3f7ef3d35ed2c13036f7eacd0a9cf10c16c60b08ecbbccc9981802b510f45f33@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d7sgj6q1ofrn5f
 before_script:
   - npm install
