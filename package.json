@@ -6,6 +6,7 @@
     "start": "npm run db:migrate:reset && npm run db:seed && babel-node server/index.js",
     "start:dev": "set DEBUG=database&& npm run db:migrate:reset && npm run db:seed && nodemon --exec babel-node server",
     "test": "set NODE_ENV=test&& npm run db:migrate:reset && npm run db:seed && nyc mocha --timeout 300000 --exit server/specs",
+    "test:dev": "set NODE_ENV=test&& nyc mocha --timeout 300000 --exit server/specs",
     "db:migrate": "set DEBUG=database&& babel-node server/migrations/dbMigrate.js",
     "db:migrate:reset": "set DEBUG=database&& babel-node server/migrations/dbMigrateReset.js",
     "db:seed": "set DEBUG=database&& babel-node server/seeders/Seeder.js",
@@ -36,7 +37,10 @@
       "text"
     ],
     "sourceMap": false,
-    "instrument": false
+    "instrument": false,
+    "exclude": [
+      "server/database/config.js"
+    ]
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
