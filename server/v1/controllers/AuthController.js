@@ -45,7 +45,8 @@ class AuthController {
 
     if (!foundCredentials) {
       return res.status(401).send({
-        message: 'Unauthorised',
+        status: 'Unauthorised',
+        message: 'Provide valid credentials',
       });
     }
 

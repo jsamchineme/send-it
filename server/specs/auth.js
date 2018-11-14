@@ -44,7 +44,8 @@ describe('Test case for the "auth" resource endpoints', () => {
       .send(newUserData)
       .expect(401)
       .end((err, res) => {
-        expect(res.body.message).to.equal('Unauthorised');
+        expect(res.body.status).to.equal('Unauthorised');
+        expect(res.body.message).to.equal('Provide valid credentials');
         done();
       });
   });
