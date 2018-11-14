@@ -1,59 +1,58 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import Model from '../../models/Model';
-
-const allRecords = [
-  { id: 1, name: 'Attribute Name', state: 'lagos' },
-  { id: 2, name: 'Attribute Name', state: 'lagos' },
-  { id: 3, name: 'Attribute Name', state: 'imo' },
-];
-
-const entityAttributes = ['id', 'name', 'state'];
+import userSchema from '../../migrations/users';
 
 const modelTests = () => {
   describe('Test Case for the Model Class', () => {
-    const model = new Model(entityAttributes, allRecords);
+    const model = new Model(userSchema);
     it('should Instantiate Model', () => {
-      expect(model.allRecords.length).to.equal(allRecords.length);
+      expect(model.schema.tableName).to.not.equal(undefined);
     });
     describe('Model.findById()', () => {
-      it('should return a record when valid id is supplied', () => {
-        expect(model.findById(1).id).to.equal(1);
+      it('should return a record when valid id is supplied', async () => {
+        const record = await model.findById(1);
+        expect(record.id).to.equal(1);
       });
-      it('should return undefined when no id is supplied', () => {
-        expect(model.findById()).to.equal(undefined);
+      it('should return undefined when no id is supplied', async () => {
+        const record = await model.findById();
+        expect(record).to.equal(undefined);
       });
     });
-    describe('Model.getAll()', () => {
-      const allReturnedRecords = model.getAll();
+    describe('Model.getAll()', async () => {
+      const allReturnedRecords = await model.getAll();
       it('should return all records', () => {
-        expect(model.allRecords.length).to.equal(allReturnedRecords.length);
+        expect(allReturnedRecords.length > 0).to.equal(true);
       });
-      it('should return selected records when where constraints are set', () => {
-        const demoRecords = model.allRecords.filter(item => item.state === 'lagos');
-        const records = model.where({ state: 'lagos' }).getAll();
-        expect(records.length).to.equal(demoRecords.length);
+      it('should return selected records when where constraints are set', async () => {
+        const records = await model.where({ state: 'lagos' }).getAll();
+        expect(records.length > 0).to.equal(true);
       });
     });
     describe('Model.create()', () => {
-      it('should create records when data is supplied', () => {
-        const lastRecord = allRecords[allRecords.length - 1];
-        const newRecordData = { name: 'New Name' };
-        const result = model.create(newRecordData);
-        expect(result.name).to.equal('New Name');
-        expect(result.id).to.equal(lastRecord.id + 1);
+      it('should create records when data is supplied', async () => {
+        const newRecordData = {
+          username: 'johndoe',
+          email: 'johndoe@example.io',
+          password: 'asdadsds',
+        };
+
+        const result = await model.create(newRecordData);
+        expect(result.username).to.equal('johndoe');
       });
     });
     describe('Model.delete()', () => {
-      it('should delete records when data is supplied', () => {
-        const record = allRecords[0];
-        expect(model.delete(record.id)).to.equal(true);
+      it('should delete records when data is supplied', async () => {
+        const result = await model.delete(1);
+        expect(result).to.equal(true);
       });
-      it('should return false when no parameter is supplied', () => {
-        expect(model.delete()).to.equal(false);
+      it('should return false when no parameter is supplied', async () => {
+        const result = await model.delete();
+        expect(result).to.equal(false);
       });
-      it('should return false when no item is found to be deleted', () => {
-        expect(model.delete(0)).to.equal(false);
+      it('should return false when no item is found to be deleted', async () => {
+        const result = await model.delete(0);
+        expect(result).to.equal(false);
       });
     });
     describe('Model.where()', () => {
@@ -71,13 +70,13 @@ const modelTests = () => {
       });
     });
     describe('Model.findByAttribute()', () => {
-      const record = model.allRecords[0];
-      const result = model.findByAttribute('id', record.id);
-      it('should return a record when valid attribute is supplied', () => {
-        expect(result.id).to.equal(record.id);
+      it('should return a record when valid attribute is supplied', async () => {
+        const result = await model.findByAttribute('id', 2);
+        expect(result.id).to.equal(2);
       });
-      it('should return undefined when no attribute is supplied', () => {
-        expect(model.findByAttribute()).to.equal(undefined);
+      it('should return undefined when no attribute is supplied', async () => {
+        const result = await model.findByAttribute();
+        expect(result).to.equal(undefined);
       });
     });
   });

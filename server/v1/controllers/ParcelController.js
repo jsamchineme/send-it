@@ -13,8 +13,8 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static getAll(req, res) {
-    const allRecords = Parcel.getAll();
+  static async getAll(req, res) {
+    const allRecords = await Parcel.getAll();
 
     return res.status(200).json({
       message: 'success',
@@ -28,10 +28,10 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static listForUser(req, res) {
+  static async listForUser(req, res) {
     let { userId } = req.params;
     userId = Number(userId);
-    const allRecords = Parcel.where({ userId }).getAll();
+    const allRecords = await Parcel.where({ userId }).getAll();
 
     return res.status(200).json({
       message: 'success',
@@ -44,11 +44,11 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static create(req, res) {
+  static async create(req, res) {
     const newParcelData = req.body;
     // as parcel orders are created, they are initially given a status of 'pending'
     newParcelData.status = 'pending';
-    const newParcel = Parcel.create(newParcelData);
+    const newParcel = await Parcel.create(newParcelData);
 
     return res.status(200).json({
       message: 'success',
@@ -61,10 +61,10 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static getOne(req, res) {
+  static async getOne(req, res) {
     let { orderId } = req.params;
     orderId = Number(orderId);
-    const parcel = Parcel.findById(orderId);
+    const parcel = await Parcel.findById(orderId);
 
     if (!parcel) {
       return res.status(400).json({
@@ -83,11 +83,11 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static update(req, res) {
+  static async update(req, res) {
     let { orderId } = req.params;
     const updateData = req.body;
     orderId = Number(orderId);
-    const parcel = Parcel.findById(orderId);
+    const parcel = await Parcel.findById(orderId);
 
     if (!parcel) {
       return res.status(400).json({
@@ -95,7 +95,7 @@ class ParcelController {
       });
     }
 
-    const updatedParcel = Parcel.update(orderId, updateData);
+    const updatedParcel = await Parcel.update(orderId, updateData);
 
     return res.status(200).json({
       message: 'success',
@@ -108,11 +108,11 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static cancel(req, res) {
+  static async cancel(req, res) {
     let { orderId } = req.params;
     const updateData = req.body;
     orderId = Number(orderId);
-    const parcel = Parcel.findById(orderId);
+    const parcel = await Parcel.findById(orderId);
 
     if (!parcel) {
       return res.status(400).json({
@@ -121,7 +121,7 @@ class ParcelController {
     }
 
     updateData.status = 'cancelled';
-    const updatedParcel = Parcel.update(orderId, updateData);
+    const updatedParcel = await Parcel.update(orderId, updateData);
 
     return res.status(200).json({
       message: 'success',

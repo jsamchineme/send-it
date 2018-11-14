@@ -13,14 +13,14 @@ class AuthController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static signup(req, res) {
+  static async signup(req, res) {
     const newUserData = req.body;
     const { password } = newUserData;
     const saltRounds = 10;
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
     newUserData.password = hashedPassword;
-    const newUser = User.create(newUserData);
+    const newUser = await User.create(newUserData);
 
     return res.status(200).json({
       message: 'success',
@@ -33,10 +33,10 @@ class AuthController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static login(req, res) {
+  static async login(req, res) {
     const { email, password } = req.body;
 
-    const user = User.findByAttribute('email', email);
+    const user = await User.findByAttribute('email', email);
     let foundCredentials = false;
     if (user) {
       foundCredentials = bcrypt.compareSync(password, user.password);

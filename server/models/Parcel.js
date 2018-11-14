@@ -1,4 +1,4 @@
-import allParcelRecords, { attributes } from '../data/parcels';
+import parcelSchema from '../migrations/parcels';
 import Model from './Model';
 
 
@@ -9,11 +9,10 @@ import Model from './Model';
 class Parcel extends Model {
   /**
    * Setup the Parcel Model
-   * @param {Array} entityAttributes - the attributes of the entity
-   * @param {Array} allRecords - all the records available for the entity
+   * @param {Array} schema - an object showing tableName and attributes of the entity
    */
-  constructor(entityAttributes = attributes, allRecords = allParcelRecords) {
-    super(entityAttributes, allRecords);
+  constructor(schema = parcelSchema) {
+    super(schema);
   }
 }
 

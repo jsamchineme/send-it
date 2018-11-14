@@ -1,3 +1,7 @@
+import { connection } from '../database/config';
+
+const debug = require('debug')('database');
+
 /**
  * This makes CRUD and other data related methods available to the entities
  * that will inherit this class
@@ -6,48 +10,72 @@
  */
 class Model {
   /**
-   * @param {Array} entityAttributes - the attributes of an entity
-   * @param {Array} allRecords - all the records available for an entity
+   * @param {Object} schema - an object showing tableName and attributes of an entity
    */
-  constructor(entityAttributes, allRecords) {
-    this.attributes = entityAttributes;
-    this.allRecords = allRecords;
+  constructor(schema) {
+    this.schema = schema;
+    this.connection = connection;
     this.whereConstraints = {};
   }
 
   /**
    * @returns {Array} - all the records available for an entity
    */
-  getAll() {
+  async getAll() {
     const constraintsExist = Object.keys(this.whereConstraints).length > 0;
-    let records = this.allRecords;
+
+    let queryString;
     if (constraintsExist) {
-      // iterate over the object keys available on the whereConstraint object
-      // and check if the values of the attributes equal to the values of any items in
-      // array of records
-      records = this.allRecords.filter((item) => {
-        let constraintsPassed = 0;
-        for (const attribute in this.whereConstraints) {
-          /* istanbul ignore else  */
-          if (this.attributes.includes(attribute)) {
-            if (item[attribute] === this.whereConstraints[attribute]) {
-              constraintsPassed = constraintsPassed + 1;
-            }
+      const whereString = this.getWhereString();
+      queryString = `SELECT * FROM ${this.schema.tableName} WHERE ${whereString}`;
+    } else {
+      queryString = `SELECT * FROM ${this.schema.tableName}`;
+    }
+    try {
+      const resultSet = await this.connection.query(queryString);
+
+      // reset the constraints for other queries
+      this.resetConstraints();
+      return resultSet.rows;
+    } catch (err) {
+      debug('ERROR--', err.stack);
+      return err.stack;
+    }
+  }
+
+  /**
+   * prepare the whereString
+   * @returns {String} - the where String eg "field1" = "value1" AND "field2" = "value2";
+   */
+  getWhereString() {
+    let whereString = '';
+    let count = 0;
+    for (let attribute in this.whereConstraints) {
+      if (attribute) {
+        const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
+        if (foundAttribute) {
+          let value;
+          if (foundAttribute.type !== 'integer') {
+            value = `'${this.whereConstraints[attribute]}'`;
+          } else {
+            value = this.whereConstraints[attribute];
+          }
+
+          attribute = `"${attribute}"`;
+          whereString += `${attribute} = ${value}`;
+
+          // trying to find out if the iteration is the last
+          if (count !== Object.keys(this.whereConstraints).length - 1) {
+            whereString += ' AND ';
           }
         }
-        // after the iteration and checks, if the number of passed constraints
-        // is equal to the length of the keys in this.whereConstraints
-        // then, the item can be added to the found records
-        if (constraintsPassed === Object.keys(this.whereConstraints).length) {
-          return true;
-        }
-        return false;
-      });
+        count += 1;
+      }
     }
 
-    // reset the constraints for other queries
-    this.resetConstraints();
-    return records;
+    debug('WHERE STRING', whereString);
+
+    return whereString;
   }
 
   /**
@@ -65,9 +93,11 @@ class Model {
    */
   where(constraints) {
     for (const attribute in constraints) {
-      /* istanbul ignore else  */
-      if (this.attributes.includes(attribute)) {
-        this.whereConstraints[attribute] = constraints[attribute];
+      if (attribute) {
+        const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
+        if (foundAttribute) {
+          this.whereConstraints[attribute] = constraints[attribute];
+        }
       }
     }
     return this;
@@ -77,8 +107,16 @@ class Model {
    * @param {Number} id - the id of the record to be selected
    * @returns {Object} - the selected record
    */
-  findById(id) {
-    return this.allRecords.find(item => item.id === id);
+  async findById(id) {
+    const query = `SELECT * FROM ${this.schema.tableName} WHERE id = ${id}`;
+    try {
+      const resultSet = await this.connection.query(query);
+
+      return resultSet.rows[0];
+    } catch (err) {
+      debug('ERROR--', err.stack);
+      return err.stack;
+    }
   }
 
   /**
@@ -86,92 +124,132 @@ class Model {
    * @param {*} value - the value of the attribute
    * @returns {Object} - the selected record
    */
-  findByAttribute(attribute, value) {
-    if (attribute === undefined || value === undefined) {
-      return undefined;
+  async findByAttribute(attribute, value) {
+    const query = `SELECT * FROM ${this.schema.tableName} WHERE "${attribute}" = '${value}'`;
+    try {
+      const resultSet = await this.connection.query(query);
+
+      return resultSet.rows[0];
+    } catch (err) {
+      debug('ERROR--', err.stack);
+      return err.stack;
     }
-    return this.allRecords.find(item => item[attribute] === value);
   }
 
   /**
    * @param {Object} data - an object of attributes: value
    * @returns {Object} - the just created record
    */
-  create(data) {
-    const newRecord = {};
+  async create(data) {
+    const createData = this.prepareCreateData(data);
+    const { fieldList, fieldValues } = createData;
+    const query = `INSERT INTO ${this.schema.tableName} (${fieldList}) VALUES (${fieldValues}) RETURNING *`;
+    try {
+      const resultSet = await this.connection.query(query);
 
-    for (const attribute in data) {
-      /* istanbul ignore else  */
-      if (this.attributes.includes(attribute)) {
-        newRecord[attribute] = data[attribute];
-      }
+      const newRecord = resultSet.rows[0];
+      debug('new Record', newRecord);
+      return newRecord;
+    } catch (err) {
+      debug('ERROR--', err.stack);
+      return err.stack;
     }
-    newRecord.createdAt = new Date();
-    newRecord.updatedAt = new Date();
-
-    const lastRecord = this.allRecords[this.allRecords.length - 1];
-    newRecord.id = lastRecord.id + 1;
-
-    this.allRecords.push(newRecord);
-
-    return newRecord;
   }
 
   /**
-   * @param {Number} id - the id of the record to be updated
-   * @param {Object} newAttributesData - object of attributes: new value
-   * @returns {Object} - the updated record
+   * @param {Object} data - object of table fields: values
+   * @returns {Object} - object of table fields: values
    */
-  update(id, newAttributesData) {
-    // record to be updated
-    const record = this.allRecords.find(item => item.id === id);
+  prepareCreateData(data) {
+    const fieldList = [];
+    const fieldValues = [];
+    for (let field in data) {
+      if (field) {
+        const foundAttribute = this.schema.attributes.find(item => item.name === field);
+        if (foundAttribute) {
+          let value;
+          if (foundAttribute.type !== 'integer') {
+            value = `'${data[field]}'`;
+          } else {
+            value = data[field];
+          }
 
-    for (const attribute in newAttributesData) {
-      /* istanbul ignore else  */
-      if (this.attributes.includes(attribute)) {
-        /* istanbul ignore else  */
-        if (attribute !== 'createdAt' && attribute !== 'updatedAt' && attribute !== 'id') {
-          record[attribute] = newAttributesData[attribute];
+          field = `"${field}"`;
+
+          fieldValues.push(value);
+          fieldList.push(field);
         }
       }
     }
-    record.updatedAt = new Date();
 
-    // load the updated record back into the into "allRecords" property for the Entity
-    const currentAllRecords = this.allRecords.map((item) => {
-      if (item.id === record.id) {
-        return record;
-      }
-      return item;
-    });
-
-    this.allRecords = currentAllRecords;
-
-    return record;
+    const preparedData = { fieldList, fieldValues };
+    return preparedData;
   }
 
   /**
-   * @param {Number} id - the id of the record to be deleted
-   * @returns {Boolean} - success or failure flag
+   * @param {Object} data - object of field updates
+   * @return {String} - formatted Update "Set" String
    */
-  delete(id) {
-    if (typeof id === 'undefined') {
-      return false;
+  prepareUpdateSet(data) {
+    let preparedSetString = 'SET ';
+    for (const field in data) {
+      if (field) {
+        const foundAttribute = this.schema.attributes.find(item => item.name === field);
+        if (foundAttribute) {
+          let fieldSetString = '';
+          if (preparedSetString !== 'SET ') {
+            fieldSetString = ', ';
+          }
+          if (foundAttribute.type !== 'integer') {
+            fieldSetString += `"${field}" = '${data[field]}'`;
+          } else {
+            fieldSetString += `"${field}" = ${data[field]}`;
+          }
+          preparedSetString += fieldSetString;
+        }
+      }
     }
-    // fetch the records skipping the single one to be deleted
-    const remainingRecords = this.allRecords.filter(item => item.id !== id);
+    return preparedSetString;
+  }
 
-    /**
-     * this will be true if nothing was matched in the filter above,
-     * and hence nothing was deleted
-     */
-    if (this.allRecords.length === remainingRecords.length) {
-      return false;
+  /**
+   * @param {*} id - the id of the record
+   * @param {Object} data - object containing field updates for the record
+   * @returns {Object} - the updated record
+   */
+  async update(id, data) {
+    const preparedUpdateSet = this.prepareUpdateSet(data);
+    const queryString = `UPDATE ${this.schema.tableName} ${preparedUpdateSet} WHERE id = ${id} RETURNING *`;
+
+    try {
+      const resultSet = await this.connection.query(queryString);
+
+      const updatedRecord = resultSet.rows[0];
+      return updatedRecord;
+    } catch (err) {
+      debug('ERROR--', err.stack);
+      return err.stack;
     }
+  }
 
-    // update the allRecords property of the Entity to reflect the current state
-    this.allRecords = remainingRecords;
-    return true;
+  /**
+   * @param {*} id - the id of the record
+   * @returns {Boolean} - success or failure boolean flag
+   */
+  async delete(id) {
+    const queryString = `DELETE FROM ${this.schema.tableName} WHERE id = ${id}`;
+
+    try {
+      const result = await this.connection.query(queryString);
+
+      if (result.rowCount === 1) {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      debug('ERROR--', err.stack);
+      return err.stack;
+    }
   }
 }
 
