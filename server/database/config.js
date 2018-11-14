@@ -20,7 +20,7 @@ let pool;
  * using the heroku database in "production" environment required
  * setting the ssl property to true for the connection to succeed
  */
-if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV === 'production' || process.env.MODE === 'online') {
   pool = new Pool({
     connectionString: DATABASE_URL,
     ssl: true,
