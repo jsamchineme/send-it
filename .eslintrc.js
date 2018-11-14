@@ -6,6 +6,7 @@ module.exports = {
     "import/named": 0,
 		"no-restricted-syntax": 0,
 		"no-param-reassign": 0,
+		"no-loop-func": 0,
 		"operator-assignment": 0,
 		"curly": ["error", "multi-line"],
     "valid-jsdoc": ["error", {
