@@ -16,7 +16,11 @@ export const DATABASE_URL = databaseConfig[process.env.NODE_ENV];
 debug(`ENVIRONMENT:: "${process.env.NODE_ENV}"`);
 
 let pool;
-if (process.env.NODE_ENV === 'production') {
+/**
+ * using the heroku database in "production" environment required
+ * setting the ssl property to true for the connection to succeed
+ */
+if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
   pool = new Pool({
     connectionString: DATABASE_URL,
     ssl: true,
