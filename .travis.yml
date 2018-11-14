@@ -13,7 +13,6 @@ env:
   - NODE_ENV=test
   - MODE=online
   - TEST_DATABASE_URL=postgres://fjwmupwoecntsv:3f7ef3d35ed2c13036f7eacd0a9cf10c16c60b08ecbbccc9981802b510f45f33@ec2-54-235-193-34.compute-1.amazonaws.com:5432/d7sgj6q1ofrn5f
-  - DEBUG=database
 before_script:
   - npm install
   - npm install mocha-lcov-reporter --save-dev

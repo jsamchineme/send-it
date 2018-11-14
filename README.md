@@ -47,6 +47,8 @@ The ui templates are currently hosted on gh-pages
 ### Installation
 - run npm install
 - You can test routes with POSTMAN
+- Here are collections to test available end points on POSTMAN
+https://www.pivotaltracker.com/file_attachments/93249563/download?inline=true
 - run `npm run start` to start the server
 - You can also run `npm run start:dev` to start the server in development mode 
 - run `npm run test` to test the api
@@ -58,11 +60,11 @@ The ui templates are currently hosted on gh-pages
 
 <tr><td>GET</td> <td>api/v1/parcel</td> <td> Fetch all parcel delivery orders</td></tr>
 
-<tr><td>GET</td> <td>api/v1/parcel/:parcelId</td> <td> Fetch a specific parcel delivery order</td></tr>
+<tr><td>GET</td> <td>api/v1/parcel/:id</td> <td> Fetch a specific parcel delivery order</td></tr>
 
-<tr><td>GET</td> <td>api/v1/users/:userId/parcels</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
+<tr><td>GET</td> <td>api/v1/users/:id/parcels</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
 
-<tr><td>DELETE</td> <td>api/v1/parcel/:parcelId</td> <td> Cancel the specific parcel delivery order</td></tr> 
+<tr><td>PUT</td> <td>api/v1/parcel/:id/cancel</td> <td> Cancel the specific parcel delivery order</td></tr> 
 
 <tr><td>POST</td> <td>api/v1/parcel</td> <td> Create a parcel delivery order </td></tr>
 
