@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
+import Response from '../utils/Response';
 
 const User = new UserModel();
 
@@ -21,12 +22,11 @@ class AuthController {
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
     newUserData.password = hashedPassword;
+    newUserData.userType = 'client';
+
     const newUser = await User.create(newUserData);
 
-    return res.status(200).json({
-      message: 'success',
-      data: newUser,
-    });
+    return Response.success(res, newUser);
   }
 
   /**
@@ -44,28 +44,24 @@ class AuthController {
     }
 
     if (!foundCredentials) {
-      return res.status(401).send({
-        status: 'Unauthorised',
-        message: 'Provide valid credentials',
-      });
+      return Response.wrongCredentials(res);
     }
 
     const payload = {
+      id: user.id,
       email: user.email,
-      userId: user.id,
+      userType: user.userType,
     };
     // generate token and make it valid for 1 hour
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 * 1 });
     req.token = token;
 
-    return res.status(200).send({
-      message: 'success',
-      data: {
-        id: user.id,
-        email: user.email,
-      },
+    const data = {
+      data: payload,
       token,
-    });
+    };
+
+    return Response.success(res, data);
   }
 }
 

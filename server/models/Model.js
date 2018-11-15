@@ -41,6 +41,30 @@ class Model {
   }
 
   /**
+   * @returns {Array} - all the records available for an entity
+   */
+  async getOne() {
+    const constraintsExist = Object.keys(this.whereConstraints).length > 0;
+
+    let queryString;
+    if (constraintsExist) {
+      const whereString = this.getWhereString();
+      queryString = `SELECT * FROM ${this.schema.tableName} WHERE ${whereString} LIMIT 1`;
+    } else {
+      queryString = `SELECT * FROM ${this.schema.tableName} LIMIT 1`;
+    }
+    try {
+      const resultSet = await this.connection.query(queryString);
+
+      // reset the constraints for other queries
+      this.resetConstraints();
+      return resultSet.rows[0];
+    } catch (err) {
+      return err.stack;
+    }
+  }
+
+  /**
    * prepare the whereString
    * @returns {String} - the where String eg "field1" = "value1" AND "field2" = "value2";
    */
