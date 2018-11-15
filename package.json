@@ -4,12 +4,12 @@
   "description": "SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.",
   "scripts": {
     "start": "npm run db:migrate:reset && npm run db:seed && babel-node server/index.js",
-    "start:dev": "set DEBUG=database_&& npm run db:migrate:reset && npm run db:seed && nodemon --exec babel-node server",
+    "start:dev": "set DEBUG=database&& npm run db:migrate:reset && npm run db:seed && nodemon --exec babel-node server",
     "test": "set NODE_ENV=test&& npm run db:migrate:reset && npm run db:seed && nyc mocha --timeout 300000 --exit server/specs",
     "test:dev": "set NODE_ENV=test&& nyc mocha --timeout 300000 --exit server/specs",
-    "db:migrate": "set DEBUG=database_&& babel-node server/migrations/dbMigrate.js",
-    "db:migrate:reset": "set DEBUG=database_&& babel-node server/migrations/dbMigrateReset.js",
-    "db:seed": "set DEBUG=database_&& babel-node server/seeders/Seeder.js",
+    "db:migrate": "babel-node server/migrations/dbMigrate.js",
+    "db:migrate:reset": "babel-node server/migrations/dbMigrateReset.js",
+    "db:seed": "babel-node server/seeders/Seeder.js",
     "db:prepare": "npm run db:migrate:reset && npm run db:seed",
     "lint": "eslint --fix server",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
