@@ -31,4 +31,12 @@ parcelRoutes.put(
   ParcelController.changeDestination,
 );
 
+parcelRoutes.put(
+  '/:parcelId/presentLocation',
+  JWT.authenticate,
+  Roles.isAdmin,
+  ParcelValidator.validateChangePresentLocation,
+  ParcelController.changeDestination,
+);
+
 export default parcelRoutes;

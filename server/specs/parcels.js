@@ -220,4 +220,28 @@ describe('Test case for the "parcel" resource endpoints', () => {
         });
     });
   });
+  describe('Change parcel present location', () => {
+    it('should change parcel status', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/presentLocation`)
+        .set('x-access-token', adminToken)
+        .send({ presentLocation: 'new location' })
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.presentLocation).to.equal('new location');
+          done();
+        });
+    });
+    it('should return unauthorised when non admin user attempts access', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/presentLocation`)
+        .set('x-access-token', authToken)
+        .send({ presentLocation: 'new location' })
+        .expect(401)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unauthorised');
+          expect(res.body.message).to.equal('You lack privileges to access resource');
+          done();
+        });
+    });
+  });
 });
