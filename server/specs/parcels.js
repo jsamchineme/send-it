@@ -7,7 +7,7 @@ const request = supertest(app);
 
 describe('Test case for the "parcel" resource endpoints', () => {
   let authToken = '';
-  // let adminToken = '';
+  let adminToken = '';
   let authToken2 = '';
   let parcel = {};
   const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphZGVuQGV4YW1wbGUuaW8iLCJ1c2VySWQiOjMsImlhdCI6MTU0MjIwNjYxOCwiZXhwIjoxNTQyMjEwMjE4fQ.rwoe1fad6KrQl7ewUL1QtT5YYkKaNsi5M1n70gjdy8k';
@@ -31,19 +31,18 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .expect(200)
       .end((err, res) => {
         authToken2 = res.body.data.token;
-        done();
       });
     // prepare admin authToken
-    // request.post('/api/v1/auth/login')
-    //   .send({
-    //     email: 'samcotech@example.io',
-    //     password: 'secret',
-    //   })
-    //   .expect(200)
-    //   .end((err, res) => {
-    //     adminToken = res.body.data.token;
-    //     done();
-    //   });
+    request.post('/api/v1/auth/login')
+      .send({
+        email: 'samcotech@example.io',
+        password: 'secret',
+      })
+      .expect(200)
+      .end((err, res) => {
+        adminToken = res.body.data.token;
+        done();
+      });
   });
 
   it('should get all parcels', (done) => {
@@ -65,7 +64,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should create new parcel delivery parcel', (done) => {
+  it('should create new parcel delivery order', (done) => {
     const parcelOrderData = {
       description: 'dummy value',
       deliveryLocation: 'dummy value',
@@ -74,12 +73,12 @@ describe('Test case for the "parcel" resource endpoints', () => {
       presentMapPointer: 'dummy value',
     };
     request.post('/api/v1/parcels')
+      // .set('Content-Type', 'application/json')
       .set('x-access-token', authToken)
       .send(parcelOrderData)
       .expect(200)
       .end((err, res) => {
         parcel = res.body.data;
-        expect(res.body.data.id !== undefined).to.equal(true);
         expect(res.body.status).to.equal('success');
         done();
       });
@@ -90,7 +89,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .set('x-access-token', authToken)
       .expect(200)
       .end((err, res) => {
-        expect(res.body.data.id !== undefined).to.equal(true);
         expect(res.body.status).to.equal('success');
         done();
       });
@@ -190,6 +188,30 @@ describe('Test case for the "parcel" resource endpoints', () => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
         .set('x-access-token', authToken2)
         .send({ deliveryLocation: 'new location' })
+        .expect(401)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unauthorised');
+          expect(res.body.message).to.equal('You lack privileges to access resource');
+          done();
+        });
+    });
+  });
+  describe('Change parcel status', () => {
+    it('should change parcel status', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/status`)
+        .set('x-access-token', adminToken)
+        .send({ status: 'delivered' })
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.status).to.equal('delivered');
+          done();
+        });
+    });
+    it('should return unauthorised when non admin user attempts access', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/status`)
+        .set('x-access-token', authToken)
+        .send({ status: 'delivered' })
         .expect(401)
         .end((err, res) => {
           expect(res.body.status).to.equal('Unauthorised');

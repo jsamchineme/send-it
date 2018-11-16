@@ -1,5 +1,9 @@
 import joi from 'joi';
-import { parcelCreateSchema, changeDestinationSchema } from '../../requestSchemas/parcel';
+import {
+  parcelCreateSchema,
+  changeDestinationSchema,
+  changeStatusSchema,
+} from '../../requestSchemas/parcel';
 import ResponseSchema from '../../utils/Response';
 
 /**
@@ -27,6 +31,18 @@ class ParcelValidator {
    */
   static validateChangeDestination(req, res, next) {
     joi.validate(req.body, changeDestinationSchema)
+      .then(() => next())
+      .catch(err => ResponseSchema.unprocessable(res, err));
+  }
+
+  /**
+   * @param {Object} req - received request
+   * @param {Object} res - response object
+   * @param {Object} next - next middleware
+   * @return {Object} - response
+   */
+  static validateChangeStatus(req, res, next) {
+    joi.validate(req.body, changeStatusSchema)
       .then(() => next())
       .catch(err => ResponseSchema.unprocessable(res, err));
   }
