@@ -23,8 +23,13 @@ const changeStatusSchema = {
   status,
 };
 
+const changePresentLocationSchema = {
+  presentLocation,
+};
+
 export {
   parcelCreateSchema,
   changeDestinationSchema,
   changeStatusSchema,
+  changePresentLocationSchema,
 };
