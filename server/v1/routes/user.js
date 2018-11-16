@@ -8,6 +8,7 @@ const userRoutes = Router();
 userRoutes.get(
   '/:userId/parcels',
   JWT.authenticate,
+  Roles.isRightUser,
   ParcelController.listForUser,
 );
 
