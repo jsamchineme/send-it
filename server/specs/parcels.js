@@ -7,6 +7,7 @@ const request = supertest(app);
 
 describe('Test case for the "parcel" resource endpoints', () => {
   let authToken = '';
+  let authUser = {};
   let adminToken = '';
   let authToken2 = '';
   let parcel = {};
@@ -21,6 +22,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .expect(200)
       .end((err, res) => {
         authToken = res.body.data.token;
+        authUser = res.body.data.data;
       });
     // prepare client2 authToken for accessing unowned resource
     request.post('/api/v1/auth/login')
@@ -161,17 +163,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should return records for seleted user', (done) => {
-    request.get('/api/v1/users/2/parcels')
-      .set('x-access-token', authToken)
-      .expect(200)
-      .end((err, res) => {
-        expect(res.body.data.length > 0).to.equal(true);
-        expect(res.body.status).to.equal('success');
-        done();
-      });
-  });
-
   describe('Change parcel destinations', () => {
     it('should change parcel destination', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
@@ -240,6 +231,26 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .end((err, res) => {
           expect(res.body.status).to.equal('Unauthorised');
           expect(res.body.message).to.equal('You lack privileges to access resource');
+          done();
+        });
+    });
+  });
+  describe('User can view all parcel delivery orders', () => {
+    it('should return user parcels', (done) => {
+      request.get(`/api/v1/users/${authUser.id}/parcels`)
+        .set('x-access-token', authToken)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('success');
+          done();
+        });
+    });
+    it('should return unauthorised when trying to access another users parcel', (done) => {
+      request.get(`/api/v1/users/${authUser.id}/parcels`)
+        .set('x-access-token', authToken2)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unauthorised');
           done();
         });
     });

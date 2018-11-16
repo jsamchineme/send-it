@@ -42,6 +42,25 @@ class Roles {
       return Response.unauthorised(res);
     }
   }
+
+  /**
+   * @static
+   * @param {Object} req - request received
+   * @param {Object} res - response retunred
+   * @param {Object} next - next middleware
+   * @return {Object} - response with error messages
+   */
+  static async isRightUser(req, res, next) {
+    const user = req.decoded;
+    const { userId } = req.params;
+    const isRightUser = user.id === Number(userId);
+
+    if (isRightUser) {
+      next();
+    } else {
+      return Response.unauthorised(res);
+    }
+  }
 }
 
 export default Roles;
