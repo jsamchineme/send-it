@@ -1,14 +1,16 @@
-#PR Title
-The description should contain the following headings and the related content:
-
 #### What does this PR do?
-- The value the PR adds to the project
+- Add the _change parcel order destination_ feature 
 #### Description of Task to be completed?
-- The sub tasks done on the branch
+- Create the middlewares to enforce input validations and permission checks
+- Create controller methods to implement feature
+- Write tests cases for the end point
 #### How should this be manually tested?
-- Steps anyone can take to check feature implementation
+- pull branch and test on Postman PUT /parcels/<id>/destination
 #### Any background context you want to provide?
+- running the test above using request body of _{ deliveryLocation: 'new location' }_ effects the update
 #### What are the relevant pivotal tracker stories?
-- Link to pivotal tracker
+- https://www.pivotaltracker.com/story/show/161938276
 #### Screenshots (if appropriate)
+None
 #### Questions:`
+None

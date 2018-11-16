@@ -3,21 +3,28 @@ import Joi from 'joi';
 const deliveryLocation = Joi.string().min(1).required();
 const presentLocation = Joi.string().min(1).required();
 const pickupLocation = Joi.string().min(1).required();
-
+const status = Joi.string().min(1).required();
+const description = Joi.string().min(1);
+const presentMapPointer = Joi.string().min(1);
 
 const parcelCreateSchema = {
   deliveryLocation,
   presentLocation,
   pickupLocation,
+  description,
+  presentMapPointer,
 };
 
 const changeDestinationSchema = {
   deliveryLocation,
 };
 
-const schemas = {
-  parcelCreateSchema,
-  changeDestinationSchema,
+const changeStatusSchema = {
+  status,
 };
 
-export default schemas;
+export {
+  parcelCreateSchema,
+  changeDestinationSchema,
+  changeStatusSchema,
+};
