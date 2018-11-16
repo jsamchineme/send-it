@@ -17,7 +17,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.data.id !== undefined).to.equal(true);
-        expect(res.body.message).to.equal('success');
+        expect(res.body.status).to.equal('success');
         done();
       });
   });
@@ -30,8 +30,8 @@ describe('Test case for the "auth" resource endpoints', () => {
       .send(newUserData)
       .expect(200)
       .end((err, res) => {
-        expect(res.body.data.id !== undefined).to.equal(true);
-        expect(res.body.message).to.equal('success');
+        expect(res.body.data.data.id !== undefined).to.equal(true);
+        expect(res.body.status).to.equal('success');
         done();
       });
   });
@@ -42,9 +42,10 @@ describe('Test case for the "auth" resource endpoints', () => {
     };
     request.post('/api/v1/auth/login')
       .send(newUserData)
-      .expect(401)
+      .expect(400)
       .end((err, res) => {
-        expect(res.body.message).to.equal('Unauthorised');
+        expect(res.body.status).to.equal('Wrong Credentials');
+        expect(res.body.message).to.equal('Provide correct login credentials');
         done();
       });
   });

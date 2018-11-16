@@ -6,6 +6,7 @@ const userSchema = {
       name: 'id', autoIncrement: true, primaryKey: true,
     },
     { name: 'username', type: 'string', length: 100 },
+    { name: 'userType', type: 'string', length: 20 },
     { name: 'email', type: 'string', length: 100 },
     { name: 'password', type: 'string', length: 100 },
     { name: 'createdAt', type: 'timestamp', default: 'currentTime' },
