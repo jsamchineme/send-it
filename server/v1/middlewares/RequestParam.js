@@ -15,6 +15,7 @@ class RequestParam {
    */
   static validateParams(req, res, next) {
     for (const param in req.params) {
+      /* istanbul ignore else  */
       if (param) {
         const paramHasId = param.search(/id/i) !== -1;
         const paramValue = req.params[param];

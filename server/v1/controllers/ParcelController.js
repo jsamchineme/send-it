@@ -28,7 +28,7 @@ class ParcelController {
   static async listForUser(req, res) {
     let { userId } = req.params;
     userId = Number(userId);
-    const allRecords = await Parcel.where({ userId }).getAll();
+    const allRecords = await Parcel.where({ userId, status: 'pending_delivery' }).getAll();
 
     return Response.success(res, allRecords);
   }

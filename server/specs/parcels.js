@@ -264,6 +264,16 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
+    it('should return notFound if parcel is not found', (done) => {
+      request.put('/api/v1/parcels/0/status')
+        .set('x-access-token', adminToken)
+        .send({ status: 'delivered' })
+        .expect(404)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('NotFound');
+          done();
+        });
+    });
     it('should return unprocessable entity request has missing required input', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/status`)
         .set('x-access-token', adminToken)

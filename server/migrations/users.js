@@ -9,6 +9,7 @@ const userSchema = {
     { name: 'userType', type: 'string', length: 20 },
     { name: 'email', type: 'string', length: 100 },
     { name: 'password', type: 'string', length: 100 },
+    { name: 'active', type: 'integer' },
     { name: 'createdAt', type: 'timestamp', default: 'currentTime' },
     { name: 'updatedAt', type: 'timestamp', default: 'currentTime' },
   ],

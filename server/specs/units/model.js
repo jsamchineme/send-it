@@ -1,85 +1,141 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import Model from '../../models/Model';
-import userSchema from '../../migrations/users';
+import ParcelModel from '../../models/Parcel';
+import UserModel from '../../models/User';
 
 const modelTests = () => {
+  const User = new UserModel();
+  const Parcel = new ParcelModel();
   describe('Test Case for the Model Class', () => {
-    const model = new Model(userSchema);
     it('should Instantiate Model', () => {
-      expect(model.schema.tableName).to.not.equal(undefined);
+      expect(User.schema.tableName !== undefined).to.equal(true);
     });
     describe('Model.findById()', () => {
       it('should return a record when valid id is supplied', async () => {
-        const record = await model.findById(1);
-        expect(record.id).to.equal(1);
-      });
-      it('should return undefined when no id is supplied', async () => {
-        const record = await model.findById();
-        expect(record).to.equal(undefined);
-      });
-    });
-    describe('Model.getAll()', async () => {
-      const allReturnedRecords = await model.getAll();
-      it('should return all records', () => {
-        expect(allReturnedRecords.length > 0).to.equal(true);
-      });
-      it('should return selected records when where constraints are set', async () => {
-        const records = await model.where({ state: 'lagos' }).getAll();
-        expect(records.length > 0).to.equal(true);
-      });
-    });
-    describe('Model.create()', () => {
-      it('should create records when data is supplied', async () => {
         const newRecordData = {
           username: 'johndoe',
           email: 'johndoe@example.io',
           password: 'asdadsds',
         };
-
-        const result = await model.create(newRecordData);
-        expect(result.username).to.equal('johndoe');
+        // create a record first
+        const result = await User.create(newRecordData);
+        // try to find the record
+        const record = await User.findById(result.id);
+        expect(record.id).to.equal(result.id);
       });
     });
-    describe('Model.delete()', () => {
-      it('should delete records when data is supplied', async () => {
-        const result = await model.delete(1);
-        expect(result).to.equal(true);
+    describe('Model.getAll()', async () => {
+      const allReturnedRecords = await User.getAll();
+      it('should return all records', () => {
+        expect(allReturnedRecords.length > 0).to.equal(true);
       });
-      it('should return false when no parameter is supplied', async () => {
-        const result = await model.delete();
-        expect(result).to.equal(false);
+      it('should return selected records when where constraints are set', async () => {
+        const record = await User.create({
+          username: 'johndoe',
+          email: 'johndoe@example.io',
+          password: 'asdadsds',
+        });
+        const records = await User.where({ username: record.email, email: record.email }).getAll();
+        expect(records.length > 0).to.equal(true);
       });
-      it('should return false when no item is found to be deleted', async () => {
-        const result = await model.delete(0);
-        expect(result).to.equal(false);
+    });
+    describe('Model.getOne()', async () => {
+      const allReturnedRecords = await User.getOne();
+      it('should return all records', () => {
+        expect(allReturnedRecords.length > 0).to.equal(true);
+      });
+      it('should return selected records when where constraints are set', async () => {
+        const record = await User.create({
+          username: 'johndoe',
+          email: 'johndoe@example.io',
+          password: 'asdadsds',
+        });
+        const records = await User.where({ username: record.email, email: record.email }).getOne();
+        expect(records.length === 1).to.equal(true);
+      });
+    });
+    describe('Model.create()', () => {
+      it('should create records when data is supplied', async () => {
+        const user = await User.create({
+          username: 'johndoe',
+          email: 'johndoe@example.io',
+          password: 'asdadsds',
+          active: 0,
+        });
+        expect(user.id > 0).to.equal(true);
       });
     });
     describe('Model.where()', () => {
       it('should set the where constraints', () => {
-        model.where({ name: 'Attribute Name' });
-        const constraintAttributes = Object.keys(model.whereConstraints);
-        expect(constraintAttributes.length).to.equal(1);
+        User.where({ username: 'Attribute Name' });
+        const constraintAttributes = Object.keys(User.whereConstraints);
+        expect(constraintAttributes.length > 0).to.equal(true);
       });
     });
     describe('Model.resetConstraints()', () => {
       it('should reset the where constraints', () => {
-        model.where({ name: 'Attribute Name' }).resetConstraints();
-        const constraintAttributes = Object.keys(model.whereConstraints);
+        User.where({ username: 'Attribute Name' }).resetConstraints();
+        const constraintAttributes = Object.keys(User.whereConstraints);
         expect(constraintAttributes.length).to.equal(0);
       });
     });
     describe('Model.findByAttribute()', () => {
       it('should return a record when valid attribute is supplied', async () => {
-        const result = await model.findByAttribute('id', 2);
+        const result = await User.findByAttribute('id', 2);
         expect(result.id).to.equal(2);
       });
-      it('should return undefined when no attribute is supplied', async () => {
-        const result = await model.findByAttribute();
-        expect(result).to.equal(undefined);
+    });
+    describe('Model.getWhereString()', () => {
+      it('should get a whereString after preparing', () => {
+        Parcel.resetConstraints();
+        Parcel.where({ userId: 1, status: 'pending_delivery' });
+        const whereString = Parcel.getWhereString();
+        expect(whereString).to.equal('"userId" = 1 AND "status" = \'pending_delivery\'');
+      });
+    });
+    describe('Model.prepareUpdateSet()', () => {
+      it('should prepare update SET string', async () => {
+        let data = { status: 'pending_delivery' };
+        let preparedUpdateSet = Parcel.prepareUpdateSet(data);
+        expect(preparedUpdateSet).to.equal('SET "status" = \'pending_delivery\'');
+        data = { deliveryLocation: 'location', status: 'pending_delivery' };
+        preparedUpdateSet = Parcel.prepareUpdateSet(data);
+        expect(preparedUpdateSet).to.equal('SET "deliveryLocation" = \'location\', "status" = \'pending_delivery\'');
+      });
+    });
+    describe('Model.update()', () => {
+      it('should return a record when valid attribute is supplied', async () => {
+        const record = await User.create({
+          username: 'johndoe',
+          email: 'johndoe@example.io',
+          password: 'asdadsds',
+        });
+        const data = {
+          email: 'johndoes@example.io',
+          active: 1,
+        };
+        const result = await User.update(record.id, data);
+        expect(result.id).to.equal(record.id);
+      });
+    });
+    describe('Model.delete()', async () => {
+      const record = await User.create({
+        username: 'johndoe',
+        email: 'johndoe@example.io',
+        password: 'asdadsds',
+      });
+      it('should delete records when data is supplied', async () => {
+        const result = await User.delete(record.id);
+        expect(result).to.equal(true);
+      });
+      it('should return false when no item is found to be deleted', async () => {
+        const result = await User.delete(record.id);
+        expect(result).to.equal(false);
       });
     });
   });
 };
+
+modelTests();
 
 export default modelTests;
