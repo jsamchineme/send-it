@@ -34,6 +34,11 @@ class Roles {
   static async isParcelOwner(req, res, next) {
     const user = req.decoded;
     const { parcelId } = req.params;
+    const parcel = await Parcel.findById(parcelId);
+    if (!parcel) {
+      return Response.notFound(res);
+    }
+
     const foundParcel = await Parcel.where({ userId: user.id, id: parcelId }).getOne();
 
     if (foundParcel) {

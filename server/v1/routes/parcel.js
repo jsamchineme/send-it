@@ -3,20 +3,28 @@ import ParcelController from '../controllers/ParcelController';
 import JWT from '../middlewares/JWT';
 import Roles from '../middlewares/Roles';
 import ParcelValidator from '../middlewares/inputValidation/parcels';
-
+import RequestParam from '../middlewares/RequestParam';
 
 const parcelRoutes = Router();
 
-parcelRoutes.get('/', JWT.authenticate, ParcelController.getAll);
+parcelRoutes.get('/', JWT.authenticate, Roles.isAdmin, ParcelController.getAll);
 
 parcelRoutes.post('/', JWT.authenticate, ParcelValidator.validateCreate, ParcelController.create);
 
-parcelRoutes.get('/:parcelId', JWT.authenticate, ParcelController.getOne);
-parcelRoutes.put('/:parcelId', JWT.authenticate, ParcelController.update);
-parcelRoutes.put('/:parcelId/cancel', JWT.authenticate, ParcelController.cancel);
+parcelRoutes.get('/:parcelId', RequestParam.validateParams, JWT.authenticate, ParcelController.getOne);
+
+parcelRoutes.put('/:parcelId', RequestParam.validateParams, JWT.authenticate, ParcelController.update);
+
+parcelRoutes.put(
+  '/:parcelId/cancel',
+  RequestParam.validateParams,
+  JWT.authenticate,
+  ParcelController.cancel,
+);
 
 parcelRoutes.put(
   '/:parcelId/status',
+  RequestParam.validateParams,
   JWT.authenticate,
   Roles.isAdmin,
   ParcelValidator.validateChangeStatus,
@@ -25,6 +33,7 @@ parcelRoutes.put(
 
 parcelRoutes.put(
   '/:parcelId/destination',
+  RequestParam.validateParams,
   JWT.authenticate,
   Roles.isParcelOwner,
   ParcelValidator.validateChangeDestination,
@@ -33,6 +42,7 @@ parcelRoutes.put(
 
 parcelRoutes.put(
   '/:parcelId/presentLocation',
+  RequestParam.validateParams,
   JWT.authenticate,
   Roles.isAdmin,
   ParcelValidator.validateChangePresentLocation,

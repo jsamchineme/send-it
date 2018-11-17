@@ -28,7 +28,7 @@ class ParcelController {
   static async listForUser(req, res) {
     let { userId } = req.params;
     userId = Number(userId);
-    const allRecords = await Parcel.where({ userId }).getAll();
+    const allRecords = await Parcel.where({ userId, status: 'pending_delivery' }).getAll();
 
     return Response.success(res, allRecords);
   }
@@ -116,11 +116,6 @@ class ParcelController {
     let { parcelId } = req.params;
     const updateData = req.body;
     parcelId = Number(parcelId);
-    const parcel = await Parcel.findById(parcelId);
-
-    if (!parcel) {
-      return Response.notFound(res);
-    }
 
     const updatedParcel = await Parcel.update(parcelId, updateData);
 

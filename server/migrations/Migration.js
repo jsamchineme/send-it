@@ -93,7 +93,7 @@ export default class Migration {
     if (attribute.references !== undefined) {
       fieldRow += ` REFERENCES ${attribute.on}(${attribute.references}) `;
     }
-    if (attribute.nullable !== undefined) {
+    if (attribute.notNull === true) {
       fieldRow += ' NOT NULL ';
     }
     if (attribute.default === 'currentTime') {

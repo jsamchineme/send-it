@@ -2,11 +2,11 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../app';
-// import modelTests from './units/model';
+import modelTests from './units/model';
 
 const request = supertest(app);
 
-// modelTests();
+modelTests();
 
 describe('Test cases for the API landing routes', () => {
   it('should load the root route', (done) => {

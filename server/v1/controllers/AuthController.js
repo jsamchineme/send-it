@@ -39,9 +39,12 @@ class AuthController {
 
     const user = await User.findByAttribute('email', email);
     let foundCredentials = false;
-    if (user) {
-      foundCredentials = bcrypt.compareSync(password, user.password);
+
+    if (!user) {
+      return Response.wrongCredentials(res);
     }
+
+    foundCredentials = bcrypt.compareSync(password, user.password);
 
     if (!foundCredentials) {
       return Response.wrongCredentials(res);
@@ -56,10 +59,9 @@ class AuthController {
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 * 1 });
     req.token = token;
 
-    const data = {
-      data: payload,
-      token,
-    };
+
+    const data = payload;
+    data.token = token;
 
     return Response.success(res, data);
   }

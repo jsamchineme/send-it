@@ -76,7 +76,7 @@ class Model {
         const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
         if (foundAttribute) {
           let value;
-          if (foundAttribute.type !== 'integer') {
+          if (foundAttribute.type !== 'integer' && foundAttribute.autoIncrement === undefined) {
             value = `'${this.whereConstraints[attribute]}'`;
           } else {
             value = this.whereConstraints[attribute];
@@ -93,7 +93,6 @@ class Model {
         count += 1;
       }
     }
-
 
     return whereString;
   }
@@ -180,9 +179,9 @@ class Model {
     const fieldList = [];
     const fieldValues = [];
     for (let field in data) {
-      if (field) {
+      if (this.schema.attributes.find(item => item.name === field)) {
         const foundAttribute = this.schema.attributes.find(item => item.name === field);
-        if (foundAttribute) {
+        if (foundAttribute.autoIncrement === undefined) {
           let value;
           if (foundAttribute.type !== 'integer') {
             value = `'${data[field]}'`;
@@ -225,6 +224,7 @@ class Model {
         }
       }
     }
+    // console.log(`--------${preparedSetString}--------`);
     return preparedSetString;
   }
 
