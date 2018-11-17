@@ -116,11 +116,6 @@ class ParcelController {
     let { parcelId } = req.params;
     const updateData = req.body;
     parcelId = Number(parcelId);
-    const parcel = await Parcel.findById(parcelId);
-
-    if (!parcel) {
-      return Response.notFound(res);
-    }
 
     const updatedParcel = await Parcel.update(parcelId, updateData);
 

@@ -22,7 +22,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .expect(200)
       .end((err, res) => {
         authToken = res.body.data.token;
-        authUser = res.body.data.data;
+        authUser = res.body.data;
       });
     // prepare client2 authToken for accessing unowned resource
     request.post('/api/v1/auth/login')
@@ -47,13 +47,22 @@ describe('Test case for the "parcel" resource endpoints', () => {
       });
   });
 
-  it('should get all parcels', (done) => {
+  it('should get all parcels IF ADMIN', (done) => {
     request.get('/api/v1/parcels')
-      .set('x-access-token', authToken)
+      .set('x-access-token', adminToken)
       .expect(200)
       .end((err, res) => {
         expect(res.body.data.length > 0).to.equal(true);
         expect(res.body.status).to.equal('success');
+        done();
+      });
+  });
+  it('should fail to return all parcels IF NOT ADMIN', (done) => {
+    request.get('/api/v1/parcels')
+      .set('x-access-token', authToken)
+      .expect(401)
+      .end((err, res) => {
+        expect(res.body.status).to.equal('Unauthorised');
         done();
       });
   });
@@ -66,24 +75,38 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should create new parcel delivery order', (done) => {
-    const parcelOrderData = {
-      description: 'dummy value',
-      deliveryLocation: 'dummy value',
-      presentLocation: 'dummy value',
-      pickupLocation: 'dummy value',
-      presentMapPointer: 'dummy value',
-    };
-    request.post('/api/v1/parcels')
-      // .set('Content-Type', 'application/json')
-      .set('x-access-token', authToken)
-      .send(parcelOrderData)
-      .expect(200)
-      .end((err, res) => {
-        parcel = res.body.data;
-        expect(res.body.status).to.equal('success');
-        done();
-      });
+  describe('Create a new parcel order', () => {
+    it('should create new parcel delivery order', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        deliveryLocation: 'dummy value',
+        presentLocation: 'dummy value',
+        pickupLocation: 'dummy value',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          done();
+        });
+    });
+    it('should return unprocessable entity request has missing required input', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(422)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unprocessable Entity');
+          done();
+        });
+    });
   });
   it('should get a specific parcel delivery parcel', (done) => {
     const parcelId = 1;
@@ -175,6 +198,37 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
+    it('should return unprocessable entity request has missing required input', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/destination`)
+        .set('x-access-token', authToken)
+        .send({})
+        .expect(422)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unprocessable Entity');
+          done();
+        });
+    });
+    it('should return not found when invalid parcel is sent', (done) => {
+      request.put('/api/v1/parcels/0/destination')
+        .set('x-access-token', authToken)
+        .send({ deliveryLocation: 'new location' })
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('NotFound');
+          done();
+        });
+    });
+    it('should return invalid param when parcel id not a numeric', (done) => {
+      request.put('/api/v1/parcels/adsd/destination')
+        .set('x-access-token', authToken)
+        .send({ deliveryLocation: 'new location' })
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Wrong Params');
+          expect(res.body.message).to.equal('One or more request parameters have invalid values');
+          done();
+        });
+    });
     it('should return unauthorised when wrong user attempts access', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
         .set('x-access-token', authToken2)
@@ -210,6 +264,16 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
+    it('should return unprocessable entity request has missing required input', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/status`)
+        .set('x-access-token', adminToken)
+        .send({})
+        .expect(422)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unprocessable Entity');
+          done();
+        });
+    });
   });
   describe('Change parcel present location', () => {
     it('should change parcel status', (done) => {
@@ -220,6 +284,16 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .end((err, res) => {
           expect(res.body.status).to.equal('success');
           expect(res.body.data.presentLocation).to.equal('new location');
+          done();
+        });
+    });
+    it('should return unprocessable entity request has missing required input', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/presentLocation`)
+        .set('x-access-token', adminToken)
+        .send({})
+        .expect(422)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unprocessable Entity');
           done();
         });
     });

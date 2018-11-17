@@ -21,6 +21,18 @@ describe('Test case for the "auth" resource endpoints', () => {
         done();
       });
   });
+  it('should return error message on missing SIGNUP input', (done) => {
+    const newUserData = {
+      email: 'jaden@example.io',
+    };
+    request.post('/api/v1/auth/signup')
+      .send(newUserData)
+      .expect(422)
+      .end((err, res) => {
+        expect(res.body.status).to.equal('Unprocessable Entity');
+        done();
+      });
+  });
   it('should process login', (done) => {
     const newUserData = {
       email: 'jaden@example.io',
@@ -30,15 +42,38 @@ describe('Test case for the "auth" resource endpoints', () => {
       .send(newUserData)
       .expect(200)
       .end((err, res) => {
-        expect(res.body.data.data.id !== undefined).to.equal(true);
+        expect(res.body.data.id !== undefined).to.equal(true);
         expect(res.body.status).to.equal('success');
         done();
       });
   });
-  it('should return unauthorised when wrong login credentials are supplied', (done) => {
+  it('should return error message on missing LOGIN input', (done) => {
     const newUserData = {
+      email: 'jaden@example.io',
+    };
+    request.post('/api/v1/auth/login')
+      .send(newUserData)
+      .expect(422)
+      .end((err, res) => {
+        expect(res.body.status).to.equal('Unprocessable Entity');
+        done();
+      });
+  });
+  it('should return unauthorised when wrong login credentials are supplied', (done) => {
+    let newUserData = {
       email: 'jaden@example.ioo',
       password: 'secret',
+    };
+    request.post('/api/v1/auth/login')
+      .send(newUserData)
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.status).to.equal('Wrong Credentials');
+        expect(res.body.message).to.equal('Provide correct login credentials');
+      });
+    newUserData = {
+      email: 'jaden@example.io',
+      password: 'sssasas',
     };
     request.post('/api/v1/auth/login')
       .send(newUserData)
