@@ -50,8 +50,11 @@ The ui templates are currently hosted on gh-pages
 ### Installation
 - run npm install
 - You can test routes with POSTMAN
-- Here are collections to test available end points on POSTMAN
-https://www.pivotaltracker.com/file_attachments/93249563/download?inline=true
+- Here is a collection of requests to test available end points on POSTMAN
+https://www.pivotaltracker.com/file_attachments/93331263/download?inline=true
+- The environment can also be loaded with the collection
+https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
+- After loading the `collection` and the `environment`, the POSTMAN `Collection Runner` can be used to run the requests automatically and generate test report
 - run `npm run start` to start the server
 - You can also run `npm run start:dev` to start the server in development mode 
 - run `npm run test` to test the api
