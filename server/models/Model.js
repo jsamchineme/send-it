@@ -23,6 +23,7 @@ class Model {
     const constraintsExist = Object.keys(this.whereConstraints).length > 0;
 
     let queryString;
+    /* istanbul ignore if */
     if (constraintsExist) {
       const whereString = this.getWhereString();
       queryString = `SELECT * FROM ${this.schema.tableName} WHERE ${whereString}`;
@@ -36,6 +37,7 @@ class Model {
       this.resetConstraints();
       return resultSet.rows;
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }
@@ -47,6 +49,7 @@ class Model {
     const constraintsExist = Object.keys(this.whereConstraints).length > 0;
 
     let queryString;
+    /* istanbul ignore if */
     if (constraintsExist) {
       const whereString = this.getWhereString();
       queryString = `SELECT * FROM ${this.schema.tableName} WHERE ${whereString} LIMIT 1`;
@@ -60,6 +63,7 @@ class Model {
       this.resetConstraints();
       return resultSet.rows[0];
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }
@@ -72,8 +76,10 @@ class Model {
     let whereString = '';
     let count = 0;
     for (let attribute in this.whereConstraints) {
+      /* istanbul ignore else */
       if (attribute) {
         const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
+        /* istanbul ignore else */
         if (foundAttribute) {
           let value;
           if (foundAttribute.type !== 'integer' && foundAttribute.autoIncrement === undefined) {
@@ -112,8 +118,10 @@ class Model {
    */
   where(constraints) {
     for (const attribute in constraints) {
+      /* istanbul ignore next */
       if (attribute) {
         const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
+        /* istanbul ignore if */
         if (foundAttribute) {
           this.whereConstraints[attribute] = constraints[attribute];
         }
@@ -133,6 +141,7 @@ class Model {
 
       return resultSet.rows[0];
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }
@@ -149,6 +158,7 @@ class Model {
 
       return resultSet.rows[0];
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }
@@ -167,6 +177,7 @@ class Model {
       const newRecord = resultSet.rows[0];
       return newRecord;
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }
@@ -179,8 +190,10 @@ class Model {
     const fieldList = [];
     const fieldValues = [];
     for (let field in data) {
+      /* istanbul ignore else */
       if (this.schema.attributes.find(item => item.name === field)) {
         const foundAttribute = this.schema.attributes.find(item => item.name === field);
+        /* istanbul ignore else */
         if (foundAttribute.autoIncrement === undefined) {
           let value;
           if (foundAttribute.type !== 'integer') {
@@ -208,8 +221,10 @@ class Model {
   prepareUpdateSet(data) {
     let preparedSetString = 'SET ';
     for (const field in data) {
+      /* istanbul ignore else */
       if (field) {
         const foundAttribute = this.schema.attributes.find(item => item.name === field);
+        /* istanbul ignore else */
         if (foundAttribute) {
           let fieldSetString = '';
           if (preparedSetString !== 'SET ') {
@@ -243,6 +258,7 @@ class Model {
       const updatedRecord = resultSet.rows[0];
       return updatedRecord;
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }
@@ -262,6 +278,7 @@ class Model {
       }
       return false;
     } catch (err) {
+      /* istanbul ignore next */
       return err.stack;
     }
   }

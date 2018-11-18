@@ -94,7 +94,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
-    it('should return unprocessable entity request has missing required input', (done) => {
+    it('should return unprocessable entity when request has missing required input', (done) => {
       const parcelOrderData = {
         description: 'dummy value',
       };
@@ -198,7 +198,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
-    it('should return unprocessable entity request has missing required input', (done) => {
+    it('should return unprocessable entity when request has missing required input', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
         .set('x-access-token', authToken)
         .send({})
@@ -274,7 +274,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
-    it('should return unprocessable entity request has missing required input', (done) => {
+    it('should return unprocessable entity when request has missing required input', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/status`)
         .set('x-access-token', adminToken)
         .send({})
@@ -297,7 +297,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
-    it('should return unprocessable entity request has missing required input', (done) => {
+    it('should return unprocessable entity when request has missing required input', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/presentLocation`)
         .set('x-access-token', adminToken)
         .send({})
