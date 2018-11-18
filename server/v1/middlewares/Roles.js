@@ -60,7 +60,9 @@ class Roles {
     const { userId } = req.params;
     const isRightUser = user.id === Number(userId);
 
-    if (isRightUser) {
+    // this parcel is found for the user
+    // OR authenticated user is an admin
+    if (isRightUser || user.userType === 'admin') {
       next();
     } else {
       return Response.unauthorised(res);

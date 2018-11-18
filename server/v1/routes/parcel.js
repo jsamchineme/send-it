@@ -19,6 +19,7 @@ parcelRoutes.put(
   '/:parcelId/cancel',
   RequestParam.validateParams,
   JWT.authenticate,
+  Roles.isParcelOwner,
   ParcelController.cancel,
 );
 
