@@ -6,7 +6,7 @@ import UserModel from '../../models/User';
 const modelTests = () => {
   const User = new UserModel();
   const Parcel = new ParcelModel();
-  describe('Test Case for the Model Class', () => {
+  describe('Test Cases for the Database Model Class', () => {
     it('should Instantiate Model', () => {
       expect(User.schema.tableName !== undefined).to.equal(true);
     });
@@ -86,21 +86,22 @@ const modelTests = () => {
       });
     });
     describe('Model.getWhereString()', () => {
-      it('should get a whereString after preparing', () => {
+      it('should get a whereString after preparing it', () => {
         Parcel.resetConstraints();
-        Parcel.where({ userId: 1, status: 'pending_delivery' });
+        const data = { userId: 1, status: 'pending_delivery' };
+        Parcel.where(data);
         const whereString = Parcel.getWhereString();
-        expect(whereString).to.equal('"userId" = 1 AND "status" = \'pending_delivery\'');
+        expect(whereString).to.equal(`"userId" = ${data.userId} AND "status" = '${data.status}'`);
       });
     });
     describe('Model.prepareUpdateSet()', () => {
       it('should prepare update SET string', async () => {
         let data = { status: 'pending_delivery' };
         let preparedUpdateSet = Parcel.prepareUpdateSet(data);
-        expect(preparedUpdateSet).to.equal('SET "status" = \'pending_delivery\'');
+        expect(preparedUpdateSet).to.equal(`SET "status" = '${data.status}'`);
         data = { deliveryLocation: 'location', status: 'pending_delivery' };
         preparedUpdateSet = Parcel.prepareUpdateSet(data);
-        expect(preparedUpdateSet).to.equal('SET "deliveryLocation" = \'location\', "status" = \'pending_delivery\'');
+        expect(preparedUpdateSet).to.equal(`SET "deliveryLocation" = '${data.deliveryLocation}', "status" = '${data.status}'`);
       });
     });
     describe('Model.update()', () => {
@@ -118,13 +119,14 @@ const modelTests = () => {
         expect(result.id).to.equal(record.id);
       });
     });
-    describe('Model.delete()', async () => {
-      const record = await User.create({
-        username: 'johndoe',
-        email: 'johndoe@example.io',
-        password: 'asdadsds',
-      });
+    describe('Model.delete()', () => {
+      let record;
       it('should delete records when data is supplied', async () => {
+        record = await User.create({
+          username: 'johndoe',
+          email: 'johndoe@example.io',
+          password: 'asdadsds',
+        });
         const result = await User.delete(record.id);
         expect(result).to.equal(true);
       });
@@ -137,5 +139,3 @@ const modelTests = () => {
 };
 
 modelTests();
-
-export default modelTests;
