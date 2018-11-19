@@ -25,7 +25,7 @@ SendIT is a courier service that helps users deliver parcels to different destin
 SendIT can be found on pivotal tracker with the link below.
 (https://www.pivotaltracker.com/n/projects/2218905)
 
-### API Enpoint
+### API Enpoints
 The API is hosted at (https://johnnysam-sendit.herokuapp.com/api/v1)
 
 ### UI Templates
@@ -60,26 +60,26 @@ https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
 - run `npm run test` to test the api
 
 
-### API Endpoint Route 
+### API Endpoint Routes 
 #### NOTE: All requests are prefixed with `api/v1`
 <table>
 <tr><th>HTTP VERB</th><th>ENDPOINT</th><th>TASK</th></tr>
 
-<tr><td>GET</td> <td>parcel?token={{adminToken}}</td> <td> Fetch all parcel delivery orders</td></tr>
+<tr><td>GET</td> <td>parcels?token={{adminToken}}</td> <td> Fetch all parcel delivery orders</td></tr>
 
-<tr><td>POST</td> <td>parcel?token={{userToken}}</td> <td> Create a parcel delivery order </td></tr>
+<tr><td>POST</td> <td>parcels?token={{userToken}}</td> <td> Create a parcel delivery order </td></tr>
 
-<tr><td>GET</td> <td>parcel/:id?token={{ownerAuthToken}}</td> <td> Fetch a specific parcel delivery order</td></tr>
+<tr><td>GET</td> <td>parcels/:id?token={{ownerAuthToken}}</td> <td> Fetch a specific parcel delivery order</td></tr>
 
 <tr><td>GET</td> <td>users/:id/parcels?{{ownerAuthToken}}</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
 
-<tr><td>PUT</td> <td>parcel/:id/cancel?token={{ownerAuthToken}}</td> <td> Cancel the specific parcel delivery order</td></tr> 
+<tr><td>PUT</td> <td>parcels/:id/cancel?token={{ownerAuthToken}}</td> <td> Cancel the specific parcel delivery order</td></tr> 
 
-<tr><td>PUT</td> <td>parcel/:id/status?{{adminAuthToken}}</td> <td> Change the status of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/status?{{adminAuthToken}}</td> <td> Change the status of a parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>parcel/:id/destination?token={{ownerAuthToken}}</td> <td>Change the destination of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/destination?token={{ownerAuthToken}}</td> <td>Change the destination of a parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>parcel/:id/presentLocation?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/presentLocation?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
 
 <tr><td>POST</td> <td>auth/signup</td> <td> User Signup </td></tr>
 
