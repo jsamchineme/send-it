@@ -1,5 +1,4 @@
 import UserSeeder from './UserSeeder';
-import ParcelSeeder from './ParcelSeeder';
 
 /**
  * This class handle seeding of all database table
@@ -13,11 +12,9 @@ class Seeder {
    */
   static async seedTables() {
     const userSeeds = await UserSeeder.seedUsers();
-    const parcelSeeds = await ParcelSeeder.seedParcels();
 
     return {
       userSeeds,
-      parcelSeeds,
     };
   }
 

@@ -1,6 +1,6 @@
 # SendIT
 [![Build Status](https://travis-ci.org/jsamchineme/send-it.svg?branch=develop)](https://travis-ci.org/jsamchineme/send-it)
-[![Coverage Status](https://coveralls.io/repos/github/jsamchineme/send-it/badge.svg)](https://coveralls.io/github/jsamchineme/send-it)
+[![Coverage Status](https://coveralls.io/repos/github/jsamchineme/send-it/badge.svg?branch=develop)](https://coveralls.io/github/jsamchineme/send-it?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fb9ed5da54bcd9bf509e/maintainability)](https://codeclimate.com/github/jsamchineme/send-it/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/fb9ed5da54bcd9bf509e/test_coverage)](https://codeclimate.com/github/jsamchineme/send-it/test_coverage)
 
@@ -35,10 +35,13 @@ The ui templates are currently hosted on gh-pages
 
 ## Features
 - Fetch all parcel delivery orders
+- Create a parcel delivery order
 - Fetch a specific parcel delivery order
 - Fetch all parcel delivery orders by a specific user
 - Cancel the specific parcel delivery order
-- Create a parcel delivery order
+- Change the status of a parcel delivery order
+- Change the destination of a parcel delivery order
+- Change the present location of a parcel delivery order
 - User Signup
 - User Login
 
@@ -47,30 +50,40 @@ The ui templates are currently hosted on gh-pages
 ### Installation
 - run npm install
 - You can test routes with POSTMAN
-- Here are collections to test available end points on POSTMAN
-https://www.pivotaltracker.com/file_attachments/93249563/download?inline=true
+- Here is a collection of requests to test available end points on POSTMAN
+https://www.pivotaltracker.com/file_attachments/93331263/download?inline=true
+- The environment can also be loaded with the collection
+https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
+- After loading the `collection` and the `environment`, the POSTMAN `Collection Runner` can be used to run the requests automatically and generate test report
 - run `npm run start` to start the server
 - You can also run `npm run start:dev` to start the server in development mode 
 - run `npm run test` to test the api
 
 
 ### API Endpoint Route 
+#### NOTE: All requests are prefixed with `api/v1`
 <table>
 <tr><th>HTTP VERB</th><th>ENDPOINT</th><th>TASK</th></tr>
 
-<tr><td>GET</td> <td>api/v1/parcel</td> <td> Fetch all parcel delivery orders</td></tr>
+<tr><td>GET</td> <td>parcel?token={{adminToken}}</td> <td> Fetch all parcel delivery orders</td></tr>
 
-<tr><td>GET</td> <td>api/v1/parcel/:id</td> <td> Fetch a specific parcel delivery order</td></tr>
+<tr><td>POST</td> <td>parcel?token={{userToken}}</td> <td> Create a parcel delivery order </td></tr>
 
-<tr><td>GET</td> <td>api/v1/users/:id/parcels</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
+<tr><td>GET</td> <td>parcel/:id?token={{ownerAuthToken}}</td> <td> Fetch a specific parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>api/v1/parcel/:id/cancel</td> <td> Cancel the specific parcel delivery order</td></tr> 
+<tr><td>GET</td> <td>users/:id/parcels?{{ownerAuthToken}}</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
 
-<tr><td>POST</td> <td>api/v1/parcel</td> <td> Create a parcel delivery order </td></tr>
+<tr><td>PUT</td> <td>parcel/:id/cancel?token={{ownerAuthToken}}</td> <td> Cancel the specific parcel delivery order</td></tr> 
 
-<tr><td>POST</td> <td>api/v1/auth/signup</td> <td> User Signup </td></tr>
+<tr><td>PUT</td> <td>parcel/:id/status?{{adminAuthToken}}</td> <td> Change the status of a parcel delivery order</td></tr>
 
-<tr><td>POST</td> <td>api/v1/auth/login</td> <td> User Login </td></tr>
+<tr><td>PUT</td> <td>parcel/:id/destination?token={{ownerAuthToken}}</td> <td>Change the destination of a parcel delivery order</td></tr>
+
+<tr><td>PUT</td> <td>parcel/:id/presentLocation?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
+
+<tr><td>POST</td> <td>auth/signup</td> <td> User Signup </td></tr>
+
+<tr><td>POST</td> <td>auth/login</td> <td> User Login </td></tr>
 
 
 </table>

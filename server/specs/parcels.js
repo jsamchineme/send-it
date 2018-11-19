@@ -16,7 +16,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     // prepare client authToken
     request.post('/api/v1/auth/login')
       .send({
-        email: 'jaden@example.io',
+        email: 'johndoe@example.io',
         password: 'secret',
       })
       .expect(200)
@@ -27,7 +27,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     // prepare client2 authToken for accessing unowned resource
     request.post('/api/v1/auth/login')
       .send({
-        email: 'johndoe@example.io',
+        email: 'jaden@example.io',
         password: 'secret',
       })
       .expect(200)
@@ -147,25 +147,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should cancel a specific parcel delivery parcel', (done) => {
-    request.put('/api/v1/parcels/1/cancel')
-      .set('x-access-token', authToken)
-      .expect(200)
-      .end((err, res) => {
-        expect(res.body.status).to.equal('success');
-        expect(res.body.data.status).to.equal('cancelled');
-        done();
-      });
-  });
-  it('should return message when record is not found for PUT parcels/:id/cancel end point', (done) => {
-    request.put('/api/v1/parcels/0/cancel')
-      .set('x-access-token', authToken)
-      .expect(404)
-      .end((err, res) => {
-        expect(res.body.status).to.equal('NotFound');
-        done();
-      });
-  });
   it('should update a specific parcel delivery parcel', (done) => {
     request.put('/api/v1/parcels/1')
       .set('x-access-token', authToken)
@@ -185,6 +166,46 @@ describe('Test case for the "parcel" resource endpoints', () => {
         expect(res.body.status).to.equal('NotFound');
         done();
       });
+  });
+  describe("Cancel a specific parcel delivery order", () => {
+    let parcel = {};
+    before((done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        deliveryLocation: 'dummy value',
+        presentLocation: 'dummy value',
+        pickupLocation: 'dummy value',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          
+          done();
+        });
+    })
+    it('should cancel a specific parcel delivery parcel', (done) => {
+      request.put(`/api/v1/parcels/${parcel.id}/cancel`)
+        .set('x-access-token', authToken)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.status).to.equal('cancelled');
+          done();
+        });
+    });
+    it('should return message when record is not found for PUT parcels/:id/cancel end point', (done) => {
+      request.put('/api/v1/parcels/0/cancel')
+        .set('x-access-token', authToken)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('NotFound');
+          done();
+        });
+    });
   });
   describe('Change parcel destinations', () => {
     it('should change parcel destination', (done) => {
