@@ -92,14 +92,8 @@ class ParcelController {
    * @returns {Object} response object
    */
   static async cancel(req, res) {
-    let { parcelId } = req.params;
+    const { parcelId } = req.params;
     const updateData = req.body;
-    parcelId = Number(parcelId);
-    const parcel = await Parcel.findById(parcelId);
-
-    if (!parcel) {
-      return Response.notFound(res);
-    }
 
     updateData.status = 'cancelled';
     const updatedParcel = await Parcel.update(parcelId, updateData);
@@ -113,9 +107,8 @@ class ParcelController {
    * @returns {Object} response object
    */
   static async changeDestination(req, res) {
-    let { parcelId } = req.params;
+    const { parcelId } = req.params;
     const updateData = req.body;
-    parcelId = Number(parcelId);
 
     const updatedParcel = await Parcel.update(parcelId, updateData);
 

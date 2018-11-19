@@ -16,7 +16,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     // prepare client authToken
     request.post('/api/v1/auth/login')
       .send({
-        email: 'jaden@example.io',
+        email: 'johndoe@example.io',
         password: 'secret',
       })
       .expect(200)
@@ -27,7 +27,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     // prepare client2 authToken for accessing unowned resource
     request.post('/api/v1/auth/login')
       .send({
-        email: 'johndoe@example.io',
+        email: 'jaden@example.io',
         password: 'secret',
       })
       .expect(200)
