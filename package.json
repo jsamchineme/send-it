@@ -40,8 +40,7 @@
     "instrument": false,
     "exclude": [
       "server/database/config.js",
-      "server/specs",
-      ""
+      "server/specs"
     ]
   },
   "dependencies": {
