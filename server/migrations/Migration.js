@@ -90,6 +90,9 @@ export default class Migration {
     if (attribute.primaryKey === true) {
       fieldRow += ' PRIMARY KEY ';
     }
+    if (attribute.unique === true) {
+      fieldRow += ' UNIQUE ';
+    }
     if (attribute.references !== undefined) {
       fieldRow += ` REFERENCES ${attribute.on}(${attribute.references}) `;
     }

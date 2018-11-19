@@ -18,18 +18,21 @@ class UserSeeder {
         username: 'johndoe',
         email: 'johndoe@example.io',
         userType: 'client',
+        active: 0,
         password: bcrypt.hashSync('secret', 10),
       },
       {
         username: 'samcotech',
         email: 'samcotech@example.io',
         userType: 'admin',
+        active: 1,
         password: bcrypt.hashSync('secret', 10),
       },
       {
         username: 'jaden',
         email: 'jaden@example.io',
         userType: 'client',
+        active: 0,
         password: bcrypt.hashSync('secret', 10),
       },
     ];

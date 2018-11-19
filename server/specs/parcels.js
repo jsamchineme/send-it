@@ -167,7 +167,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  describe("Cancel a specific parcel delivery order", () => {
+  describe('Cancel a specific parcel delivery order', () => {
     let parcel = {};
     before((done) => {
       const parcelOrderData = {
@@ -183,10 +183,10 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          
+
           done();
         });
-    })
+    });
     it('should cancel a specific parcel delivery parcel', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/cancel`)
         .set('x-access-token', authToken)
