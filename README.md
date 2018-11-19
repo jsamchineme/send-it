@@ -60,7 +60,7 @@ https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
 - run `npm run test` to test the api
 
 
-### API Endpoint Route 
+### API Endpoint Routes 
 #### NOTE: All requests are prefixed with `api/v1`
 <table>
 <tr><th>HTTP VERB</th><th>ENDPOINT</th><th>TASK</th></tr>
