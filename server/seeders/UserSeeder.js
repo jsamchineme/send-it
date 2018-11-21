@@ -62,8 +62,8 @@ class UserSeeder {
         },
       ];
 
-      const orders = dummyParcels.map(async (item) => {
-        const order = item;
+      const orders = dummyParcels.map(async (parcel) => {
+        const order = parcel;
         const newOrder = await Parcel.create(order);
         return newOrder;
       });

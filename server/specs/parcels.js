@@ -2,6 +2,9 @@ import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../app';
+import ParcelModel from '../models/Parcel';
+
+const Parcel = new ParcelModel();
 
 const request = supertest(app);
 
@@ -16,7 +19,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     // prepare client authToken
     request.post('/api/v1/auth/login')
       .send({
-        email: 'johndoe@example.io',
+        email: 'jsamchineme@gmail.com',
         password: 'secret',
       })
       .expect(200)
@@ -183,7 +186,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-
           done();
         });
     });
@@ -208,6 +210,14 @@ describe('Test case for the "parcel" resource endpoints', () => {
     });
   });
   describe('Change parcel destinations', () => {
+    before((done) => {
+      const getParcel = async () => {
+        const newParcel = await Parcel.where({ status: 'pending_delivery' }).getOne();
+        return newParcel;
+      };
+      parcel = Promise.resolve(getParcel());
+      done();
+    });
     it('should change parcel destination', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
         .set('x-access-token', authToken)
