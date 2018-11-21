@@ -38,6 +38,7 @@ parcelRoutes.put(
   JWT.authenticate,
   Roles.isParcelOwner,
   ParcelValidator.validateChangeDestination,
+  ParcelValidator.validateStatus,
   ParcelController.changeDestination,
 );
 
