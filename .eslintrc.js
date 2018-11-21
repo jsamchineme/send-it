@@ -1,29 +1,37 @@
 module.exports = {
 	"root": true,
-	"extends": "airbnb-base",
-	"rules": {
-		"class-methods-use-this": 0,
-    "import/named": 0,
-		"no-restricted-syntax": 0,
-		"no-param-reassign": 0,
-		"consistent-return": 0,
-		"no-loop-func": 0,
-		"operator-assignment": 0,
-		"no-restricted-globals": 0,
-		"no-shadow": 0,
-		"curly": ["error", "multi-line"],
+  "extends": "airbnb-base",
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "globals": {
+    "_": true
+  },
+  "rules": {
+    "one-var": 0,
+    "one-var-declaration-per-line": 0,
+    "new-cap": 0,
+    "consistent-return": 0,
+    "no-param-reassign": 0,
+    "no-underscore-dangle": 0,
+    "comma-dangle": 0,
+    "curly": ["error", "multi-line"],
+    "import/no-unresolved": [2, { "commonjs": true }],
+    "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "valid-jsdoc": ["error", {
-			"requireReturn": true,
-			"requireReturnType": true,
-			"requireParamDescription": false,
-			"requireReturnDescription": true
-		}],
-		"require-jsdoc": ["error", {
-			"require": {
-				"FunctionDeclaration": true,
-				"MethodDefinition": true,
-				"ClassDeclaration": true
-			}
-		}]
-	}
+      "requireReturn": true,
+      "requireReturnType": true,
+      "requireParamDescription": false,
+      "requireReturnDescription": true
+    }],
+    "require-jsdoc": ["error", {
+        "require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true
+        }
+    }]
+  }
 };
