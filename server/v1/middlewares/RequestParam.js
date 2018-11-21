@@ -1,4 +1,4 @@
-import Response from '../utils/Response';
+import Response from '../helpers/Response';
 
 /** Validate the request Params
  * For example wherever we have /:someResourceId

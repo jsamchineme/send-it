@@ -1,6 +1,6 @@
 import joi from 'joi';
 import { signupSchema, loginSchema } from '../../requestSchemas/auth';
-import ResponseSchema from '../../utils/Response';
+import ResponseSchema from '../../helpers/Response';
 import UserModel from '../../../models/User';
 
 const User = new UserModel();

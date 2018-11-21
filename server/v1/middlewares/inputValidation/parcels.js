@@ -5,7 +5,7 @@ import {
   changeStatusSchema,
   changePresentLocationSchema,
 } from '../../requestSchemas/parcel';
-import ResponseSchema from '../../utils/Response';
+import ResponseSchema from '../../helpers/Response';
 
 /**
  * @export

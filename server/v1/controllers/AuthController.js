@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
-import Response from '../utils/Response';
+import Response from '../helpers/Response';
 
 const User = new UserModel();
 

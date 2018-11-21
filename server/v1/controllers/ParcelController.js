@@ -1,5 +1,10 @@
 import ParcelModel from '../../models/Parcel';
-import Response from '../utils/Response';
+import Response from '../helpers/Response';
+import ParcelEmitter, {
+  PARCEL_STATUS_UPDATE,
+  PARCEL_LOCATION_UPDATE,
+} from '../helpers/events/ParcelEmitter';
+
 
 const Parcel = new ParcelModel();
 
@@ -120,6 +125,22 @@ class ParcelController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
+  static async changeLocation(req, res) {
+    const { parcelId } = req.params;
+    const updateData = req.body;
+
+    const updatedParcel = await Parcel.update(parcelId, updateData);
+
+    ParcelEmitter.publish(PARCEL_LOCATION_UPDATE, updatedParcel);
+
+    return Response.success(res, updatedParcel);
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
   static async changeStatus(req, res) {
     let { parcelId } = req.params;
     const updateData = req.body;
@@ -131,6 +152,8 @@ class ParcelController {
     }
 
     const updatedParcel = await Parcel.update(parcelId, updateData);
+
+    ParcelEmitter.publish(PARCEL_STATUS_UPDATE, updatedParcel);
 
     return Response.success(res, updatedParcel);
   }

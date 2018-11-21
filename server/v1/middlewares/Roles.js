@@ -1,5 +1,5 @@
 import ParcelModel from '../../models/Parcel';
-import Response from '../utils/Response';
+import Response from '../helpers/Response';
 
 const Parcel = new ParcelModel();
 

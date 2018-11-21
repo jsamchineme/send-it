@@ -15,8 +15,8 @@ class UserSeeder {
   static async seedUsers() {
     const dummyUsers = [
       {
-        username: 'johndoe',
-        email: 'johndoe@example.io',
+        username: 'jsamchineme',
+        email: 'jsamchineme@gmail.com',
         userType: 'client',
         active: 0,
         password: bcrypt.hashSync('secret', 10),
