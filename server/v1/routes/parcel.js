@@ -38,6 +38,7 @@ parcelRoutes.put(
   JWT.authenticate,
   Roles.isParcelOwner,
   ParcelValidator.validateChangeDestination,
+  ParcelValidator.validateStatus,
   ParcelController.changeDestination,
 );
 
@@ -47,7 +48,7 @@ parcelRoutes.put(
   JWT.authenticate,
   Roles.isAdmin,
   ParcelValidator.validateChangePresentLocation,
-  ParcelController.changeDestination,
+  ParcelController.changeLocation,
 );
 
 export default parcelRoutes;

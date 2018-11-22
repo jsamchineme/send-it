@@ -1,4 +1,4 @@
-import { describe, it } from 'mocha';
+import { describe, it, after } from 'mocha';
 import { expect } from 'chai';
 import ParcelModel from '../../models/Parcel';
 import UserModel from '../../models/User';
@@ -8,20 +8,26 @@ const modelTests = () => {
   const Parcel = new ParcelModel();
   describe('Test Cases for the Database Model Class', () => {
     it('should Instantiate Model', () => {
-      expect(User.schema.tableName !== undefined).to.equal(true);
+      expect(User.schema.tableName === 'users').to.equal(true);
     });
     describe('Model.findById()', () => {
+      let record;
       it('should return a record when valid id is supplied', async () => {
         const newRecordData = {
           username: 'johndoe',
           email: 'johndoe@example.io',
           password: 'asdadsds',
+          userType: 'client',
+          active: 0,
         };
         // create a record first
         const result = await User.create(newRecordData);
         // try to find the record
-        const record = await User.findById(result.id);
+        record = await User.findById(result.id);
         expect(record.id).to.equal(result.id);
+      });
+      after(async () => {
+        await User.delete(record.id);
       });
     });
     describe('Model.getAll()', async () => {
@@ -55,14 +61,20 @@ const modelTests = () => {
       });
     });
     describe('Model.create()', () => {
+      let record;
       it('should create records when data is supplied', async () => {
         const user = await User.create({
-          username: 'johndoe',
-          email: 'johndoe@example.io',
-          password: 'asdadsds',
+          username: 'johndoe2',
+          email: 'johndoe1@example.io',
+          password: 'secret',
+          userType: 'client',
           active: 0,
         });
+        record = user;
         expect(user.id > 0).to.equal(true);
+      });
+      after(async () => {
+        await User.delete(record.id);
       });
     });
     describe('Model.where()', () => {
@@ -123,9 +135,11 @@ const modelTests = () => {
       let record;
       it('should delete records when data is supplied', async () => {
         record = await User.create({
-          username: 'johndoe',
-          email: 'johndoe@example.io',
-          password: 'asdadsds',
+          username: 'johndoe3',
+          email: 'johndoe3@example.io',
+          userType: 'client',
+          active: 0,
+          password: 'secret',
         });
         const result = await User.delete(record.id);
         expect(result).to.equal(true);

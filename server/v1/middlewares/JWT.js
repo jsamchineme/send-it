@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Response from '../utils/Response';
+import Response from '../helpers/Response';
 
 /**
  * Secure routes with JWT

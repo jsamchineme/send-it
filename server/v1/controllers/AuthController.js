@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
-import Response from '../utils/Response';
+import Response from '../helpers/Response';
 
 const User = new UserModel();
 
@@ -23,6 +23,7 @@ class AuthController {
 
     newUserData.password = hashedPassword;
     newUserData.userType = 'client';
+    newUserData.active = 0;
 
     const newUser = await User.create(newUserData);
 
@@ -64,6 +65,23 @@ class AuthController {
     data.token = token;
 
     return Response.success(res, data);
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static async delete(req, res) {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return Response.notFound(res);
+    }
+    const deleted = await User.delete(user.id);
+    if (deleted) {
+      return Response.noContent(res);
+    }
   }
 }
 

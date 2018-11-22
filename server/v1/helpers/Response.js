@@ -31,6 +31,10 @@ const responses = {
     status: 'NotFound',
     message: 'The requested resource could not be found',
   }),
+  noContent: res => res.status(204).json({
+    status: 'deleted',
+    message: 'The reource has been deleted',
+  }),
 };
 
 export default responses;
