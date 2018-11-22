@@ -3,8 +3,8 @@ import bodyParser from 'body-parser';
 import routes from './v1/routes';
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.get('/', (req, res) => {

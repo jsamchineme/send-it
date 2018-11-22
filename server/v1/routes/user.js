@@ -1,17 +1,16 @@
 import { Router } from 'express';
 import ParcelController from '../controllers/ParcelController';
-import JWT from '../middlewares/JWT';
+import Authentication from '../middlewares/Authentication';
 import Roles from '../middlewares/Roles';
 import RequestParam from '../middlewares/RequestParam';
 
 const userRoutes = Router();
 
-userRoutes.get(
-  '/:userId/parcels',
-  RequestParam.validateParams,
-  JWT.authenticate,
-  Roles.isRightUser,
-  ParcelController.listForUser,
-);
+const { verifyToken } = Authentication;
+const { validateParams } = RequestParam;
+const { isRightUser } = Roles;
+const { listForUser } = ParcelController;
+
+userRoutes.get('/:userId/parcels', validateParams, verifyToken, isRightUser, listForUser);
 
 export default userRoutes;

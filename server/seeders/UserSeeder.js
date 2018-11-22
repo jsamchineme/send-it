@@ -19,21 +19,21 @@ class UserSeeder {
         email: 'jsamchineme@gmail.com',
         userType: 'client',
         active: 0,
-        password: bcrypt.hashSync('secret', 10),
+        password: bcrypt.hashSync('secretpass', 10),
       },
       {
         username: 'samcotech',
         email: 'samcotech@example.io',
         userType: 'admin',
         active: 1,
-        password: bcrypt.hashSync('secret', 10),
+        password: bcrypt.hashSync('secretpass', 10),
       },
       {
-        username: 'jaden',
+        username: 'jadenuser',
         email: 'jaden@example.io',
         userType: 'client',
         active: 0,
-        password: bcrypt.hashSync('secret', 10),
+        password: bcrypt.hashSync('secretpass', 10),
       },
     ];
 
@@ -45,7 +45,7 @@ class UserSeeder {
         {
           userId: newUser.id,
           description: 'description for delivered item',
-          status: 'delivered',
+          status: 'pending_delivery',
           deliveryLocation: '5 pack street, Lagos',
           presentLocation: '5 Victoria Land Street, Ikeja',
           pickupLocation: '5 Victoria Land Street, Ikeja',
@@ -62,8 +62,8 @@ class UserSeeder {
         },
       ];
 
-      const orders = dummyParcels.map(async (item) => {
-        const order = item;
+      const orders = dummyParcels.map(async (parcel) => {
+        const order = parcel;
         const newOrder = await Parcel.create(order);
         return newOrder;
       });

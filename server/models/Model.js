@@ -75,30 +75,28 @@ class Model {
   getWhereString() {
     let whereString = '';
     let count = 0;
-    for (let attribute in this.whereConstraints) {
+    const whereAttributes = Object.keys(this.whereConstraints);
+    whereAttributes.forEach((attribute) => {
+      const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
       /* istanbul ignore else */
-      if (attribute) {
-        const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
-        /* istanbul ignore else */
-        if (foundAttribute) {
-          let value;
-          if (foundAttribute.type !== 'integer' && foundAttribute.autoIncrement === undefined) {
-            value = `'${this.whereConstraints[attribute]}'`;
-          } else {
-            value = this.whereConstraints[attribute];
-          }
-
-          attribute = `"${attribute}"`;
-          whereString += `${attribute} = ${value}`;
-
-          // trying to find out if the iteration is the last
-          if (count !== Object.keys(this.whereConstraints).length - 1) {
-            whereString += ' AND ';
-          }
+      if (foundAttribute) {
+        let value;
+        if (foundAttribute.type !== 'integer' && foundAttribute.autoIncrement === undefined) {
+          value = `'${this.whereConstraints[attribute]}'`;
+        } else {
+          value = this.whereConstraints[attribute];
         }
-        count += 1;
+
+        attribute = `"${attribute}"`;
+        whereString += `${attribute} = ${value}`;
+
+        // trying to find out if the iteration is the last
+        if (count !== whereAttributes.length - 1) {
+          whereString += ' AND ';
+        }
       }
-    }
+      count += 1;
+    });
 
     return whereString;
   }
@@ -117,7 +115,8 @@ class Model {
    * @returns {Model} - the instance of this Model class facilitating method chainability
    */
   where(constraints) {
-    for (const attribute in constraints) {
+    const theseConstraints = Object.keys(constraints);
+    theseConstraints.forEach((attribute) => {
       /* istanbul ignore next */
       if (attribute) {
         const foundAttribute = this.schema.attributes.find(item => item.name === attribute);
@@ -126,7 +125,7 @@ class Model {
           this.whereConstraints[attribute] = constraints[attribute];
         }
       }
-    }
+    });
     return this;
   }
 
@@ -189,7 +188,8 @@ class Model {
   prepareCreateData(data) {
     const fieldList = [];
     const fieldValues = [];
-    for (let field in data) {
+    const fields = Object.keys(data);
+    fields.forEach((field) => {
       /* istanbul ignore else */
       if (this.schema.attributes.find(item => item.name === field)) {
         const foundAttribute = this.schema.attributes.find(item => item.name === field);
@@ -208,7 +208,7 @@ class Model {
           fieldList.push(field);
         }
       }
-    }
+    });
 
     const preparedData = { fieldList, fieldValues };
     return preparedData;
@@ -220,25 +220,23 @@ class Model {
    */
   prepareUpdateSet(data) {
     let preparedSetString = 'SET ';
-    for (const field in data) {
+    const fields = Object.keys(data);
+    fields.forEach((field) => {
+      const foundAttribute = this.schema.attributes.find(item => item.name === field);
       /* istanbul ignore else */
-      if (field) {
-        const foundAttribute = this.schema.attributes.find(item => item.name === field);
-        /* istanbul ignore else */
-        if (foundAttribute) {
-          let fieldSetString = '';
-          if (preparedSetString !== 'SET ') {
-            fieldSetString = ', ';
-          }
-          if (foundAttribute.type !== 'integer') {
-            fieldSetString += `"${field}" = '${data[field]}'`;
-          } else {
-            fieldSetString += `"${field}" = ${data[field]}`;
-          }
-          preparedSetString += fieldSetString;
+      if (foundAttribute) {
+        let fieldSetString = '';
+        if (preparedSetString !== 'SET ') {
+          fieldSetString = ', ';
         }
+        if (foundAttribute.type !== 'integer') {
+          fieldSetString += `"${field}" = '${data[field]}'`;
+        } else {
+          fieldSetString += `"${field}" = ${data[field]}`;
+        }
+        preparedSetString += fieldSetString;
       }
-    }
+    });
     // console.log(`--------${preparedSetString}--------`);
     return preparedSetString;
   }

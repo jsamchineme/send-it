@@ -2,6 +2,9 @@ import { describe, it, before } from 'mocha';
 import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../app';
+// import ParcelModel from '../models/Parcel';
+
+// const Parcel = new ParcelModel();
 
 const request = supertest(app);
 
@@ -16,8 +19,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
     // prepare client authToken
     request.post('/api/v1/auth/login')
       .send({
-        email: 'johndoe@example.io',
-        password: 'secret',
+        email: 'jsamchineme@gmail.com',
+        password: 'secretpass',
       })
       .expect(200)
       .end((err, res) => {
@@ -28,7 +31,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     request.post('/api/v1/auth/login')
       .send({
         email: 'jaden@example.io',
-        password: 'secret',
+        password: 'secretpass',
       })
       .expect(200)
       .end((err, res) => {
@@ -38,7 +41,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     request.post('/api/v1/auth/login')
       .send({
         email: 'samcotech@example.io',
-        password: 'secret',
+        password: 'secretpass',
       })
       .expect(200)
       .end((err, res) => {
@@ -63,6 +66,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .expect(401)
       .end((err, res) => {
         expect(res.body.status).to.equal('Unauthorised');
+        // expect(res.body.message).to.equal('Unauthorised');
         done();
       });
   });
@@ -147,28 +151,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         done();
       });
   });
-  it('should update a specific parcel delivery parcel', (done) => {
-    request.put('/api/v1/parcels/1')
-      .set('x-access-token', authToken)
-      .send({ status: 'delivered' })
-      .expect(200)
-      .end((err, res) => {
-        expect(res.body.status).to.equal('success');
-        expect(res.body.data.status).to.equal('delivered');
-        done();
-      });
-  });
-  it('should return message when record is not found for PUT parcels/:id end point', (done) => {
-    request.put('/api/v1/parcels/0')
-      .set('x-access-token', authToken)
-      .expect(404)
-      .end((err, res) => {
-        expect(res.body.status).to.equal('NotFound');
-        done();
-      });
-  });
   describe('Cancel a specific parcel delivery order', () => {
-    let parcel = {};
+    // let parcel = {};
     before((done) => {
       const parcelOrderData = {
         description: 'dummy value',
@@ -183,7 +167,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-
           done();
         });
     });
@@ -229,6 +212,23 @@ describe('Test case for the "parcel" resource endpoints', () => {
           done();
         });
     });
+    it('should return unprocessable entity when request status is delivered', (done) => {
+      // change status to delivered
+      request.put(`/api/v1/parcels/${parcel.id}/status`)
+        .set('x-access-token', adminToken)
+        .send({ status: 'delivered' })
+        .expect(200)
+        .end(() => {
+          request.put(`/api/v1/parcels/${parcel.id}/destination`)
+            .set('x-access-token', authToken)
+            .send({ deliveryLocation: 'new location' })
+            .expect(422)
+            .end((err, res) => {
+              expect(res.body.status).to.equal('Unprocessable Entity');
+              done();
+            });
+        });
+    });
     it('should return not found when invalid parcel is sent', (done) => {
       request.put('/api/v1/parcels/0/destination')
         .set('x-access-token', authToken)
@@ -266,18 +266,18 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should change parcel status', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/status`)
         .set('x-access-token', adminToken)
-        .send({ status: 'delivered' })
+        .send({ status: 'pending_delivery' })
         .expect(200)
         .end((err, res) => {
           expect(res.body.status).to.equal('success');
-          expect(res.body.data.status).to.equal('delivered');
+          expect(res.body.data.status).to.equal('pending_delivery');
           done();
         });
     });
     it('should return unauthorised when non admin user attempts access', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/status`)
         .set('x-access-token', authToken)
-        .send({ status: 'delivered' })
+        .send({ status: 'pending_delivery' })
         .expect(401)
         .end((err, res) => {
           expect(res.body.status).to.equal('Unauthorised');

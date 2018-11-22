@@ -72,7 +72,7 @@ class AuthController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
-  static async delete(req, res) {
+  static async deleteUser(req, res) {
     const { userId } = req.params;
     const user = await User.findById(userId);
     if (!user) {
