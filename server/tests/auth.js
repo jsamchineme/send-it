@@ -17,7 +17,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       request.post('/api/v1/auth/login')
         .send({
           email: 'samcotech@example.io',
-          password: 'secret',
+          password: 'secretpass',
         })
         .expect(200)
         .end((err, res) => {
@@ -29,7 +29,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       const newUserData = {
         username: faker.name.findName(),
         email: faker.internet.email(),
-        password: 'secret',
+        password: 'secretpass',
       };
       request.post('/api/v1/auth/signup')
         .send(newUserData)
@@ -53,6 +53,36 @@ describe('Test case for the "auth" resource endpoints', () => {
           done();
         });
     });
+    it('should return error message when email already exists', (done) => {
+      const newUserData = {
+        email: 'jaden@example.io',
+        username: 'jadenuser',
+        password: 'secretpass'
+      };
+      request.post('/api/v1/auth/signup')
+        .send(newUserData)
+        .expect(422)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unprocessable Entity');
+          expect(res.body.message).to.equal('email already exists');
+          done();
+        });
+    });
+    it('should return error message when username already exists', (done) => {
+      const newUserData = {
+        email: 'jaden24@example.io',
+        username: 'jadenuser',
+        password: 'secretpass'
+      };
+      request.post('/api/v1/auth/signup')
+        .send(newUserData)
+        .expect(422)
+        .end((err, res) => {
+          expect(res.body.status).to.equal('Unprocessable Entity');
+          expect(res.body.message).to.equal('username already exists');
+          done();
+        });
+    });
     after((done) => {
       // prepare admin authToken
       request.delete(`/api/v1/auth/users/${newUser.id}`)
@@ -64,12 +94,12 @@ describe('Test case for the "auth" resource endpoints', () => {
     });
   });
   describe('User Login', () => {
-    let newUser = {};
+    newUser = {};
     before((done) => {
       const newUserData = {
         username: faker.name.findName(),
         email: faker.internet.email(),
-        password: 'secret',
+        password: 'secretpass',
       };
       request.post('/api/v1/auth/signup')
         .send(newUserData)
@@ -83,7 +113,7 @@ describe('Test case for the "auth" resource endpoints', () => {
     it('should be able to login', (done) => {
       const newUserData = {
         email: newUser.email,
-        password: 'secret',
+        password: 'secretpass',
       };
       request.post('/api/v1/auth/login')
         .send(newUserData)
@@ -108,20 +138,9 @@ describe('Test case for the "auth" resource endpoints', () => {
       });
   });
   it('should return unauthorised when wrong login credentials are supplied', (done) => {
-    let newUserData = {
-      email: 'jaden@example.ioo',
-      password: 'secret',
-    };
-    request.post('/api/v1/auth/login')
-      .send(newUserData)
-      .expect(400)
-      .end((err, res) => {
-        expect(res.body.status).to.equal('Wrong Credentials');
-        expect(res.body.message).to.equal('Provide correct login credentials');
-      });
-    newUserData = {
+    const newUserData = {
       email: 'jaden@example.io',
-      password: 'sssasas',
+      password: 'sssasasadadsads',
     };
     request.post('/api/v1/auth/login')
       .send(newUserData)

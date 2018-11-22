@@ -5,8 +5,8 @@
   "scripts": {
     "start": "npm run db:migrate:reset && npm run db:seed && babel-node server/index.js",
     "start:dev": "npm run db:migrate:reset && npm run db:seed && nodemon --exec babel-node server",
-    "test": "set NODE_ENV=test&& npm run db:migrate:reset && npm run db:seed && nyc mocha --timeout 300000 --exit server/specs/",
-    "test:dev": "set NODE_ENV=test&& nyc mocha --timeout 300000 --exit server/specs/",
+    "test": "set NODE_ENV=test&& npm run db:migrate:reset && npm run db:seed && nyc mocha --timeout 300000 --exit server/tests/",
+    "test:dev": "set NODE_ENV=test&& nyc mocha --timeout 300000 --exit server/tests/",
     "db:migrate": "babel-node server/migrations/dbMigrate.js",
     "db:migrate:reset": "babel-node server/migrations/dbMigrateReset.js",
     "db:seed": "babel-node server/seeders/Seeder.js",
@@ -40,7 +40,7 @@
     "instrument": false,
     "exclude": [
       "server/database/config.js",
-      "server/specs"
+      "server/tests"
     ]
   },
   "dependencies": {

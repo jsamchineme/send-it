@@ -6,7 +6,7 @@ import Response from '../helpers/Response';
  * @export
  * @class
  */
-class JWT {
+class Authentication {
   /**
    * @static
    * @param {Object} req - request received
@@ -14,7 +14,7 @@ class JWT {
    * @param {Object} next - next middleware
    * @return {Object} - response with error messages
    */
-  static async authenticate(req, res, next) {
+  static async verifyToken(req, res, next) {
     const token = req.headers['x-access-token'] || req.query.token;
 
     if (token) {
@@ -31,4 +31,4 @@ class JWT {
   }
 }
 
-export default JWT;
+export default Authentication;

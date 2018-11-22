@@ -1,54 +1,75 @@
 import { Router } from 'express';
 import ParcelController from '../controllers/ParcelController';
-import JWT from '../middlewares/JWT';
+import Authentication from '../middlewares/Authentication';
 import Roles from '../middlewares/Roles';
 import ParcelValidator from '../middlewares/inputValidation/parcels';
 import RequestParam from '../middlewares/RequestParam';
 
 const parcelRoutes = Router();
 
-parcelRoutes.get('/', JWT.authenticate, Roles.isAdmin, ParcelController.getAll);
+const { verifyToken } = Authentication;
+const { validateParams } = RequestParam;
+const { isAdmin, isParcelOwner } = Roles;
 
-parcelRoutes.post('/', JWT.authenticate, ParcelValidator.validateCreate, ParcelController.create);
+const {
+  getAll, getOne, create, cancel, changeStatus, changeDestination, changeLocation,
+} = ParcelController;
 
-parcelRoutes.get('/:parcelId', RequestParam.validateParams, JWT.authenticate, ParcelController.getOne);
+const {
+  validateChangeDestination,
+  validateStatus,
+  validateChangePresentLocation,
+  validateChangeStatus,
+  validateCreate
+} = ParcelValidator;
 
-parcelRoutes.put('/:parcelId', RequestParam.validateParams, JWT.authenticate, ParcelController.update);
+// Get all parcels
+parcelRoutes.get('/', verifyToken, isAdmin, getAll);
 
+// Create a parcel order
+parcelRoutes.post('/', verifyToken, validateCreate, create);
+
+// Get a single parcel order
+parcelRoutes.get('/:parcelId', validateParams, verifyToken, getOne);
+
+// Cancel a parcel order
 parcelRoutes.put(
   '/:parcelId/cancel',
-  RequestParam.validateParams,
-  JWT.authenticate,
-  Roles.isParcelOwner,
-  ParcelController.cancel,
+  validateParams,
+  verifyToken,
+  isParcelOwner,
+  cancel,
 );
 
+// Change the status of a parcel order
 parcelRoutes.put(
   '/:parcelId/status',
-  RequestParam.validateParams,
-  JWT.authenticate,
-  Roles.isAdmin,
-  ParcelValidator.validateChangeStatus,
-  ParcelController.changeStatus,
+  validateParams,
+  verifyToken,
+  isAdmin,
+  validateChangeStatus,
+  changeStatus,
 );
 
+// Change the destination of a parcel order
 parcelRoutes.put(
   '/:parcelId/destination',
-  RequestParam.validateParams,
-  JWT.authenticate,
-  Roles.isParcelOwner,
-  ParcelValidator.validateChangeDestination,
-  ParcelValidator.validateStatus,
-  ParcelController.changeDestination,
+  validateParams,
+  verifyToken,
+  isParcelOwner,
+  validateChangeDestination,
+  validateStatus,
+  changeDestination,
 );
 
+// Change the present location of a parcel order
 parcelRoutes.put(
   '/:parcelId/presentLocation',
-  RequestParam.validateParams,
-  JWT.authenticate,
-  Roles.isAdmin,
-  ParcelValidator.validateChangePresentLocation,
-  ParcelController.changeLocation,
+  validateParams,
+  verifyToken,
+  isAdmin,
+  validateChangePresentLocation,
+  changeLocation,
 );
 
 export default parcelRoutes;

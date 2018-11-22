@@ -1,18 +1,26 @@
 import Joi from 'joi';
 
-const email = Joi.string().email().min(1).required();
-const password = Joi.string().min(1).required();
-const username = Joi.string().min(1).required();
+const email = Joi.string().strict().trim().strict()
+  .min(10)
+  .max(100)
+  .email()
+  .required();
 
-const signupSchema = {
+const password = Joi.string().trim().strict().min(8)
+  .max(40)
+  .required();
+const username = Joi.string().trim().min(8).max(50)
+  .required();
+
+const signupRequestSchema = {
   email,
   password,
   username,
 };
 
-const loginSchema = {
+const loginRequestSchema = {
   email,
   password,
 };
 
-export { loginSchema, signupSchema };
+export { loginRequestSchema, signupRequestSchema };

@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { signupSchema, loginSchema } from '../../requestSchemas/auth';
+import { signupRequestSchema, loginRequestSchema } from '../../requestSchemas/auth';
 import ResponseSchema from '../../helpers/Response';
 import UserModel from '../../../models/User';
 
@@ -17,7 +17,7 @@ class AuthValidator {
    * @return {Object} - response
    */
   static validateLogin(req, res, next) {
-    joi.validate(req.body, loginSchema)
+    joi.validate(req.body, loginRequestSchema)
       .then(() => next())
       .catch(err => ResponseSchema.unprocessable(res, err));
   }
@@ -29,7 +29,7 @@ class AuthValidator {
    * @return {Object} - response
    */
   static validateSignup(req, res, next) {
-    joi.validate(req.body, signupSchema)
+    joi.validate(req.body, signupRequestSchema)
       .then(() => next())
       .catch(err => ResponseSchema.unprocessable(res, err));
   }
@@ -40,14 +40,14 @@ class AuthValidator {
    * @param {Object} next - next middleware
    * @return {Object} - response
    */
-  static async unique(req, res, next) {
+  static async validateUnique(req, res, next) {
     const foundEmail = await User.where({ email: req.body.email }).getOne();
     const foundUsername = await User.where({ username: req.body.username }).getOne();
 
     if (foundEmail) {
       const err = {
         details: [
-          { message: '"email" already exists' },
+          { message: 'email already exists' },
         ],
       };
       return ResponseSchema.unprocessable(res, err);
@@ -55,7 +55,7 @@ class AuthValidator {
     if (foundUsername) {
       const err = {
         details: [
-          { message: '"username" already exists' },
+          { message: 'username already exists' },
         ],
       };
       return ResponseSchema.unprocessable(res, err);

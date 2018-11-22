@@ -46,7 +46,7 @@ class ParcelValidator {
    * @return {Object} - response
    */
   static async validateStatus(req, res, next) {
-    const parcel = await Parcel.findByAttribute('status', 'delivered');
+    const parcel = await Parcel.where({ status: 'delivered', id: req.params.parcelId }).getOne();
     if (parcel) {
       const err = {
         details: [

@@ -115,7 +115,7 @@ export default class Migration {
     let preparedField = '';
     attributes.forEach((attribute, index) => {
       preparedField = this.prepareEachField(attribute);
-      rows = rows + preparedField;
+      rows += preparedField;
       // if the attribute is not the last one, add comma after it
       if (index !== attributes.length - 1) {
         rows += ', \n';
