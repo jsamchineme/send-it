@@ -27,8 +27,8 @@ describe('Test case for the "auth" resource endpoints', () => {
     });
     it('should process signup', (done) => {
       const newUserData = {
-        username: faker.name.findName(),
-        email: faker.internet.email(),
+        username: 'newusername1',
+        email: 'newemail1@example.io',
         password: 'secretpass',
       };
       request.post('/api/v1/auth/signup')
