@@ -919,7 +919,7 @@ a {
 }
 
 .items-list .body .upper-section {
-  height: 370px;
+  height: 275px;
   overflow: auto;
 }
 
@@ -1263,6 +1263,7 @@ a {
 
   .items-list .body .actions {
     margin-top: 10px;
+    text-align: center;
   }
 
   .items-list .body .actions .btn {
