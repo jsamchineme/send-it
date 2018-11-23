@@ -122,10 +122,11 @@ const modelTests = () => {
           username: 'johndoe',
           email: 'johndoe@example.io',
           password: 'asdadsds',
+
         });
         const data = {
           email: 'johndoes@example.io',
-          verified: true,
+          verified: false,
         };
         const result = await User.update(record.id, data);
         expect(result.id).to.equal(record.id);

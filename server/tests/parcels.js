@@ -80,6 +80,26 @@ describe('Test case for the "parcel" resource endpoints', () => {
       });
   });
   describe('Create a new parcel order', () => {
+    it('should return the cost', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '10.22',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost !== undefined).to.equal(true);
+          done();
+        });
+    });
     it('should return N2,000 for corresponding weight', (done) => {
       const parcelOrderData = {
         description: 'dummy value',
