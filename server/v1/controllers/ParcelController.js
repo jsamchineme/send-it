@@ -33,7 +33,7 @@ class ParcelController {
   static async listForUser(req, res) {
     let { userId } = req.params;
     userId = Number(userId);
-    const allRecords = await Parcel.where({ userId }).getAll();
+    const allRecords = await Parcel.where({ placedBy: userId }).getAll();
 
     return Response.success(res, allRecords);
   }
@@ -44,11 +44,33 @@ class ParcelController {
    * @returns {Object} response object
    */
   static async create(req, res) {
+    const weightCategories = {
+      '5-15': '2,000',
+      '16-50': '4,000',
+      '51-80': '5,000',
+      '81-100': '10,000'
+    };
     const newParcelData = req.body;
     const userId = req.decoded.id;
-    // as parcel orders are created, they are initially given a status of 'pending'
-    newParcelData.status = 'pending';
-    newParcelData.userId = userId;
+    // as parcel orders are created, they are initially given a status of 'placed'
+    newParcelData.status = 'placed';
+    newParcelData.placedBy = userId;
+
+    const { weight } = newParcelData;
+    let cost;
+    if (weight >= 5 && weight <= 15) {
+      cost = `N${weightCategories['5-15']}`;
+    } else if (weight >= 16 && weight <= 50) {
+      cost = `N${weightCategories['16-50']}`;
+    } else if (weight >= 51 && weight <= 80) {
+      cost = `N${weightCategories['51-80']}`;
+    } else if (weight >= 81 && weight <= 100) {
+      cost = `N${weightCategories['81-100']}`;
+    } else {
+      cost = `N${weightCategories['81-100']}`;
+    }
+
+    newParcelData.cost = cost;
     const newParcel = await Parcel.create(newParcelData);
 
     return Response.success(res, newParcel);

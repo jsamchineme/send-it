@@ -18,7 +18,7 @@ const {
 const {
   validateChangeDestination,
   validateStatus,
-  validateChangePresentLocation,
+  validateChangeLocation,
   validateChangeStatus,
   validateCreate
 } = ParcelValidator;
@@ -68,7 +68,7 @@ parcelRoutes.put(
   validateParams,
   verifyToken,
   isAdmin,
-  validateChangePresentLocation,
+  validateChangeLocation,
   changeLocation,
 );
 

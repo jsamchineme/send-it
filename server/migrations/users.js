@@ -9,7 +9,16 @@ const userSchema = {
       name: 'username', type: 'string', length: 100, notNull: true,
     },
     {
-      name: 'userType', type: 'string', length: 20, notNull: true,
+      name: 'firstname', type: 'string', length: 30,
+    },
+    {
+      name: 'lastname', type: 'string', length: 30,
+    },
+    {
+      name: 'othernames', type: 'string', length: 30,
+    },
+    {
+      name: 'isAdmin', type: 'boolean', notNull: true, default: true,
     },
     {
       name: 'email', type: 'string', length: 100, notNull: true, unique: true,
@@ -17,9 +26,11 @@ const userSchema = {
     {
       name: 'password', type: 'string', length: 100, notNull: true,
     },
-    { name: 'active', type: 'integer', notNull: true },
-    { name: 'createdAt', type: 'timestamp', default: 'currentTime' },
-    { name: 'updatedAt', type: 'timestamp', default: 'currentTime' },
+    {
+      name: 'verified', type: 'boolean', notNull: true, default: true
+    },
+    { name: 'registered', type: 'timestamp', default: 'currentTime' },
+    { name: 'updated', type: 'timestamp', default: 'currentTime' },
   ],
 };
 

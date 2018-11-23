@@ -80,12 +80,13 @@ describe('Test case for the "parcel" resource endpoints', () => {
       });
   });
   describe('Create a new parcel order', () => {
-    it('should create new parcel delivery order', (done) => {
+    it('should return the cost', (done) => {
       const parcelOrderData = {
         description: 'dummy value',
-        deliveryLocation: 'dummy value',
-        presentLocation: 'dummy value',
-        pickupLocation: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '10.22',
         presentMapPointer: 'dummy value',
       };
       request.post('/api/v1/parcels')
@@ -95,6 +96,107 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .end((err, res) => {
           parcel = res.body.data;
           expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost !== undefined).to.equal(true);
+          done();
+        });
+    });
+    it('should return N2,000 for corresponding weight', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '10.22',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost).to.equal('N2,000');
+          done();
+        });
+    });
+    it('should return N4,000 for corresponding weight', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '20.22',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost).to.equal('N4,000');
+          done();
+        });
+    });
+    it('should return N4,000 for corresponding weight', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '20.22',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost).to.equal('N4,000');
+          done();
+        });
+    });
+    it('should return N5,000 for corresponding weight', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '52.22',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost).to.equal('N5,000');
+          done();
+        });
+    });
+    it('should return N10,000 for corresponding weight', (done) => {
+      const parcelOrderData = {
+        description: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '90.22',
+        presentMapPointer: 'dummy value',
+      };
+      request.post('/api/v1/parcels')
+        .set('x-access-token', authToken)
+        .send(parcelOrderData)
+        .expect(200)
+        .end((err, res) => {
+          parcel = res.body.data;
+          expect(res.body.status).to.equal('success');
+          expect(res.body.data.cost).to.equal('N10,000');
           done();
         });
     });
@@ -156,9 +258,10 @@ describe('Test case for the "parcel" resource endpoints', () => {
     before((done) => {
       const parcelOrderData = {
         description: 'dummy value',
-        deliveryLocation: 'dummy value',
-        presentLocation: 'dummy value',
-        pickupLocation: 'dummy value',
+        to: 'dummy value',
+        currentLocation: 'dummy value',
+        from: 'dummy value',
+        weight: '20',
         presentMapPointer: 'dummy value',
       };
       request.post('/api/v1/parcels')
@@ -194,7 +297,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should change parcel destination', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
         .set('x-access-token', authToken)
-        .send({ deliveryLocation: 'new location' })
+        .send({ to: 'new location' })
         .expect(200)
         .end((err, res) => {
           expect(res.body.data.id).to.equal(parcel.id);
@@ -221,7 +324,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .end(() => {
           request.put(`/api/v1/parcels/${parcel.id}/destination`)
             .set('x-access-token', authToken)
-            .send({ deliveryLocation: 'new location' })
+            .send({ to: 'new location' })
             .expect(422)
             .end((err, res) => {
               expect(res.body.status).to.equal('Unprocessable Entity');
@@ -232,7 +335,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should return not found when invalid parcel is sent', (done) => {
       request.put('/api/v1/parcels/0/destination')
         .set('x-access-token', authToken)
-        .send({ deliveryLocation: 'new location' })
+        .send({ to: 'new location' })
         .expect(400)
         .end((err, res) => {
           expect(res.body.status).to.equal('NotFound');
@@ -242,7 +345,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should return invalid param when parcel id not a numeric', (done) => {
       request.put('/api/v1/parcels/adsd/destination')
         .set('x-access-token', authToken)
-        .send({ deliveryLocation: 'new location' })
+        .send({ to: 'new location' })
         .expect(400)
         .end((err, res) => {
           expect(res.body.status).to.equal('Wrong Params');
@@ -253,7 +356,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should return unauthorised when wrong user attempts access', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/destination`)
         .set('x-access-token', authToken2)
-        .send({ deliveryLocation: 'new location' })
+        .send({ to: 'new location' })
         .expect(401)
         .end((err, res) => {
           expect(res.body.status).to.equal('Unauthorised');
@@ -266,18 +369,18 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should change parcel status', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/status`)
         .set('x-access-token', adminToken)
-        .send({ status: 'pending_delivery' })
+        .send({ status: 'transiting' })
         .expect(200)
         .end((err, res) => {
           expect(res.body.status).to.equal('success');
-          expect(res.body.data.status).to.equal('pending_delivery');
+          expect(res.body.data.status).to.equal('transiting');
           done();
         });
     });
     it('should return unauthorised when non admin user attempts access', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/status`)
         .set('x-access-token', authToken)
-        .send({ status: 'pending_delivery' })
+        .send({ status: 'transiting' })
         .expect(401)
         .end((err, res) => {
           expect(res.body.status).to.equal('Unauthorised');
@@ -310,11 +413,11 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should change parcel status', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/presentLocation`)
         .set('x-access-token', adminToken)
-        .send({ presentLocation: 'new location' })
+        .send({ currentLocation: 'new location' })
         .expect(200)
         .end((err, res) => {
           expect(res.body.status).to.equal('success');
-          expect(res.body.data.presentLocation).to.equal('new location');
+          expect(res.body.data.to).to.equal('new location');
           done();
         });
     });
@@ -331,7 +434,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     it('should return unauthorised when non admin user attempts access', (done) => {
       request.put(`/api/v1/parcels/${parcel.id}/presentLocation`)
         .set('x-access-token', authToken)
-        .send({ presentLocation: 'new location' })
+        .send({ currentLocation: 'new location' })
         .expect(401)
         .end((err, res) => {
           expect(res.body.status).to.equal('Unauthorised');

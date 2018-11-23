@@ -6,24 +6,31 @@ const parcelSchema = {
       name: 'id', autoIncrement: true, primaryKey: true,
     },
     {
-      name: 'userId', type: 'integer', notNull: true,
+      name: 'placedBy', type: 'integer', notNull: true,
     },
     { name: 'description', type: 'string', length: 200 },
+    { name: 'weight', type: 'string', length: 200 },
+    {
+      name: 'weightmetric', type: 'string', length: 20, default: 'kg',
+    },
+    {
+      name: 'cost', type: 'string', length: 20, notNull: true,
+    },
     {
       name: 'status', type: 'string', length: 30, notNull: true,
     },
     {
-      name: 'deliveryLocation', type: 'string', length: 200, notNull: true,
+      name: 'currentLocation', type: 'string', length: 200, notNull: true,
     },
     {
-      name: 'presentLocation', type: 'string', length: 200, notNull: true,
+      name: 'to', type: 'string', length: 200, notNull: true,
     },
     {
-      name: 'pickupLocation', type: 'string', length: 200, notNull: true,
+      name: 'from', type: 'string', length: 200, notNull: true,
     },
     { name: 'presentMapPointer', type: 'text' },
-    { name: 'createdAt', type: 'timestamp', default: 'currentTime' },
-    { name: 'updatedAt', type: 'timestamp', default: 'currentTime' },
+    { name: 'sentOn', type: 'timestamp', default: 'currentTime' },
+    { name: 'deliveredOn', type: 'timestamp', default: 'currentTime' },
   ],
 };
 

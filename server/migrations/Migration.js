@@ -84,6 +84,9 @@ export default class Migration {
     if (attribute.type === 'timestamp') {
       fieldRow += ' timestamptz ';
     }
+    if (attribute.type === 'boolean') {
+      fieldRow += ' BOOLEAN ';
+    }
     if (attribute.autoIncrement !== undefined) {
       fieldRow += ' SERIAL ';
     }
@@ -99,8 +102,12 @@ export default class Migration {
     if (attribute.notNull === true) {
       fieldRow += ' NOT NULL ';
     }
-    if (attribute.default === 'currentTime') {
-      fieldRow += ' DEFAULT CURRENT_TIMESTAMP ';
+    if (attribute.default !== undefined) {
+      if (attribute.default === 'currentTime') {
+        fieldRow += ' DEFAULT CURRENT_TIMESTAMP ';
+      } else {
+        fieldRow += ` DEFAULT '${attribute.default}' `;
+      }
     }
 
     return fieldRow;

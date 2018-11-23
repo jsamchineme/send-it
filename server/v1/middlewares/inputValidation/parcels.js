@@ -3,7 +3,7 @@ import {
   parcelCreateSchema,
   changeDestinationSchema,
   changeStatusSchema,
-  changePresentLocationSchema,
+  changeLocationSchema,
 } from '../../requestSchemas/parcel';
 import ResponseSchema from '../../helpers/Response';
 import ParcelModel from '../../../models/Parcel';
@@ -50,7 +50,7 @@ class ParcelValidator {
     if (parcel) {
       const err = {
         details: [
-          { message: '"status" is already set as delivered' },
+          { message: 'status is already set as delivered' },
         ],
       };
       return ResponseSchema.unprocessable(res, err);
@@ -76,8 +76,8 @@ class ParcelValidator {
    * @param {Object} next - next middleware
    * @return {Object} - response
    */
-  static validateChangePresentLocation(req, res, next) {
-    joi.validate(req.body, changePresentLocationSchema)
+  static validateChangeLocation(req, res, next) {
+    joi.validate(req.body, changeLocationSchema)
       .then(() => next())
       .catch(err => ResponseSchema.unprocessable(res, err));
   }

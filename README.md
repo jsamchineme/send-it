@@ -51,7 +51,7 @@ The ui templates are currently hosted on gh-pages
 - run npm install
 - You can test routes with POSTMAN
 - Here is a collection of requests to test available end points on POSTMAN
-https://www.pivotaltracker.com/file_attachments/93331263/download?inline=true
+https://www.pivotaltracker.com/file_attachments/93440857/download?inline=true
 - The environment can also be loaded with the collection
 https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
 - After loading the `collection` and the `environment`, the POSTMAN `Collection Runner` can be used to run the requests automatically and generate test report
@@ -79,7 +79,7 @@ https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
 
 <tr><td>PUT</td> <td>parcels/:id/destination?token={{ownerAuthToken}}</td> <td>Change the destination of a parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>parcels/:id/presentLocation?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/to?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
 
 <tr><td>POST</td> <td>auth/signup</td> <td> User Signup </td></tr>
 

@@ -17,22 +17,22 @@ class UserSeeder {
       {
         username: 'jsamchineme',
         email: 'jsamchineme@gmail.com',
-        userType: 'client',
-        active: 0,
+        isAdmin: false,
+        verified: false,
         password: bcrypt.hashSync('secretpass', 10),
       },
       {
         username: 'samcotech',
         email: 'samcotech@example.io',
-        userType: 'admin',
-        active: 1,
+        isAdmin: true,
+        verified: true,
         password: bcrypt.hashSync('secretpass', 10),
       },
       {
         username: 'jadenuser',
         email: 'jaden@example.io',
-        userType: 'client',
-        active: 0,
+        isAdmin: false,
+        verified: false,
         password: bcrypt.hashSync('secretpass', 10),
       },
     ];
@@ -43,38 +43,38 @@ class UserSeeder {
 
       const dummyParcels = [
         {
-          userId: newUser.id,
+          placedBy: newUser.id,
           description: 'description for delivered item',
-          status: 'pending_delivery',
-          deliveryLocation: '5 pack street, Lagos',
-          presentLocation: '5 Victoria Land Street, Ikeja',
-          pickupLocation: '5 Victoria Land Street, Ikeja',
+          status: 'transiting',
+          currentLocation: '5 Victoria Land Street, Ikeja',
+          from: '5 Victoria Land Street, Ikeja',
+          to: '5 pack street, Lagos',
+          weight: 54,
+          cost: 'N2,000',
           presentMapPointer: '45234232323',
         },
         {
-          userId: newUser.id,
+          placedBy: newUser.id,
           description: 'some description of the item in the order',
-          status: 'pending_delivery',
-          deliveryLocation: '5 pack street, Lagos',
-          presentLocation: '5 Victoria Land Street, Ikeja',
-          pickupLocation: '5 Victoria Land Street, Ikeja',
+          status: 'transiting',
+          currentLocation: '5 Victoria Land Street, Ikeja',
+          from: '5 Victoria Land Street, Ikeja',
+          to: '5 pack street, Lagos',
+          weight: 50,
+          cost: 'N2,000',
           presentMapPointer: '45234232323',
         },
       ];
 
       const orders = dummyParcels.map(async (parcel) => {
         const order = parcel;
-        const newOrder = await Parcel.create(order);
-        return newOrder;
+        await Parcel.create(order);
       });
 
-      const createdOrders = await Promise.all(orders);
-      newUser.orders = createdOrders;
-      return newUser;
+      await Promise.all(orders);
     });
 
-    const createdUsers = await Promise.all(users);
-    return createdUsers;
+    await Promise.all(users);
   }
 }
 
