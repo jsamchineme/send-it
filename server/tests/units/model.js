@@ -17,8 +17,8 @@ const modelTests = () => {
           username: 'johndoe',
           email: 'johndoe@example.io',
           password: 'asdadsds',
-          userType: 'client',
-          active: 0,
+          isAdmin: true,
+          verified: false,
         };
         // create a record first
         const result = await User.create(newRecordData);
@@ -66,9 +66,9 @@ const modelTests = () => {
         const user = await User.create({
           username: 'johndoe2',
           email: 'johndoe1@example.io',
-          password: 'secret',
-          userType: 'client',
-          active: 0,
+          password: 'secretpass',
+          isAdmin: false,
+          verified: false,
         });
         record = user;
         expect(user.id > 0).to.equal(true);
@@ -100,20 +100,20 @@ const modelTests = () => {
     describe('Model.getWhereString()', () => {
       it('should get a whereString after preparing it', () => {
         Parcel.resetConstraints();
-        const data = { userId: 1, status: 'pending_delivery' };
+        const data = { placedBy: 1, status: 'transiting' };
         Parcel.where(data);
         const whereString = Parcel.getWhereString();
-        expect(whereString).to.equal(`"userId" = ${data.userId} AND "status" = '${data.status}'`);
+        expect(whereString).to.equal(`"placedBy" = ${data.placedBy} AND "status" = '${data.status}'`);
       });
     });
     describe('Model.prepareUpdateSet()', () => {
       it('should prepare update SET string', async () => {
-        let data = { status: 'pending_delivery' };
+        let data = { status: 'transiting' };
         let preparedUpdateSet = Parcel.prepareUpdateSet(data);
         expect(preparedUpdateSet).to.equal(`SET "status" = '${data.status}'`);
-        data = { deliveryLocation: 'location', status: 'pending_delivery' };
+        data = { to: 'location', status: 'transiting' };
         preparedUpdateSet = Parcel.prepareUpdateSet(data);
-        expect(preparedUpdateSet).to.equal(`SET "deliveryLocation" = '${data.deliveryLocation}', "status" = '${data.status}'`);
+        expect(preparedUpdateSet).to.equal(`SET "to" = '${data.to}', "status" = '${data.status}'`);
       });
     });
     describe('Model.update()', () => {
@@ -125,7 +125,7 @@ const modelTests = () => {
         });
         const data = {
           email: 'johndoes@example.io',
-          active: 1,
+          verified: true,
         };
         const result = await User.update(record.id, data);
         expect(result.id).to.equal(record.id);
@@ -137,9 +137,9 @@ const modelTests = () => {
         record = await User.create({
           username: 'johndoe3',
           email: 'johndoe3@example.io',
-          userType: 'client',
-          active: 0,
-          password: 'secret',
+          isAdmin: false,
+          verified: false,
+          password: 'secretpass',
         });
         const result = await User.delete(record.id);
         expect(result).to.equal(true);

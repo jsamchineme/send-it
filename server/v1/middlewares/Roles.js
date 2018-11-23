@@ -17,7 +17,7 @@ class Roles {
   static isAdmin(req, res, next) {
     const user = req.decoded;
 
-    if (user.userType === 'admin') {
+    if (user.isAdmin) {
       next();
     } else {
       return Response.unauthorised(res);
@@ -39,7 +39,7 @@ class Roles {
       return Response.notFound(res);
     }
 
-    const foundParcel = await Parcel.where({ userId: user.id, id: parcelId }).getOne();
+    const foundParcel = await Parcel.where({ placedBy: user.id, id: parcelId }).getOne();
 
     if (foundParcel) {
       next();
@@ -62,7 +62,7 @@ class Roles {
 
     // this parcel is found for the user
     // OR authenticated user is an admin
-    if (isRightUser || user.userType === 'admin') {
+    if (isRightUser || user.isAdmin) {
       next();
     } else {
       return Response.unauthorised(res);

@@ -22,8 +22,8 @@ class AuthController {
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
     newUserData.password = hashedPassword;
-    newUserData.userType = 'client';
-    newUserData.active = 0;
+    newUserData.isAdmin = false;
+    newUserData.verified = false;
 
     const newUser = await User.create(newUserData);
 
@@ -54,7 +54,7 @@ class AuthController {
     const payload = {
       id: user.id,
       email: user.email,
-      userType: user.userType,
+      isAdmin: user.isAdmin,
     };
     // generate token and make it valid for 1 hour
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: 60 * 60 * 1 });

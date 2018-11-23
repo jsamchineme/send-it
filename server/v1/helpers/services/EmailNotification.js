@@ -19,7 +19,7 @@ class EmailNotification {
    * @return {EmailNotification} - the email notification instance
    */
   static async statusNotify(data) {
-    const user = await User.findById(data.userId);
+    const user = await User.findById(data.placedBy);
 
     const mailData = {
       toEmail: user.email,
@@ -37,12 +37,12 @@ class EmailNotification {
   }
 
   /**
-   * Notify the user of updates to the parcel destination
+   * Notify the user of updates to the parcel's current location
    * @param {Object} data - the emitted data
    * @return {EmailNotification} - the email notification instance
    */
   static async locationNotify(data) {
-    const user = await User.findById(data.userId);
+    const user = await User.findById(data.placedBy);
 
     const mailData = {
       toEmail: user.email,

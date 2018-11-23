@@ -79,7 +79,7 @@ https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
 
 <tr><td>PUT</td> <td>parcels/:id/destination?token={{ownerAuthToken}}</td> <td>Change the destination of a parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>parcels/:id/presentLocation?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/to?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
 
 <tr><td>POST</td> <td>auth/signup</td> <td> User Signup </td></tr>
 

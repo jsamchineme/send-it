@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "description": "SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.",
   "scripts": {
-    "start": "npm run db:migrate:reset && npm run db:seed && babel-node server/index.js",
-    "start:dev": "npm run db:migrate:reset && npm run db:seed && nodemon --exec babel-node server",
+    "start": "babel-node server/index.js",
+    "start:dev": "set DEBUG=database&& npm run db:migrate:reset && npm run db:seed && nodemon --exec babel-node server",
     "test": "set NODE_ENV=test&& npm run db:migrate:reset && npm run db:seed && nyc mocha --timeout 300000 --exit server/tests/",
     "test:dev": "set NODE_ENV=test&& nyc mocha --timeout 300000 --exit server/tests/",
     "db:migrate": "babel-node server/migrations/dbMigrate.js",
     "db:migrate:reset": "babel-node server/migrations/dbMigrateReset.js",
     "db:seed": "babel-node server/seeders/Seeder.js",
-    "db:prepare": "npm run db:migrate:reset && npm run db:seed",
+    "db:prepare": "set DEBUG=database&&npm run db:migrate:reset && npm run db:seed",
     "lint": "eslint --fix server",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "heroku-postbuild": "npm run db:prepare"
   },
   "engines": {
     "node": "8.11.2"
@@ -58,6 +59,7 @@
     "jsonwebtoken": "8.3.0",
     "mocha": "5.2.0",
     "mocha-logger": "1.0.6",
+    "multer": "1.4.1",
     "pg": "7.6.1",
     "supertest": "3.3.0",
     "validator": "10.8.0",
