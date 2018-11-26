@@ -1,0 +1,26 @@
+const path = require('path');
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, 'public'),
+    filename: 'app.js',
+    publicPath: '/'
+  },
+  devServer: {
+    contentBase: './public',
+    port: 3000,
+    historyApiFallback: {
+      index: 'index.html'
+    }
+  },
+  module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: [
+        "babel-loader"
+      ]
+    }]
+  }
+};
