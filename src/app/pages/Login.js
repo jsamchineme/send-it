@@ -25,11 +25,11 @@ export default class Login {
                     <span class="error">This is a required field</span>
                   </div> -->
                   <label for="email">Email</label>   
-                  <input type="email" placeholder='you@email.com' id='email' required/>
+                  <input type="email" placeholder='you@email.com' name='email' required/>
                 </div>
                 <div class="input-group transparent-box">
                   <label for="password">Password</label>
-                  <input type="password" placeholder='your password' id='password' required/> 
+                  <input type="password" placeholder='your password' name='password' required/> 
                 </div>
                 <div class="input-footer"></div>
                 <!-- <div class="v-gap-2"></div> -->

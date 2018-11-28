@@ -1,10 +1,10 @@
 class Router {
   constructor() {
-      this.handlers = {};
+    this.handlers = {};
   }
 
   set(route, handler) {
-      this.handlers[route] = handler;
+    this.handlers[route] = handler;
   }
 }
 

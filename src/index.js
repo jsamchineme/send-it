@@ -18,14 +18,12 @@ app.funcs = {
     // add some initial load calls here
     this.setRouter();
     window.onpopstate = () => this.setRouter();
-    this.renderPage();
 
-    // this.signup = signup;
+    // render the page the first time.
+    this.renderPage();
   },
   renderPage: () => {
-    let target = document.getElementById("root");
-    let appHTML = app.render();
-    target.innerHTML = appHTML;
+    app.reRender();
   },
   /**
    * Apply the route path and render the current page based on the route
@@ -46,6 +44,7 @@ app.funcs = {
 
     let currentPage = routes[path];
 
+    // app.setState triggers a re-render of the view
     app.setState('currentPage', currentPage);
   },
   linkHandler: (elem) => {

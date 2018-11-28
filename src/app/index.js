@@ -49,14 +49,58 @@ export default class App {
     this.state[key] = value;
     this.reRender();
     
-    // 
     console.log(this.state);
   }
 
   reRender() {
-    let appHTML = this.render();
+    // to get page transition animations
+    // get the html
+    // create two nodes
+    // one for the current view's html
+    // the other for the new view's html
+    // load the both to the root
+
+    // get the root element of the whole view
     let target = document.getElementById("root");
-    target.innerHTML = appHTML;
+    
+    let exitingView = document.getElementById('exiting-view');
+    let activeView = document.getElementById('active-view');
+
+    // active view is the container to hold new active content after page transition
+    // activeView is undefined when the page is just loading for the first time
+    if(!activeView) {
+      activeView = document.createElement("div");
+      activeView.id = 'active-view';
+    }
+        
+    // exiting view is the container to hold formerly active content after page transition
+    // exitingView is undefined when the page is just loading for the first time
+    if(!exitingView) {      
+      exitingView = document.createElement("div");
+      exitingView.id = 'exiting-view';
+    } else {
+      // place the HTML from the last active view into the exiting view
+      exitingView.innerHTML = activeView.innerHTML;
+    }
+    
+    let activeViewHTML = app.render();
+    activeView.innerHTML = activeViewHTML;
+
+    exitingView.className = '';
+    activeView.className = 'entering';
+
+    // remove the "entering" class name after 1 second 
+    setTimeout(() => {
+      activeView.className = '';
+      setTimeout(() => {
+        // on applying the "out" the height of the exiting view is transited to 1
+        // to avoid extra unnecesary hieght and scroll for the currently active view
+        exitingView.className = 'out';
+      }, 500);
+    }, 1000);
+
+    target.appendChild(exitingView);
+    target.appendChild(activeView);
   }
 
   getCurrentPage() {

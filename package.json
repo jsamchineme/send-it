@@ -4,8 +4,8 @@
   "description": "SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.",
   "scripts": {
     "dev": "webpack --mode development --watch",
-    "start": "node server.js",
-    "start:dev": "webpack-dev-server --open --inline --hot",
+    "start": "node server.js",  
+    "start:dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
     "heroku-postbuild": "webpack --mode production"
   },
