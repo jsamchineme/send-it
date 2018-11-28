@@ -3,7 +3,7 @@ import Link from '../components/Link';
 export default class Home {
   render() {
     return (`
-      <div class="wrapper">
+      <div class="wrapper" style='background: white;'>
         <div class="page-content">
           <div class='mast-banner' style='background-image: url(assets/img/sending-package.jpg)'>
             <section class="mast theme-dark">
