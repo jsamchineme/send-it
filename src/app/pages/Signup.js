@@ -1,6 +1,9 @@
 import Link from '../components/Link';
 
 export default class Signup {
+  constructor() {
+    document.title = "Signup - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+  }
   render() {
     return (`
       <div class="wrapper">

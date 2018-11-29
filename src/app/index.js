@@ -2,6 +2,16 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Home from './pages/Home';
 import ForgotPassword from './pages/ForgotPassword';
+import MakeOrder from './pages/MakeOrder';
+import InviteUsers from './pages/InviteUsers';
+import AllParcels from './pages/AllParcels';
+import NotFound from './pages/NotFound';
+import AdminLogin from './pages/admin/Login';
+import PendingParcels from './pages/PendingParcels';
+import DeliveredParcels from './pages/DeliveredParcels';
+import UserProfile from './pages/UserProfile';
+import { routes } from '../router';
+
 
 export default class App {
   constructor() {
@@ -21,26 +31,12 @@ export default class App {
     if (path === undefined) {
       path = window.location.pathname;
     }
-    let currentPage;
-    switch (path) {
-      case '/signup':
-        currentPage = "SignUp";
-        break;
-      case '/login':
-        currentPage = "Login";
-        break;
-      case '/forgot-password':
-        currentPage = "ForgotPassword";
-        break;
-      case '/user-profile':
-        currentPage = "UserProfile";
-        break;
-      case '/':
-        currentPage = "Home";
-        break;
-      default:
-        currentPage = "Home";
-        break;
+
+    let currentPage = routes[path];
+
+    if(!currentPage) {
+      // show a not found page
+      window.location = '/not-found';
     }
     return currentPage;
   }
@@ -96,7 +92,7 @@ export default class App {
         // on applying the "out" the height of the exiting view is transited to 1
         // to avoid extra unnecesary hieght and scroll for the currently active view
         exitingView.className = 'out';
-      }, 500);
+      }, 100);
     }, 1000);
 
     target.appendChild(exitingView);
@@ -113,8 +109,13 @@ export default class App {
       case 'Login': Page = new Login(); break;
       case 'SignUp': Page = new Signup(); break;
       case 'ForgotPassword': Page = new ForgotPassword(); break;
-      // case 'UserProfile': Page = new UserProfile(); break;
-      default: Page = new Home();
+      case 'MakeOrder': Page = new MakeOrder(); break;
+      case 'InviteUsers': Page = new InviteUsers(); break;
+      case 'AllParcels': Page = new AllParcels(); break;
+      case 'PendingParcels': Page = new PendingParcels(); break;
+      case 'DeliveredParcels': Page = new DeliveredParcels(); break;
+      case 'UserProfile': Page = new UserProfile(); break;
+      default: Page = new NotFound();
     }
     let eventListeners = Page.attachEventListeners ? Page.attachEventListeners : null;
     let appEventListeners = window.appEventListeners || [];
@@ -132,8 +133,6 @@ export default class App {
 
     let currentPage = this.renderPage();
 
-    return `<div>
-            ${currentPage}
-        </div>`;
+    return `<div> ${currentPage} </div>`;
   }
 }

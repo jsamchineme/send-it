@@ -1,16 +1,8 @@
 import App from './app';
-
-import {
-  router
-} from './router';
-
-// router.set('/signup', (e) => {
-//   console.log("router", router.handlers);
-// });
+import { router, routes } from './router';
 
 let app = new App();
 
-document.title = "Send-IT";
 window.appEventListeners = [];
 
 app.funcs = {
@@ -32,15 +24,6 @@ app.funcs = {
     if (path === undefined) {
       path = window.location.pathname;
     }
-    // setting up routes and pages
-    let routes = {
-      "/signup": 'SignUp',
-      "/login": "Login",
-      "/user-profile": "UserProfile",
-      "/forgot-password": "ForgotPassword",
-      "/admin-dashboard": "AdminDashboard",
-      "/": "Home",
-    }
 
     let currentPage = routes[path];
 
@@ -54,8 +37,10 @@ app.funcs = {
     } = window.location;
     // preparing the route to switch to
     let href = `${origin}${destination}`;
+
     // pushing prepared route to the window history object 
     window.history.pushState({}, '', href);
+
     // set the new page route
     app.funcs.setRouter(destination);
 
