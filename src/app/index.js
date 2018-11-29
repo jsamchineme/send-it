@@ -11,13 +11,31 @@ import PendingParcels from './pages/PendingParcels';
 import DeliveredParcels from './pages/DeliveredParcels';
 import UserProfile from './pages/UserProfile';
 import { routes } from '../router';
-
+import { userSignup, getParcels } from '../app/services/apiRequests';
 
 export default class App {
   constructor() {
     this.state = {
-      currentPage: this.setInitialPage()
+      currentPage: this.setInitialPage(),
+      authUser: {
+        email: 'jsamchineme@gmail.com',
+        username: 'samcotech',
+        password: 'secretpass',
+        token: 'asdasdfasdfasdf',
+        isAdmin: true
+      },
+      signupData: {
+        firstname: 'Samuel',
+        lastname: 'Osuh',
+        email: 'jsamchineme@example.com',
+        username: 'samcotech',
+        password: 'secretpass',
+      }
     }
+
+    getParcels().then(response => {
+      console.log('RESPONSE', response);
+    });
 
     /**
      * I can get all the funcs and set them as direct properties of this class
