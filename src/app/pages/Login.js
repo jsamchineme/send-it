@@ -1,6 +1,9 @@
 import Link from '../components/Link';
 
 export default class Login {
+  constructor() {
+    document.title = "Login - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+  }
   render() {
     return (`
       <div class="wrapper">
@@ -8,14 +11,17 @@ export default class Login {
           <section class="mast no-bg paddless">
             ${Link({
               to:'/', 
-              text:`<div class="logo"><img src="assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
+              text:`<div class="logo"><img src="/assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
               <div class="text">Send<span>IT</span></div>`, 
               className: 'logo-text-group', 
               style:''}
             )}
           </section>
           <div class="login-box">
-            <form action="user-profile.html">
+            <form 
+              action="user-profile"
+              class="user-login-form"
+            >
               <div class="form-header">
                 Login
               </div>

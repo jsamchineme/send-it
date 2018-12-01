@@ -1,8 +1,8 @@
-import Link from '../components/Link';
+import Link from '../../components/Link';
 
-export default class ForgotPassword {
+export default class Login {
   constructor() {
-    document.title = "Forgot password - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Login - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
     return (`
@@ -18,28 +18,49 @@ export default class ForgotPassword {
             )}
           </section>
           <div class="login-box">
-            <form action="">
+            <form
+              class="admin-login-form"
+              action="/admin-dashboard"
+            >
               <div class="form-header">
-                <span>Password Recovery</span>
-                <div class="v-gap-1"></div>
-                <div class='tip'>Please Enter the email associated with your account</div>
+                Admin Login
               </div>
               <div class="form-body">
                 <div class="input-group transparent-box">
+                  <!-- <div class="info">
+                    <span class="error">This is a required field</span>
+                  </div> -->
                   <label for="email">Email</label>
-                  <input type="email" id='email' placeholder='you@email.com' required/>
+                  <input 
+                    type="email" 
+                    placeholder='you@email.com' 
+                    name='email'
+                    required
+                    value='samcotech@example.io'
+                  />
+                </div>
+                <div class="input-group transparent-box">
+                  <label for="password">Password</label>
+                  <input 
+                    type="password" 
+                    placeholder='your password' 
+                    name='password'
+                    required
+                    value='secretpass'
+                  />
                 </div>
                 <div class="input-footer"></div>
-                <div class="v-gap-2"></div>
-                
+                <!-- <div class="v-gap-2"></div> -->
                 <div class="row text-center">
                   <div class="column">
-                    <button class="btn submit">Request Password Reset</button>
+                    <button class="btn submit">Login</button>
                   </div>
                   <div class="actions column text-center">
                     <div class="v-gap-2"></div>
                     <div class="">
                       ${Link({to:'/signup', text:`Sign up`, className: '', style:''})}
+                      <span style="margin-right: 10px; display: inline-block;"></span>
+                      ${Link({to:'/forgot-password', text:`Forgot password`, className: '', style:''})}
                     </div>
                   </div>
                 </div>

@@ -1,19 +1,16 @@
 import App from './app';
+import { router, routes } from './router';
+import services from './app/services';
 
-import {
-  router
-} from './router';
-
-// router.set('/signup', (e) => {
-//   console.log("router", router.handlers);
-// });
 
 let app = new App();
 
-document.title = "Send-IT";
 window.appEventListeners = [];
 
 app.funcs = {
+  /**
+   * initialise the app and prepare the first rendering
+   */
   init() {
     // add some initial load calls here
     this.setRouter();
@@ -22,8 +19,14 @@ app.funcs = {
     // render the page the first time.
     this.renderPage();
   },
-  renderPage: () => {
-    app.reRender();
+  /**
+   * render the view
+   */
+  renderPage: async () => {
+    await app.reRender();
+    // add all event handler 
+    
+    // .addEventListener('click', window.services.api.userLogin);
   },
   /**
    * Apply the route path and render the current page based on the route
@@ -32,21 +35,17 @@ app.funcs = {
     if (path === undefined) {
       path = window.location.pathname;
     }
-    // setting up routes and pages
-    let routes = {
-      "/signup": 'SignUp',
-      "/login": "Login",
-      "/user-profile": "UserProfile",
-      "/forgot-password": "ForgotPassword",
-      "/admin-dashboard": "AdminDashboard",
-      "/": "Home",
-    }
 
     let currentPage = routes[path];
 
     // app.setState triggers a re-render of the view
     app.setState('currentPage', currentPage);
   },
+  /**
+   * handling the click event on all links
+   * this will determine the url to navigate to
+   * by reading the href attribute of the anchor tag
+   */
   linkHandler: (elem) => {
     let destination = elem.getAttribute("href");
     let {
@@ -54,17 +53,19 @@ app.funcs = {
     } = window.location;
     // preparing the route to switch to
     let href = `${origin}${destination}`;
+
     // pushing prepared route to the window history object 
     window.history.pushState({}, '', href);
+
     // set the new page route
     app.funcs.setRouter(destination);
 
     // run any of the functions attached to a particular route when the route is navigated to
     router.handlers[destination] ? router.handlers[destination]() : null;
   }
-
 }
 
 
 window.app = app;
+const actions = services;
 window.app.funcs.init();

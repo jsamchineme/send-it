@@ -1,8 +1,8 @@
 import Link from '../components/Link';
 
-export default class Home {
+export default class NotFound {
   constructor() {
-    document.title = "Home - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Not found - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
     return (`
@@ -27,9 +27,9 @@ export default class Home {
                 </div>
                 <div class="right-content">
                   <div class="landing-text">
-                    <div class="text-1">Send Packages Anywhere.</div>
-                    <div class="text-2">We pick up, deliver and even let you track the process.</div>
-                    <div class="text-3">Ain't that cool?</div>
+                    <div class="text-1">We couldn't find what you were looking for</div>
+                    <div class="text-2">It's Our bad. Checkout our offering below</div>
+                    <!-- <div class="text-3">Ain't that cool?</div> -->
                   </div>
                   <div class="actions">
                     ${Link({to:'/login', text:`Get Started`, className: 'button cta', style:''})}
