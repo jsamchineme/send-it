@@ -11,28 +11,43 @@ export default class Login {
           <section class="mast no-bg paddless">
             ${Link({
               to:'/', 
-              text:`<div class="logo"><img src="assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
+              text:`<div class="logo"><img src="/assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
               <div class="text">Send<span>IT</span></div>`, 
               className: 'logo-text-group', 
               style:''}
             )}
           </section>
           <div class="login-box">
-            <form action="user-profile.html">
+            <form
+              class="admin-login-form"
+              action="/admin-dashboard"
+            >
               <div class="form-header">
-                Login
+                Admin Login
               </div>
               <div class="form-body">
                 <div class="input-group transparent-box">
                   <!-- <div class="info">
                     <span class="error">This is a required field</span>
                   </div> -->
-                  <label for="email">Email</label>   
-                  <input type="email" placeholder='you@email.com' name='email' required/>
+                  <label for="email">Email</label>
+                  <input 
+                    type="email" 
+                    placeholder='you@email.com' 
+                    name='email'
+                    required
+                    value='samcotech@example.io'
+                  />
                 </div>
                 <div class="input-group transparent-box">
                   <label for="password">Password</label>
-                  <input type="password" placeholder='your password' name='password' required/> 
+                  <input 
+                    type="password" 
+                    placeholder='your password' 
+                    name='password'
+                    required
+                    value='secretpass'
+                  />
                 </div>
                 <div class="input-footer"></div>
                 <!-- <div class="v-gap-2"></div> -->

@@ -9,7 +9,7 @@ const Parcel = () => {
             <!--<div class='text-num order-id'>Tracking ID: <span>#37749</span></div>-->
           </div>
           <div class="image">
-            <img src="assets/img/packages/package-1.png" alt="">
+            <img src="/assets/img/packages/package-1.png" alt="">
           </div>
         </div>
         <div class="lower-section">

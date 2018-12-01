@@ -1,6 +1,2 @@
 /node_modules
-.nyc_output
 .env
-.vscode
-coverage
-yarn.lock

@@ -39,7 +39,7 @@ export default class UserProfile {
                     <div class="summary-card row">
                       <div class="left column col-8">
                         <div class="image round">
-                          <img src="assets/img/users/amilolo.jpg" alt="Profile Picture">
+                          <img src="/assets/img/users/amilolo.jpg" alt="Profile Picture">
                         </div>
                         <div class="text-info">
                           <div class="text-1">Solomonowen Jalamiaweyes</div>

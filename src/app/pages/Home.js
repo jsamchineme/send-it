@@ -12,7 +12,7 @@ export default class Home {
             <section class="mast theme-dark">
               ${Link({
                 to:'/', 
-                text:`<div class="logo"><img src="assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
+                text:`<div class="logo"><img src="/assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
                 <div class="text">Send<span>IT</span></div>`, 
                 className: 'logo-text-group', 
                 style:''}
@@ -22,7 +22,7 @@ export default class Home {
               <div class="container">
                 <div class="left-content">
                   <div class="image">
-                    <img src="assets/img/package-landing-image.jpg" alt="sendit landing introduction image" />
+                    <img src="/assets/img/package-landing-image.jpg" alt="sendit landing introduction image" />
                   </div>
                 </div>
                 <div class="right-content">
@@ -44,15 +44,15 @@ export default class Home {
             </div>
             <div class="items row auto-container">
               <div class="item column col-4">
-                <div class="image"><img src="assets/img/sendit-pickup-ondemand.svg" alt="" /></div>
+                <div class="image"><img src="/assets/img/sendit-pickup-ondemand.svg" alt="" /></div>
                 <div class="text">Pickup On Demand</div>
               </div>
               <div class="item column col-4">
-                <div class="image"><img src="assets/img/sendit-timely-delivery.svg" alt="" /></div>
+                <div class="image"><img src="/assets/img/sendit-timely-delivery.svg" alt="" /></div>
                 <div class="text">Timely Delivery</div>
               </div>
               <div class="item column col-4">
-                <div class="image"><img src="assets/img/sendit-track-package.svg" alt="" /></div>
+                <div class="image"><img src="/assets/img/sendit-track-package.svg" alt="" /></div>
                 <div class="text">Track Order</div>
               </div>
             </div>

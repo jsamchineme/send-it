@@ -11,7 +11,7 @@ export default class InviteUsers {
           <section class="mast no-bg paddless">
             ${Link({
               to:'/', 
-              text:`<div class="logo"><img src="assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
+              text:`<div class="logo"><img src="/assets/img/sendit-pickup-ondemand.svg" alt="sendit-logo" /></div>
               <div class="text">Send<span>IT</span></div>`, 
               className: 'logo-text-group', 
               style:''}

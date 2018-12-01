@@ -68,7 +68,7 @@ export default class MakeOrder {
                               </div>
                               <div class="images column col-5">
                                 <div class="image">
-                                  <!-- <img src="assets/img/packages/package-1.png" alt=""> -->
+                                  <!-- <img src="/assets/img/packages/package-1.png" alt=""> -->
                                 </div>
                               </div>
                             </form>

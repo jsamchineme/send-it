@@ -10,32 +10,22 @@ import AdminLogin from './pages/admin/Login';
 import PendingParcels from './pages/PendingParcels';
 import DeliveredParcels from './pages/DeliveredParcels';
 import UserProfile from './pages/UserProfile';
+import AdminAllParcels from './pages/admin/AllParcels';
+import AdminPendingParcels from './pages/admin/PendingParcels';
+import AdminDeliveredParcels from './pages/admin/DeliveredParcels';
 import { routes } from '../router';
 import { userSignup, getParcels } from '../app/services/apiRequests';
+import store from './store';
+import services from './services';
 
 export default class App {
   constructor() {
+
     this.state = {
       currentPage: this.setInitialPage(),
-      authUser: {
-        email: 'jsamchineme@gmail.com',
-        username: 'samcotech',
-        password: 'secretpass',
-        token: 'asdasdfasdfasdf',
-        isAdmin: true
-      },
-      signupData: {
-        firstname: 'Samuel',
-        lastname: 'Osuh',
-        email: 'jsamchineme@example.com',
-        username: 'samcotech',
-        password: 'secretpass',
-      }
     }
 
-    getParcels().then(response => {
-      console.log('RESPONSE', response);
-    });
+    this.store = store;
 
     /**
      * I can get all the funcs and set them as direct properties of this class
@@ -66,7 +56,7 @@ export default class App {
     console.log(this.state);
   }
 
-  reRender() {
+  async reRender() {
     // to get page transition animations
     // get the html
     // create two nodes
@@ -103,6 +93,9 @@ export default class App {
     exitingView.className = '';
     activeView.className = 'entering';
 
+    target.appendChild(exitingView);
+    target.appendChild(activeView);
+
     // remove the "entering" class name after 1 second 
     setTimeout(() => {
       activeView.className = '';
@@ -110,17 +103,36 @@ export default class App {
         // on applying the "out" the height of the exiting view is transited to 1
         // to avoid extra unnecesary hieght and scroll for the currently active view
         exitingView.className = 'out';
+        // exitingView.innerHTML = '';
       }, 100);
     }, 1000);
 
-    target.appendChild(exitingView);
-    target.appendChild(activeView);
+    
+    // I fetch the item at index 1 because the first one will be behind in the 
+    // exiting view
+    let adminLoginForm = document.getElementsByClassName('admin-login-form')[1];
+    let userLoginForm = document.getElementsByClassName('user-login-form')[1];
+    let signupForm = document.getElementsByClassName('signup-login-form')[1];
+
+    // attach event handlers to elements
+    let { actions } = services;
+    if(adminLoginForm) { 
+      adminLoginForm.addEventListener('submit', actions.userLogin);
+      adminLoginForm.addEventListener('input', actions.saveInput.bind(this, 'userLogin'));
+    }
+    if(userLoginForm) { 
+      userLoginForm.addEventListener('submit', actions.userLogin);
+      userLoginForm.addEventListener('input', actions.saveInput.bind(this, 'userLogin'));
+    }
+    if(signupForm) { 
+      signupForm.addEventListener('submit', actions.userSignup);
+      signupForm.addEventListener('input', actions.saveInput.bind(this, 'userSignup'));
+    }
+
   }
 
   getCurrentPage() {
-    let {
-      currentPage
-    } = this.state;
+    let { currentPage } = this.state;
     let Page;
     switch (currentPage) {
       case 'Home': Page = new Home(); break;
@@ -133,6 +145,11 @@ export default class App {
       case 'PendingParcels': Page = new PendingParcels(); break;
       case 'DeliveredParcels': Page = new DeliveredParcels(); break;
       case 'UserProfile': Page = new UserProfile(); break;
+      case 'AdminLogin': Page = new AdminLogin(); break;
+      case 'AdminAllParcels': Page = new AdminAllParcels(); break;
+      case 'AdminPendingParcels': Page = new AdminPendingParcels(); break;
+      case 'AdminDeliveredParcels': Page = new AdminDeliveredParcels(); break;
+
       default: Page = new NotFound();
     }
     let eventListeners = Page.attachEventListeners ? Page.attachEventListeners : null;
