@@ -33,7 +33,7 @@ export default class Login {
                   <label for="email">Email</label>
                   <input 
                     type="email" 
-                    placeholder='you@email.com' 
+                    placeholder='your email' 
                     name='email'
                     required
                     value='samcotech@example.io'

@@ -31,7 +31,7 @@ export default class Login {
                     <span class="error">This is a required field</span>
                   </div> -->
                   <label for="email">Email</label>   
-                  <input type="email" placeholder='you@email.com' name='email' required/>
+                  <input type="email" placeholder='your email' name='email' required/>
                 </div>
                 <div class="input-group transparent-box">
                   <label for="password">Password</label>

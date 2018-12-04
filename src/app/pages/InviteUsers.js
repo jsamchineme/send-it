@@ -26,7 +26,7 @@ export default class InviteUsers {
               </div>
               <div class="form-body">
                 <div class="input-group">
-                  <input type="email" placeholder='email' required />
+                  <input type="email" placeholder='your email' required />
                 </div>
                 <div class="input-footer"></div>
                 <div class="v-gap-2"></div>

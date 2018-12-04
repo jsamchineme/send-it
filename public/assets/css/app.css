@@ -1027,7 +1027,52 @@ a {
   opacity: 0;
 }
 
+.page-loading {
+  background-color: #cccccc;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 /* Page transition styles end here */
+
+
+/* over-riding styles */
+
+.input-group.transparent-box {
+  background: white;
+}
+
+.input-group.transparent-box label {
+  display: none;
+}
+
+.input-group input, .input-group select {
+  border: none;
+  background: white;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+
+.btn.submit {
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 300ms ease-in-out;
+}
+
+.btn.submit:hover {
+  background-color: black;
+  color: orange;
+  margin-top: 20px;
+}
+
+/* Overiding Styles end */
+
 
 @media screen and (min-width: 768px) {
   .col-1 {

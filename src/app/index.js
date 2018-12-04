@@ -14,7 +14,8 @@ import AdminAllParcels from './pages/admin/AllParcels';
 import AdminPendingParcels from './pages/admin/PendingParcels';
 import AdminDeliveredParcels from './pages/admin/DeliveredParcels';
 import { routes } from '../router';
-import { userSignup, getParcels } from '../app/services/apiRequests';
+import AdminPage from './pages/middlewares/AdminPage';
+import UserPage from './pages/middlewares/UserPage';
 import store from './store';
 import services from './services';
 
@@ -56,7 +57,7 @@ export default class App {
     console.log(this.state);
   }
 
-  async reRender() {
+  prepareView() {
     // to get page transition animations
     // get the html
     // create two nodes
@@ -106,8 +107,9 @@ export default class App {
         // exitingView.innerHTML = '';
       }, 100);
     }, 1000);
+  }
 
-    
+  addEventListeners() {
     // I fetch the item at index 1 because the first one will be behind in the 
     // exiting view
     let adminLoginForm = document.getElementsByClassName('admin-login-form')[1];
@@ -128,7 +130,12 @@ export default class App {
       signupForm.addEventListener('submit', actions.userSignup);
       signupForm.addEventListener('input', actions.saveInput.bind(this, 'userSignup'));
     }
+  }
 
+  async reRender() {
+    this.prepareView();
+
+    this.addEventListeners();
   }
 
   getCurrentPage() {
@@ -139,22 +146,21 @@ export default class App {
       case 'Login': Page = new Login(); break;
       case 'SignUp': Page = new Signup(); break;
       case 'ForgotPassword': Page = new ForgotPassword(); break;
-      case 'MakeOrder': Page = new MakeOrder(); break;
-      case 'InviteUsers': Page = new InviteUsers(); break;
-      case 'AllParcels': Page = new AllParcels(); break;
-      case 'PendingParcels': Page = new PendingParcels(); break;
-      case 'DeliveredParcels': Page = new DeliveredParcels(); break;
-      case 'UserProfile': Page = new UserProfile(); break;
+      case 'MakeOrder': Page = UserPage.guard()(new MakeOrder()); break;
+      case 'InviteUsers': Page = UserPage.guard()(new InviteUsers()); break;
+      case 'AllParcels': Page = UserPage.guard()(new AllParcels()); break;
+      case 'PendingParcels': Page = UserPage.guard()(new PendingParcels()); break;
+      case 'DeliveredParcels': Page = UserPage.guard()(new DeliveredParcels()); break;
+      case 'UserProfile': Page = UserPage.guard()(new UserProfile()); break;
       case 'AdminLogin': Page = new AdminLogin(); break;
-      case 'AdminAllParcels': Page = new AdminAllParcels(); break;
-      case 'AdminPendingParcels': Page = new AdminPendingParcels(); break;
-      case 'AdminDeliveredParcels': Page = new AdminDeliveredParcels(); break;
-
+      case 'AdminAllParcels': Page = AdminPage.guard()(new AdminAllParcels()); break;
+      case 'AdminPendingParcels': Page = AdminPage.guard()(new AdminPendingParcels()); break;
+      case 'AdminDeliveredParcels': Page = AdminPage.guard()(new AdminDeliveredParcels()); break;
       default: Page = new NotFound();
     }
-    let eventListeners = Page.attachEventListeners ? Page.attachEventListeners : null;
-    let appEventListeners = window.appEventListeners || [];
-    window.appEventListeners = [...appEventListeners, eventListeners];
+    // let eventListeners = Page.attachEventListeners ? Page.attachEventListeners : null;
+    // let appEventListeners = window.appEventListeners || [];
+    // window.appEventListeners = [...appEventListeners, eventListeners];
     return Page;
   }
 

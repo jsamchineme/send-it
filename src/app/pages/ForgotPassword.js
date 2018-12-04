@@ -27,7 +27,7 @@ export default class ForgotPassword {
               <div class="form-body">
                 <div class="input-group transparent-box">
                   <label for="email">Email</label>
-                  <input type="email" id='email' placeholder='you@email.com' required/>
+                  <input type="email" id='email' placeholder='your email' required/>
                 </div>
                 <div class="input-footer"></div>
                 <div class="v-gap-2"></div>

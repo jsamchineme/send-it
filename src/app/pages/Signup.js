@@ -49,7 +49,7 @@ export default class Signup {
                   <label for="email">Email</label>
                   <input 
                     type="email" 
-                    placeholder='you@email.com' 
+                    placeholder='your email' 
                     required
                     name='email'
                   />

@@ -10,6 +10,7 @@ class Router {
 
 export const routes = {
   "/": "Home",
+  "/home": "Home",
   "/signup": 'SignUp',
   "/login": "Login",
   "/admin-login": "AdminLogin",
