@@ -117,8 +117,8 @@ export default class App {
     // attach event handlers to elements
     let { actions } = services;
     if(adminLoginForm) { 
-      adminLoginForm.addEventListener('submit', actions.userLogin);
-      adminLoginForm.addEventListener('input', actions.saveInput.bind(this, 'userLogin'));
+      adminLoginForm.addEventListener('submit', actions.adminLogin);
+      adminLoginForm.addEventListener('input', actions.saveInput.bind(this, 'adminLogin'));
     }
     if(userLoginForm) { 
       userLoginForm.addEventListener('submit', actions.userLogin);

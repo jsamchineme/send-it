@@ -1,11 +1,18 @@
-import SideBar from '../../layouts/SideBar'
+import SideBar from '../../layouts/AdminSideBar';
 import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
 import Parcel from '../../components/Parcel';
+import { retrieveAuthUser } from "../../services/localStorage";
 
 export default class AdminAllParcels {
   constructor() {
     document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    
+    // redirect user if not admin
+    const savedAuthUser = retrieveAuthUser();
+    if (! savedAuthUser || !savedAuthUser.isAdmin) {
+      window.location.href = '/admin-login';
+    }
   }
   renderProduct() {
     let productHTML = '';

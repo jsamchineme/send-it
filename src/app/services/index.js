@@ -1,6 +1,10 @@
 import * as localStorage from './localStorage';
 import saveInput from './actions/saveInput';
-import { userLogin, userSignup } from './actions/user';
+import { 
+  userLogin, 
+  userSignup, 
+  adminLogin 
+} from './actions/user';
 
 
 export default {
@@ -8,6 +12,7 @@ export default {
   actions: {
     saveInput,
     userLogin,
+    adminLogin,
     userSignup
   }
 };

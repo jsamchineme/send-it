@@ -6,12 +6,12 @@ const BASE_URL = 'http://localhost:8001/api/v1';
 
 export const getParcels = (token) => {
   return fetch(`${BASE_URL}/parcels?token=${token}`)
-  .then(async res => { 
+  .then(res => { 
     if(!res.ok) {
-      throw await new ResponseException(res);
+      throw new ResponseException(res);
     }
     return res.json();
-  }); 
+  });
 }
 
 export const userLogin = (data) => {
@@ -25,7 +25,7 @@ export const userLogin = (data) => {
   })
   .then(async res => { 
     if(!res.ok) {
-      throw await new ResponseException(res);
+      throw await ResponseException.prepare(res);
     }
     return res.json();
   });
@@ -40,9 +40,9 @@ export const userSignup = (data) => {
       'Content-Type': 'application/json'
     }),
   })
-  .then(async res => { 
+  .then(res => { 
     if(!res.ok) {
-      throw await new ResponseException(res);
+      throw new ResponseException(res);
     }
     return res.json();
   })

@@ -14,8 +14,33 @@ export const userLogin = (e) => {
     
     const savedAuthUser = retrieveAuthUser();
 
+    console.log('--Auth User--', savedAuthUser);
+
+  }).catch(async error => {
+    let message = await error.getMessage();
+    console.log("---ERROR", message);
+    // TODO:
+    // show some feedback on the user interface
+  });
+}
+
+export const adminLogin = (e) => {
+  e.preventDefault();
+  const data = window.app.store.adminLoginData;
+
+  api.userLogin(data).then(response => {
+    window.app.store.authUser = response.data;
+
+    const authUser = response.data;
+    
+    persistAuthUser(authUser);
+    
+    const savedAuthUser = retrieveAuthUser();
+
+    console.log('--Auth User--', savedAuthUser);
   }).catch(error => {
-    // console.log("---ERROR", error.status);
+    // let message = await error.getMessage();
+    console.log("---ERROR", error.status);
     // TODO:
     // show some feedback on the user interface
   });

@@ -67,5 +67,4 @@ app.funcs = {
 
 
 window.app = app;
-const actions = services;
 window.app.funcs.init();
