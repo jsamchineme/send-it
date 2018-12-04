@@ -1,4 +1,4 @@
-import SideBar from '../../layouts/SideBar'
+import SideBar from '../../layouts/AdminSideBar';
 import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
 import Parcel from '../../components/Parcel';
