@@ -63,7 +63,7 @@ export default class Home {
                 <div class="container" style="background-image: url('assets/img/sending-package.jpg')">
                   <div class="bg">
                     <div class="text">Got Package?</div>
-                    ${Link({to:'/login', text:`SEND IT`, className: 'btn small cta theme-orange', style:''})}
+                    ${Link({to:'/login', text:`SEND IT`, className: 'button small cta theme-orange', style:''})}
                   </div>
                 </div>
               </div>
@@ -71,7 +71,7 @@ export default class Home {
                 <div class="container" style="background-image: url('assets/img/tracking-image.jpg')">
                   <div class="bg">
                     <div class="text">Sent Package?</div>
-                    ${Link({to:'/login', text:`TRACK IT`, className: 'btn small cta theme-orange', style:''})}
+                    ${Link({to:'/login', text:`TRACK IT`, className: 'button small cta theme-orange', style:''})}
                   </div>
                 </div>
               </div>
