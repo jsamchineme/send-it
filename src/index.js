@@ -38,8 +38,8 @@ app.funcs = {
 
     let currentPage = routes[path];
 
-    // app.setState triggers a re-render of the view
-    app.setState('currentPage', currentPage);
+    app.state['currentPage'] = currentPage;
+    app.reRender();
   },
   /**
    * handling the click event on all links

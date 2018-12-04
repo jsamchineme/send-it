@@ -29,6 +29,7 @@ export default class Signup {
               <div class="form-body">
                 <div class="input-group transparent-box">
                   <label for="firstname">Firstname</label>
+                  
                   <input 
                     type="text" 
                     placeholder='Firstname' 
@@ -47,6 +48,7 @@ export default class Signup {
                 </div>
                 <div class="input-group transparent-box">
                   <label for="email">Email</label>
+                  <div id='email-error-box'></div>
                   <input 
                     type="email" 
                     placeholder='your email' 

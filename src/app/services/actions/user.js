@@ -47,11 +47,15 @@ export const adminLogin = (e) => {
 }
 
 export const userSignup = (e) => {
-  const data = window.app.store.userSignupData;
   e.preventDefault();
+  const data = window.app.store.userSignupData;
 
   api.userSignup(data).then(response => {
     window.app.store.authUser = response.data;
     console.log(response);
+  }).catch(error => {
+    console.log("---ERROR", error.message);
+    // TODO:
+    // show some feedback on the user interface
   });
 }

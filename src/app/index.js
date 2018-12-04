@@ -33,9 +33,11 @@ export default class App {
      * instead of accessing as object.funcs.functionName
      */
   }
+  
   setInitialPage() {
     return this.getPathPage();
   }
+  
   getPathPage(path) {
     if (path === undefined) {
       path = window.location.pathname;
@@ -104,7 +106,12 @@ export default class App {
         // on applying the "out" the height of the exiting view is transited to 1
         // to avoid extra unnecesary hieght and scroll for the currently active view
         exitingView.className = 'out';
-        // exitingView.innerHTML = '';
+        // wait a while after transition animation has played before remove the HTML
+        // within the exitingView 
+        setTimeout(() => {
+          // also to avoid getting duplicated ids from the two div (exiting and active)
+          exitingView.innerHTML = '';
+        }, 300);
       }, 100);
     }, 1000);
   }
@@ -132,9 +139,14 @@ export default class App {
     }
   }
 
+  // reRender() {
+  //   let appHTML = this.render();
+  //   let target = document.getElementById("root");
+  //   target.innerHTML = appHTML;
+  // }
+
   async reRender() {
     this.prepareView();
-
     this.addEventListeners();
   }
 
