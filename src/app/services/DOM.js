@@ -1,3 +1,0 @@
-class DOM {
-  static getElem() {}
-}

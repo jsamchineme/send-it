@@ -6,6 +6,12 @@ import Parcel from '../../components/Parcel';
 export default class AdminPendingParcels {
   constructor() {
     document.title = "Pending Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+
+    // redirect user if not admin
+    const savedAuthUser = retrieveAuthUser();
+    if (! savedAuthUser || !savedAuthUser.isAdmin) {
+      window.location.href = '/admin-login';
+    }
   }
   renderProduct() {
     let productHTML = '';

@@ -2,10 +2,17 @@ import SideBar from '../../layouts/SideBar'
 import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
 import Parcel from '../../components/Parcel';
+import { retrieveAuthUser } from "../../services/localStorage";
 
 export default class AdminDeliveredParcels {
   constructor() {
     document.title = "Delivered Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+
+    // redirect user if not admin
+    const savedAuthUser = retrieveAuthUser();
+    if (! savedAuthUser || !savedAuthUser.isAdmin) {
+      window.location.href = '/admin-login';
+    }
   }
   renderProduct() {
     let productHTML = '';
