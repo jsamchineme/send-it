@@ -1037,6 +1037,18 @@ a {
 }
 
 /* Page transition styles end here */
+.error-box {
+  color: red;
+  height: 0px;
+  overflow: hidden;
+  transition: all 300ms ease-in-out;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.error-box.active {
+  height: 20px;
+}
 
 
 /* over-riding styles */
@@ -1057,7 +1069,6 @@ a {
   padding-left: 15px;
   margin-bottom: 10px;
 }
-
 
 .btn.submit {
   cursor: pointer;

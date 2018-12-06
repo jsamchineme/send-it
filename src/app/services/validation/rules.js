@@ -1,22 +1,28 @@
 
 export const userSignupRules = { 
   firstname: [
-    {name: "required"},
+    {name: "min", ruleValue: 3},
     {name: "max", ruleValue: 30}
   ],
   lastname: [
-    {name: "required"},
+    {name: "min", ruleValue: 3},
     {name: "max", ruleValue: 30}
   ],
   email: [
     {name: "required"},
     {name: "email"},
-    {name: "max", ruleValue: 60}
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100}
+  ],
+  username: [
+    {name: "required"},
+    {name: "min", ruleValue: 8},
+    {name: "max", ruleValue: 50}
   ],
   password: [
     {name: "required"},
-    {name: "max", ruleValue: 60},
-    {name: "min", ruleValue: 10}
+    {name: "min", ruleValue: 8},
+    {name: "max", ruleValue: 40},
   ],
 }
 

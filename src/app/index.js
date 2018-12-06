@@ -139,13 +139,16 @@ export default class App {
     }
   }
 
-  // reRender() {
-  //   let appHTML = this.render();
-  //   let target = document.getElementById("root");
-  //   target.innerHTML = appHTML;
-  // }
-
   async reRender() {
+    let appHTML = this.render();
+    let target = document.getElementById("active-view");
+    
+    target.innerHTML = appHTML;
+
+    this.addEventListeners();
+  }
+
+  async loadView() {
     this.prepareView();
     this.addEventListeners();
   }
@@ -170,9 +173,6 @@ export default class App {
       case 'AdminDeliveredParcels': Page = AdminPage.guard()(new AdminDeliveredParcels()); break;
       default: Page = new NotFound();
     }
-    // let eventListeners = Page.attachEventListeners ? Page.attachEventListeners : null;
-    // let appEventListeners = window.appEventListeners || [];
-    // window.appEventListeners = [...appEventListeners, eventListeners];
     return Page;
   }
 

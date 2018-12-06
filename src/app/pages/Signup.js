@@ -29,7 +29,7 @@ export default class Signup {
               <div class="form-body">
                 <div class="input-group transparent-box">
                   <label for="firstname">Firstname</label>
-                  
+                  <div id='firstname-error-box' class='error-box'></div>
                   <input 
                     type="text" 
                     placeholder='Firstname' 
@@ -39,6 +39,7 @@ export default class Signup {
                 </div>
                 <div class="input-group transparent-box">
                   <label for="lastname">Lastname</label>
+                  <div id='lastname-error-box' class='error-box'></div>
                   <input 
                     type="text" 
                     placeholder='Lastname'
@@ -48,7 +49,7 @@ export default class Signup {
                 </div>
                 <div class="input-group transparent-box">
                   <label for="email">Email</label>
-                  <div id='email-error-box'></div>
+                  <div id='email-error-box' class='error-box'></div>
                   <input 
                     type="email" 
                     placeholder='your email' 
@@ -58,6 +59,7 @@ export default class Signup {
                 </div>
                 <div class="input-group transparent-box">
                   <label for="username">Username</label>
+                  <div id='username-error-box' class='error-box'></div>
                   <input 
                     type="text" 
                     placeholder='username' 
@@ -67,6 +69,7 @@ export default class Signup {
                 </div>
                 <div class="input-group transparent-box">
                   <label for="password">Password</label>
+                  <div id='password-error-box' class='error-box'></div>
                   <input
                     type="password" 
                     placeholder='securepassword' 

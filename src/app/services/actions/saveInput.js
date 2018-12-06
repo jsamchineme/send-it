@@ -1,7 +1,6 @@
-import validate from '../../services/validation';
+import Validation from '../../services/validation';
 
 const saveInput = (action, e) => {
-  console.log(action);
   const field = e.target.name;
   const value = e.target.value;
 
@@ -16,7 +15,7 @@ const saveInput = (action, e) => {
   window.app.store[data] = input;
   
   // validate the input and save 
-  validate(action, input);
+  Validation.validate(action, input, field);
 
 }
 
