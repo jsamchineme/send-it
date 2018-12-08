@@ -23,7 +23,7 @@ app.funcs = {
    * render the view
    */
   renderPage: async () => {
-    await app.reRender();
+    await app.loadView();
     // add all event handler 
     
     // .addEventListener('click', window.services.api.userLogin);
@@ -38,8 +38,8 @@ app.funcs = {
 
     let currentPage = routes[path];
 
-    // app.setState triggers a re-render of the view
-    app.setState('currentPage', currentPage);
+    app.state['currentPage'] = currentPage;
+    app.loadView();
   },
   /**
    * handling the click event on all links

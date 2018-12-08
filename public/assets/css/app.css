@@ -308,6 +308,7 @@ img {
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 30px;
+  color: white;
 }
 
 .landing-intro .landing-text .text-1 {
@@ -1036,10 +1037,50 @@ a {
   right: 0;
 }
 
+label {
+  display: inline-block;
+}
+
+
 /* Page transition styles end here */
+.error-box {
+  color: red;
+  height: 0px;
+  overflow: hidden;
+  transition: all 300ms ease-in-out;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.error-box.active {
+  height: 20px;
+}
+
+#server-error-box.error-box.active {
+  height: 100%;
+}
+
+.form-header .error-box {
+  font-size: 18px;
+  padding-left: 0px;
+  margin-top: 20px;
+  font-family: 'LatoLig';
+}
 
 
 /* over-riding styles */
+.wrapper.signup-welcome {
+  background: none;
+}
+
+.wrapper.signup-welcome .page-content,
+.wrapper.signup-welcome .mast-banner,
+.wrapper.signup-welcome .mast,
+.wrapper.signup-welcome .landing-intro,
+.wrapper.signup-welcome .landing-intro > .container
+{
+  background: none;
+}
 
 .input-group.transparent-box {
   background: white;
@@ -1057,7 +1098,6 @@ a {
   padding-left: 15px;
   margin-bottom: 10px;
 }
-
 
 .btn.submit {
   cursor: pointer;

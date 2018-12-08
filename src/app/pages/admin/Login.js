@@ -24,6 +24,7 @@ export default class Login {
             >
               <div class="form-header">
                 Admin Login
+                <div id='server-error-box' class='error-box'></div>
               </div>
               <div class="form-body">
                 <div class="input-group transparent-box">
@@ -31,29 +32,29 @@ export default class Login {
                     <span class="error">This is a required field</span>
                   </div> -->
                   <label for="email">Email</label>
+                  <div id='email-error-box' class='error-box'></div>
                   <input 
                     type="email" 
                     placeholder='your email' 
                     name='email'
-                    required
-                    value='samcotech@example.io'
+                    value=''
                   />
                 </div>
                 <div class="input-group transparent-box">
                   <label for="password">Password</label>
+                  <div id='password-error-box' class='error-box'></div>
                   <input 
                     type="password" 
                     placeholder='your password' 
                     name='password'
-                    required
-                    value='secretpass'
+                    value=''
                   />
                 </div>
                 <div class="input-footer"></div>
                 <!-- <div class="v-gap-2"></div> -->
                 <div class="row text-center">
                   <div class="column">
-                    <button class="btn submit">Login</button>
+                    <button class="btn submit" id="adminLogin-action-button">Login</button>
                   </div>
                   <div class="actions column text-center">
                     <div class="v-gap-2"></div>

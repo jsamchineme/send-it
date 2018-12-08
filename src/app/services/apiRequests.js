@@ -40,9 +40,9 @@ export const userSignup = (data) => {
       'Content-Type': 'application/json'
     }),
   })
-  .then(res => { 
+  .then(async res => { 
     if(!res.ok) {
-      throw new ResponseException(res);
+      throw await ResponseException.prepare(res);
     }
     return res.json();
   })
