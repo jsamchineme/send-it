@@ -37,7 +37,6 @@ describe('Test cases for the API landing routes', () => {
       .expect(404)
       .end((err, res) => {
         expect(res.body).deep.equal({
-          status: 'Failed',
           message: 'Route Not Found',
         });
         done();

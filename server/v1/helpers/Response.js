@@ -1,38 +1,32 @@
 const responses = {
-  unprocessable: (res, err) => res.status(422).send({
-    status: 'Unprocessable Entity',
+  unprocessable: (res, err) => res.status(422).json({
     message: err.details[0].message,
   }),
-  wrongParamType: res => res.status(400).send({
-    status: 'Wrong Params',
-    message: 'One or more request parameters have invalid values',
+  wrongParamType: res => res.status(400).json({
+    message: 'Incorrectly formed request',
   }),
-  success: (res, data) => res.status(200).send({
-    status: 'success',
+  success: (res, data) => res.status(200).json({
     data,
   }),
-  unauthorised: res => res.status(401).send({
-    status: 'Unauthorised',
+  unauthorised: res => res.status(401).json({
     message: 'You lack privileges to access resource',
   }),
-  wrongCredentials: res => res.status(400).send({
-    status: 'Wrong Credentials',
+  wrongCredentials: res => res.status(401).json({
     message: 'Provide correct login credentials',
   }),
-  unauthenticated: res => res.status(400).send({
-    status: 'Unauthenticated',
+  unauthenticated: res => res.status(401).json({
     message: 'Invalid or expired token',
   }),
-  missingToken: res => res.status(400).send({
-    status: 'Failed',
+  missingToken: res => res.status(400).json({
     message: 'missing token',
   }),
   notFound: res => res.status(404).json({
-    status: 'NotFound',
     message: 'The requested resource could not be found',
   }),
+  conflict: (res, err) => res.status(409).json({
+    message: err.details[0].message,
+  }),
   noContent: res => res.status(204).json({
-    status: 'deleted',
     message: 'The reource has been deleted',
   }),
 };
