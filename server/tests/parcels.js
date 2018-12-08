@@ -56,7 +56,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.data.length > 0).to.equal(true);
-        expect(res.body.status).to.equal('success');
         done();
       });
   });
@@ -65,17 +64,16 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .set('x-access-token', authToken)
       .expect(401)
       .end((err, res) => {
-        expect(res.body.status).to.equal('Unauthorised');
-        // expect(res.body.message).to.equal('Unauthorised');
+        expect(res.body.message).to.equal('You lack privileges to access resource');
         done();
       });
   });
   it('should return invalid token when invalid token is used', (done) => {
     request.get('/api/v1/parcels')
       .set('x-access-token', invalidToken)
-      .expect(400)
+      .expect(401)
       .end((err, res) => {
-        expect(res.body.status).to.equal('Unauthenticated');
+        expect(res.body.message).to.equal('Invalid or expired token');
         done();
       });
   });
@@ -95,7 +93,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.cost !== undefined).to.equal(true);
           done();
         });
@@ -115,7 +112,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.cost).to.equal('N2,000');
           done();
         });
@@ -135,7 +131,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.cost).to.equal('N4,000');
           done();
         });
@@ -155,7 +150,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.cost).to.equal('N4,000');
           done();
         });
@@ -175,7 +169,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.cost).to.equal('N5,000');
           done();
         });
@@ -195,7 +188,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           parcel = res.body.data;
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.cost).to.equal('N10,000');
           done();
         });
@@ -208,8 +200,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', authToken)
         .send(parcelOrderData)
         .expect(422)
-        .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
+        .end(() => {
           done();
         });
     });
@@ -220,7 +211,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .set('x-access-token', authToken)
       .expect(200)
       .end((err, res) => {
-        expect(res.body.status).to.equal('success');
+        expect(res.body.data.id !== undefined).to.equal(true);
         done();
       });
   });
@@ -229,7 +220,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
     request.get(`/api/v1/parcels/${parcelId}`)
       .expect(400)
       .end((err, res) => {
-        expect(res.body.status).to.equal('Failed');
+        expect(res.body.message).to.equal('missing token');
         done();
       });
   });
@@ -239,7 +230,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .set('x-access-token', 'xyz')
       .expect(400)
       .end((err, res) => {
-        expect(res.body.status).to.equal('Unauthenticated');
         expect(res.body.message).to.equal('Invalid or expired token');
         done();
       });
@@ -249,7 +239,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
       .set('x-access-token', authToken)
       .expect(404)
       .end((err, res) => {
-        expect(res.body.status).to.equal('NotFound');
+        expect(res.body.message).to.equal('The requested resource could not be found');
         done();
       });
   });
@@ -278,7 +268,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', authToken)
         .expect(200)
         .end((err, res) => {
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.status).to.equal('cancelled');
           done();
         });
@@ -288,7 +277,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', authToken)
         .expect(404)
         .end((err, res) => {
-          expect(res.body.status).to.equal('NotFound');
+          expect(res.body.message).to.equal('The requested resource could not be found');
           done();
         });
     });
@@ -301,7 +290,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.body.data.id).to.equal(parcel.id);
-          expect(res.body.status).to.equal('success');
           done();
         });
     });
@@ -310,8 +298,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', authToken)
         .send({})
         .expect(422)
-        .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
+        .end(() => {
           done();
         });
     });
@@ -326,8 +313,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
             .set('x-access-token', authToken)
             .send({ to: 'new location' })
             .expect(422)
-            .end((err, res) => {
-              expect(res.body.status).to.equal('Unprocessable Entity');
+            .end(() => {
               done();
             });
         });
@@ -336,9 +322,9 @@ describe('Test case for the "parcel" resource endpoints', () => {
       request.put('/api/v1/parcels/0/destination')
         .set('x-access-token', authToken)
         .send({ to: 'new location' })
-        .expect(400)
+        .expect(404)
         .end((err, res) => {
-          expect(res.body.status).to.equal('NotFound');
+          expect(res.body.message).to.equal('The requested resource could not be found');
           done();
         });
     });
@@ -346,10 +332,9 @@ describe('Test case for the "parcel" resource endpoints', () => {
       request.put('/api/v1/parcels/adsd/destination')
         .set('x-access-token', authToken)
         .send({ to: 'new location' })
-        .expect(400)
+        .expect(401)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Wrong Params');
-          expect(res.body.message).to.equal('One or more request parameters have invalid values');
+          expect(res.body.message).to.equal('Incorrectly formed request');
           done();
         });
     });
@@ -359,7 +344,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .send({ to: 'new location' })
         .expect(401)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Unauthorised');
           expect(res.body.message).to.equal('You lack privileges to access resource');
           done();
         });
@@ -372,7 +356,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .send({ status: 'transiting' })
         .expect(200)
         .end((err, res) => {
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.status).to.equal('transiting');
           done();
         });
@@ -383,7 +366,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .send({ status: 'transiting' })
         .expect(401)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Unauthorised');
           expect(res.body.message).to.equal('You lack privileges to access resource');
           done();
         });
@@ -394,7 +376,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .send({ status: 'delivered' })
         .expect(404)
         .end((err, res) => {
-          expect(res.body.status).to.equal('NotFound');
+          expect(res.body.message).to.equal('The requested resource could not be found');
           done();
         });
     });
@@ -403,8 +385,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', adminToken)
         .send({})
         .expect(422)
-        .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
+        .end(() => {
           done();
         });
     });
@@ -416,7 +397,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .send({ currentLocation: 'new location' })
         .expect(200)
         .end((err, res) => {
-          expect(res.body.status).to.equal('success');
           expect(res.body.data.to).to.equal('new location');
           done();
         });
@@ -426,8 +406,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', adminToken)
         .send({})
         .expect(422)
-        .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
+        .end(() => {
           done();
         });
     });
@@ -437,7 +416,6 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .send({ currentLocation: 'new location' })
         .expect(401)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Unauthorised');
           expect(res.body.message).to.equal('You lack privileges to access resource');
           done();
         });
@@ -449,7 +427,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', authToken)
         .expect(200)
         .end((err, res) => {
-          expect(res.body.status).to.equal('success');
+          expect(res.body.data.length > 0).to.equal(true);
           done();
         });
     });
@@ -458,7 +436,7 @@ describe('Test case for the "parcel" resource endpoints', () => {
         .set('x-access-token', authToken2)
         .expect(401)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Unauthorised');
+          expect(res.body.message).to.equal('You lack privileges to access resource');
           done();
         });
     });

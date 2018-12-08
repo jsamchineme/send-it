@@ -37,7 +37,6 @@ describe('Test case for the "auth" resource endpoints', () => {
         .end((err, res) => {
           newUser = res.body.data;
           expect(res.body.data.id !== undefined).to.equal(true);
-          expect(res.body.status).to.equal('success');
           done();
         });
     });
@@ -48,8 +47,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       request.post('/api/v1/auth/signup')
         .send(newUserData)
         .expect(422)
-        .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
+        .end(() => {
           done();
         });
     });
@@ -61,9 +59,8 @@ describe('Test case for the "auth" resource endpoints', () => {
       };
       request.post('/api/v1/auth/signup')
         .send(newUserData)
-        .expect(422)
+        .expect(409)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
           expect(res.body.message).to.equal('email already exists');
           done();
         });
@@ -76,9 +73,8 @@ describe('Test case for the "auth" resource endpoints', () => {
       };
       request.post('/api/v1/auth/signup')
         .send(newUserData)
-        .expect(422)
+        .expect(409)
         .end((err, res) => {
-          expect(res.body.status).to.equal('Unprocessable Entity');
           expect(res.body.message).to.equal('username already exists');
           done();
         });
@@ -120,7 +116,6 @@ describe('Test case for the "auth" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.body.data.id !== undefined).to.equal(true);
-          expect(res.body.status).to.equal('success');
           done();
         });
     });
@@ -132,8 +127,7 @@ describe('Test case for the "auth" resource endpoints', () => {
     request.post('/api/v1/auth/login')
       .send(newUserData)
       .expect(422)
-      .end((err, res) => {
-        expect(res.body.status).to.equal('Unprocessable Entity');
+      .end(() => {
         done();
       });
   });
@@ -144,9 +138,8 @@ describe('Test case for the "auth" resource endpoints', () => {
     };
     request.post('/api/v1/auth/login')
       .send(newUserData)
-      .expect(400)
+      .expect(401)
       .end((err, res) => {
-        expect(res.body.status).to.equal('Wrong Credentials');
         expect(res.body.message).to.equal('Provide correct login credentials');
         done();
       });

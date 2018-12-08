@@ -28,7 +28,6 @@ app.use('/api/v1', routes);
 app.use('*', (req, res) => {
   res.status(404);
   res.json({
-    status: 'Failed',
     message: 'Route Not Found',
   });
 });

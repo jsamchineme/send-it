@@ -12,9 +12,9 @@ const password = Joi.string().trim().strict().alphanum()
   .required();
 const username = Joi.string().trim().min(8).max(50)
   .required();
-const firstname = Joi.string().trim().min(8).max(30);
-const lastname = Joi.string().trim().min(8).max(30);
-const othernames = Joi.string().trim().min(8).max(30);
+const firstname = Joi.string().trim().min(3).max(30);
+const lastname = Joi.string().trim().min(3).max(30);
+const othernames = Joi.string().trim().min(3).max(30);
 
 const signupRequestSchema = {
   email,

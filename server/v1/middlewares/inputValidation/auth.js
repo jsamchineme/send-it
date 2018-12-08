@@ -50,7 +50,7 @@ class AuthValidator {
           { message: 'email already exists' },
         ],
       };
-      return ResponseSchema.unprocessable(res, err);
+      return ResponseSchema.conflict(res, err);
     }
     if (foundUsername) {
       const err = {
@@ -58,7 +58,7 @@ class AuthValidator {
           { message: 'username already exists' },
         ],
       };
-      return ResponseSchema.unprocessable(res, err);
+      return ResponseSchema.conflict(res, err);
     }
     next();
   }
