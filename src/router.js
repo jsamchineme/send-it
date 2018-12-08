@@ -12,6 +12,7 @@ export const routes = {
   "/": "Home",
   "/home": "Home",
   "/signup": 'SignUp',
+  "/signup/welcome": 'SignUpWelcome',
   "/login": "Login",
   "/admin-login": "AdminLogin",
   "/user-profile": "UserProfile",

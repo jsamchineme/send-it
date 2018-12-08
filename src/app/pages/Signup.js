@@ -25,6 +25,7 @@ export default class Signup {
             >
               <div class="form-header">
                 Sign up
+                <div id='server-error-box' class='error-box'></div>
               </div>
               <div class="form-body">
                 <div class="input-group transparent-box">
@@ -34,7 +35,6 @@ export default class Signup {
                     type="text" 
                     placeholder='Firstname' 
                     name='firstname'
-                    required
                   />
                 </div>
                 <div class="input-group transparent-box">
@@ -44,7 +44,6 @@ export default class Signup {
                     type="text" 
                     placeholder='Lastname'
                     name='lastname'
-                    required
                   /> 
                 </div>
                 <div class="input-group transparent-box">
@@ -53,7 +52,6 @@ export default class Signup {
                   <input 
                     type="email" 
                     placeholder='your email' 
-                    required
                     name='email'
                   />
                 </div>
@@ -62,26 +60,24 @@ export default class Signup {
                   <div id='username-error-box' class='error-box'></div>
                   <input 
                     type="text" 
-                    placeholder='username' 
-                    required
+                    placeholder='username'
                     name='username'
-                  /> 
+                  />
                 </div>
                 <div class="input-group transparent-box">
                   <label for="password">Password</label>
                   <div id='password-error-box' class='error-box'></div>
                   <input
                     type="password" 
-                    placeholder='securepassword' 
-                    required
+                    placeholder='securepassword'
                     name='password'
-                  /> 
+                  />
                 </div>
                 <div class="input-footer"></div>
                 <div class="v-gap-2"></div>
                 <div class="row text-center">
                   <div class="column">
-                    <button class="btn submit">Sign up</button>
+                    <button class="btn submit" id="userSignup-action-button">Sign up</button>
                   </div>
                   <div class="actions column text-center">
                     <div class="v-gap-2"></div>

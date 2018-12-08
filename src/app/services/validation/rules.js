@@ -26,3 +26,31 @@ export const userSignupRules = {
   ],
 }
 
+export const userLoginRules = { 
+  email: [
+    {name: "required"},
+    {name: "email"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100}
+  ],
+  password: [
+    {name: "required"},
+    {name: "min", ruleValue: 8},
+    {name: "max", ruleValue: 40},
+  ],
+}
+
+export const adminLoginRules = { 
+  email: [
+    {name: "required"},
+    {name: "email"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100}
+  ],
+  password: [
+    {name: "required"},
+    {name: "min", ruleValue: 8},
+    {name: "max", ruleValue: 40},
+  ],
+}
+

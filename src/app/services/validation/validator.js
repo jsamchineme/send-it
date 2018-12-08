@@ -60,21 +60,36 @@ const validate = (data, rules) => {
   return errorBag;
 }
 
-export const inputValid = (errorBag, fields) => {
+export const inputValid = (errorBag, fields, fieldRules) => {
   // we return false if for all fields, errors are empty
-  let emptyFieldsCount = 0;
-  for (let i = 0; i < fields.length; i++) {
+  let validFields = [];
+  let canProceed = false;
 
-    if (errorBag.hasOwnProperty(fields[i]) && errorBag[fields[i]].length === 0) {
-      emptyFieldsCount = emptyFieldsCount + 1;
+  fields.forEach(field => {
+    if (errorBag[field] !== undefined && errorBag[field].length === 0) {
+      validFields.push(field);
     }
+    // Add unrequired field to the list, if they are not provided 
+    // checking that the field does not have the "required" rule
+    const canAddUnrequired = errorBag[field] === undefined;
+
+    if (canAddUnrequired) {
+      if (!fieldRules[field].find(f => f.name === 'required')) {
+        // check that the field is not already in the valid fields list
+        if (!validFields.find(f => f === field)) {
+          validFields.push(field);
+        }
+      }
+    }
+  });
+
+
+
+  if (validFields.length === fields.length) {
+    canProceed = true;
   }
 
-  if (emptyFieldsCount === fields.length) {
-    return true;
-  }
-
-  return false;
+  return canProceed;
 }
 
 export const errorsFound = (field, errors) => {

@@ -31,7 +31,7 @@ class Validation {
       let validatedFields = Object.keys(actionValidationRules);
       
       // check to see if all rules were passed, flag that request can proceed
-      let canProceed = inputValid(errorBag, validatedFields);
+      let canProceed = inputValid(errorBag, validatedFields, actionValidationRules);
       
       // put the validation results in the window.app.store namespace
       window.app.store[errorKey] = errorBag;
@@ -82,7 +82,7 @@ class Validation {
         // and it has no value
         // clearMessage over a timeout
         if(currentField === field && fieldValue.length === 0) {
-          Validation.clearMessage(field, errorBox, errorBag);
+          Validation.clearMessage(field, errorBox, errorBag, input, fields, rules);
         }
       } else {
         Validation.showMessages(errorMessage, errorBox);
@@ -97,7 +97,14 @@ class Validation {
     errorBox ? errorBox.innerHTML = errorMessage : null;
   }
 
-  static clearMessage(field, errorBox, errorBag) {
+  static clearMessage(
+    field, 
+    errorBox, 
+    errorBag, 
+    input, 
+    validatedFields, 
+    actionValidationRules
+  ) {
     // start the delay that resolves over 5 minutes to
     // to hide the message box
 
@@ -111,10 +118,23 @@ class Validation {
       // that are not required
       errorBag[field] = [];
 
+      // re-evaluate final validation
+      inputValid(errorBag, validatedFields, actionValidationRules);
+
+      // also remove it from the data to be sent 
+      // so that they are not contained in the request hitting the api
+      delete input[field];
+
       // restore box to initial where it is hidden by default
       errorBox.className = 'error-box';
     }, 2000);
   }
+}
+
+const showMessages = Validation.showMessages;
+
+export {
+  showMessages
 }
 
 export default Validation;

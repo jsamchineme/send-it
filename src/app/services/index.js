@@ -4,7 +4,7 @@ import {
   userLogin, 
   userSignup, 
   adminLogin 
-} from './actions/user';
+} from './actions/user/index';
 
 
 export default {

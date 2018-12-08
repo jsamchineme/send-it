@@ -1,5 +1,6 @@
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import SignupWelcome from './pages/SignupWelcome';
 import Home from './pages/Home';
 import ForgotPassword from './pages/ForgotPassword';
 import MakeOrder from './pages/MakeOrder';
@@ -18,6 +19,7 @@ import AdminPage from './pages/middlewares/AdminPage';
 import UserPage from './pages/middlewares/UserPage';
 import store from './store';
 import services from './services';
+import delay from './services/utils/delay';
 
 export default class App {
   constructor() {
@@ -59,7 +61,21 @@ export default class App {
     console.log(this.state);
   }
 
-  prepareView() {
+  async prepareRerender() {
+    // get the root element of the whole view
+    let target = document.getElementById("root");
+    
+    let activeView = document.getElementById('active-view');
+    
+    let activeViewHTML = app.render();
+
+    activeView.innerHTML = activeViewHTML;
+
+    let result = await target.appendChild(activeView);
+    console.log('RESULT', result);
+  }
+
+  async prepareView() {
     // to get page transition animations
     // get the html
     // create two nodes
@@ -99,29 +115,33 @@ export default class App {
     target.appendChild(exitingView);
     target.appendChild(activeView);
 
-    // remove the "entering" class name after 1 second 
-    setTimeout(() => {
-      activeView.className = '';
-      setTimeout(() => {
-        // on applying the "out" the height of the exiting view is transited to 1
-        // to avoid extra unnecesary hieght and scroll for the currently active view
-        exitingView.className = 'out';
-        // wait a while after transition animation has played before remove the HTML
-        // within the exitingView 
-        setTimeout(() => {
-          // also to avoid getting duplicated ids from the two div (exiting and active)
-          exitingView.innerHTML = '';
-        }, 300);
-      }, 100);
-    }, 1000);
+    await this.animateTransition(activeView, exitingView);
+
+    console.log('DOM-READY');
+  }
+
+  async animateTransition(activeView, exitingView) {
+    await delay(1000); 
+    // remove the "entering" class name after 1 second
+    activeView.className = '';
+    await delay(100); 
+    // on applying the "out" the height of the exiting view is transited to 1
+    // to avoid extra unnecesary hieght and scroll for the currently active view
+    exitingView.className = 'out';
+    // wait a while after transition animation has played before remove the HTML
+    // within the exitingView 
+    await delay(300);
+    // also to avoid getting duplicated ids from the two div (exiting and active)
+    exitingView.innerHTML = '';
+    console.clear();
   }
 
   addEventListeners() {
     // I fetch the item at index 1 because the first one will be behind in the 
     // exiting view
-    let adminLoginForm = document.getElementsByClassName('admin-login-form')[1];
-    let userLoginForm = document.getElementsByClassName('user-login-form')[1];
-    let signupForm = document.getElementsByClassName('signup-login-form')[1];
+    let adminLoginForm = document.getElementsByClassName('admin-login-form')[0];
+    let userLoginForm = document.getElementsByClassName('user-login-form')[0];
+    let signupForm = document.getElementsByClassName('signup-login-form')[0];
 
     // attach event handlers to elements
     let { actions } = services;
@@ -140,16 +160,14 @@ export default class App {
   }
 
   async reRender() {
-    let appHTML = this.render();
-    let target = document.getElementById("active-view");
-    
-    target.innerHTML = appHTML;
+    await this.prepareRerender();
 
     this.addEventListeners();
   }
 
   async loadView() {
-    this.prepareView();
+    await this.prepareView();
+
     this.addEventListeners();
   }
 
@@ -160,6 +178,7 @@ export default class App {
       case 'Home': Page = new Home(); break;
       case 'Login': Page = new Login(); break;
       case 'SignUp': Page = new Signup(); break;
+      case 'SignUpWelcome': Page = new SignupWelcome(); break;
       case 'ForgotPassword': Page = new ForgotPassword(); break;
       case 'MakeOrder': Page = UserPage.guard()(new MakeOrder()); break;
       case 'InviteUsers': Page = UserPage.guard()(new InviteUsers()); break;
