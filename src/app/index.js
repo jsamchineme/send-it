@@ -6,6 +6,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import MakeOrder from './pages/MakeOrder';
 import InviteUsers from './pages/InviteUsers';
 import AllParcels from './pages/AllParcels';
+import ParcelEntry from './pages/ParcelEntry';
 import NotFound from './pages/NotFound';
 import AdminLogin from './pages/admin/Login';
 import PendingParcels from './pages/PendingParcels';
@@ -24,10 +25,8 @@ import delay from './services/utils/delay';
 export default class App {
   constructor() {
 
-    this.state = {
-      currentPage: this.setInitialPage(),
-    }
-
+    this.state = {};
+    this.currentPage = this.setInitialPage();
     this.store = store;
 
     /**
@@ -39,18 +38,44 @@ export default class App {
   setInitialPage() {
     return this.getPathPage();
   }
+
+  getDynamicPage(currentPage) {
+    // handing route parameter
+    // Currently handling /all-parcels/
+    if(!currentPage) {
+      let url = window.location.href;
+      let urlParts = url.split('/');
+      let parcelHomeIndex = urlParts.indexOf('all-parcels');
+      let parameterIndex = parcelHomeIndex + 1;
+      if(parameterIndex) {
+        let parameterValue = urlParts[parameterIndex];
+        this.state['selectedParcelId'] = parameterValue;
+        currentPage = 'ParcelEntry';
+      }
+    }
+    return currentPage;
+  }
   
   getPathPage(path) {
     if (path === undefined) {
       path = window.location.pathname;
     }
+    // if the last string is a /, 
+    // remove the / 
+    const lastIndex = path.length - 1;
+    if (path[lastIndex] === '/') {
+      path = path.slice(0,lastIndex);
+    }
 
     let currentPage = routes[path];
+    let dynamicPathPage = this.getDynamicPage(currentPage);
+    currentPage = currentPage || dynamicPathPage;
 
     if(!currentPage) {
       // show a not found page
       window.location = '/not-found';
     }
+
     return currentPage;
   }
 
@@ -133,7 +158,7 @@ export default class App {
     await delay(300);
     // also to avoid getting duplicated ids from the two div (exiting and active)
     exitingView.innerHTML = '';
-    console.clear();
+    // console.clear();
   }
 
   addEventListeners() {
@@ -159,6 +184,27 @@ export default class App {
     }
   }
 
+  /**
+   * Send off requests that have been populates by all the components rendered
+   * The constructor method of any components or pages loaded could contain 
+   * requests required to return some data for rendering to the view
+   * the Class that prepares any components will have function to handle 
+   * successful retrieval of the request.
+   */
+  dispatchRequests() {
+    // allRequests is an Object of requestNames: action function
+    const allRequests = window.requests || {};
+    let actions = Object.keys(allRequests);
+    actions.forEach(action => {
+      // fire the action
+      allRequests[action]();
+      console.log(`${action} dispatched`);
+      // remove the request/action from the stack
+      delete allRequests[action];
+    });
+    
+  }
+
   async reRender() {
     await this.prepareRerender();
 
@@ -168,6 +214,8 @@ export default class App {
   async loadView() {
     await this.prepareView();
 
+    this.dispatchRequests();
+    
     this.addEventListeners();
   }
 
@@ -183,6 +231,7 @@ export default class App {
       case 'MakeOrder': Page = UserPage.guard()(new MakeOrder()); break;
       case 'InviteUsers': Page = UserPage.guard()(new InviteUsers()); break;
       case 'AllParcels': Page = UserPage.guard()(new AllParcels()); break;
+      case 'ParcelEntry': Page = UserPage.guard()(new ParcelEntry()); break;
       case 'PendingParcels': Page = UserPage.guard()(new PendingParcels()); break;
       case 'DeliveredParcels': Page = UserPage.guard()(new DeliveredParcels()); break;
       case 'UserProfile': Page = UserPage.guard()(new UserProfile()); break;
