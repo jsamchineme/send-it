@@ -2,18 +2,31 @@ import SideBar from '../../layouts/AdminSideBar';
 import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
 import Parcel from '../../components/Parcel';
+import { getAllParcels } from '../../services/actions/parcel';
+import events from '../../services/events/events';
+import subscriptions from '../../services/events/subscriptions';
+import stackRequests from '../../services/utils/stackRequests';
 
 export default class AdminAllParcels {
   constructor() {
     document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    stackRequests('getParcels', getAllParcels);
+    events.on(subscriptions.FETCH_PARCELS_SUCCESS, this.listOrders);
   }
-  renderProduct() {
-    let productHTML = '';
-    for(let i=0; i < 12; i++) {
-      productHTML += Parcel();
-    }
-    return productHTML;
+
+  listOrders() {
+    let parcelHTML = '';
+    let parcels = window.app.state['allParcels'] || [];
+
+    parcels.map(parcel => {
+      parcelHTML += Parcel(parcel);
+    });
+    
+    let target = document.getElementById('orders-list');
+
+    target.innerHTML = parcelHTML;
   }
+
   render() {
     return (`
       <div>
@@ -37,8 +50,10 @@ export default class AdminAllParcels {
 
                     <section class="page-section items-list all-parcels">
                       <div class="header"><span>All Parcels</span></div>
-                      <div class="body row auto-container gutter-20">
-                        ${this.renderProduct()}
+                      <div class="body row auto-container gutter-20" id="orders-list">
+
+                        <!-- orders list -->
+
                       </div>
                     </section>
                   </div>

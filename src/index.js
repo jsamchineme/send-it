@@ -24,9 +24,6 @@ app.funcs = {
    */
   renderPage: async () => {
     await app.loadView();
-    // add all event handler 
-    
-    // .addEventListener('click', window.services.api.userLogin);
   },
   /**
    * Apply the route path and render the current page based on the route
@@ -35,8 +32,17 @@ app.funcs = {
     if (path === undefined) {
       path = window.location.pathname;
     }
+    // if the last string is a /, 
+    // remove the / 
+    const lastIndex = path.length - 1;
+    if (path[lastIndex] === '/') {
+      path = path.slice(0,lastIndex);
+    }
 
     let currentPage = routes[path];
+
+    let dynamicPathPage = app.getDynamicPage(currentPage);
+    currentPage = currentPage || dynamicPathPage;
 
     app.state['currentPage'] = currentPage;
     app.loadView();
@@ -62,7 +68,27 @@ app.funcs = {
 
     // run any of the functions attached to a particular route when the route is navigated to
     router.handlers[destination] ? router.handlers[destination]() : null;
+  },
+  /**
+   * changing route programmatically, dynamically
+   * for example, after successful login, change to the home page
+   * this will determine the url to navigate to
+   * by reading the href attribute of the anchor tag
+   */
+  changeRoute: (destination) => {
+    let {
+      origin
+    } = window.location;
+    // preparing the route to switch to
+    let href = `${origin}${destination}`;
+
+    // pushing prepared route to the window history object 
+    window.history.pushState({}, '', href);
+
+    // run any of the functions attached to a particular route when the route is navigated to
+    router.handlers[destination] ? router.handlers[destination]() : null;
   }
+  
 }
 
 

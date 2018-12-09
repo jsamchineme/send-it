@@ -3,8 +3,9 @@ import saveInput from './actions/saveInput';
 import { 
   userLogin, 
   userSignup, 
-  adminLogin 
+  adminLogin
 } from './actions/user/index';
+import { getAllParcels } from './actions/parcel/index';
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
     saveInput,
     userLogin,
     adminLogin,
-    userSignup
+    userSignup,
+    getAllParcels
   }
 };

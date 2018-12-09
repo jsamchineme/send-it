@@ -4,11 +4,31 @@ import ResponseException from './ResponseException';
 const BASE_URL = 'http://localhost:8001/api/v1';
 
 
-export const getParcels = (token) => {
-  return fetch(`${BASE_URL}/parcels?token=${token}`)
-  .then(res => { 
+export const getParcels = (data) => {
+  return fetch(`${BASE_URL}/parcels?token=${data.token}`)
+  .then(async res => { 
     if(!res.ok) {
-      throw new ResponseException(res);
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  });
+}
+
+export const getUserParcels = (data) => {
+  return fetch(`${BASE_URL}/users/${data.userId}/parcels?token=${data.token}`)
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  });
+}
+
+export const fetchAParcel = (data) => {
+  return fetch(`${BASE_URL}/parcels/${data.parcelId}?token=${data.token}`)
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
     }
     return res.json();
   });
