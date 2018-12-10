@@ -8,11 +8,15 @@ const authRoutes = Router();
 
 const { verifyToken } = Authentication;
 const { validateLogin, validateSignup, validateUnique } = AuthValidator;
-const { signup, deleteUser, login } = AuthController;
+const {
+  signup, deleteUser, login, refreshToken
+} = AuthController;
 const { isAdmin } = Roles;
 
 authRoutes.post('/login', validateLogin, login);
 authRoutes.post('/signup', validateSignup, validateUnique, signup);
 authRoutes.delete('/users/:userId', verifyToken, isAdmin, deleteUser);
+authRoutes.patch('/refresh', verifyToken, refreshToken);
+
 
 export default authRoutes;
