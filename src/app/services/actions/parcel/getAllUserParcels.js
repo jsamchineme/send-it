@@ -13,7 +13,7 @@ const getAllUserParcels = async () => {
   
   try {
     const response = await api.getUserParcels(data);
-    
+
     // store the parcels data in the window.app.state namespace
     window.app.state['allUserParcels'] = response.data;
 
@@ -24,7 +24,7 @@ const getAllUserParcels = async () => {
 
   }
   catch(error) {
-    console.log('Error', error.status);
+    console.log('Error', error);
   }
 
 }

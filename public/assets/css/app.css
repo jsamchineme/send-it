@@ -303,11 +303,15 @@ img {
 }
 
 .landing-intro .landing-text {
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 30px;
+}
+
+.signup-welcome .landing-intro .landing-text {
+  font-size: 25px;
   color: white;
 }
 

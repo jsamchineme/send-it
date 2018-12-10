@@ -36,9 +36,9 @@ const userLogin = async (e) => {
       );
       
       if(authUser.isAdmin) {
-        window.location.href = '/admin-dashboard/all-parcels';
+        window.app.funcs.changeRoute('/admin-dashboard/all-parcels');
       } else {
-        window.location.href = '/all-parcels';
+        window.app.funcs.changeRoute('/all-parcels');
       }
     }
     catch(error) {
