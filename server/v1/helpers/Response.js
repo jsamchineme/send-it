@@ -17,6 +17,9 @@ const responses = {
   unauthenticated: res => res.status(401).json({
     message: 'Invalid or expired token',
   }),
+  invalidToken: res => res.status(401).json({
+    message: 'Invalid token',
+  }),
   missingToken: res => res.status(400).json({
     message: 'missing token',
   }),

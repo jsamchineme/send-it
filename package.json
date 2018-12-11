@@ -69,6 +69,7 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-plugin-istanbul": "5.1.0",
+    "babel-plugin-transform-es2015-destructuring": "6.23.0",
     "babel-preset-env": "1.7.0",
     "coveralls": "3.0.2",
     "cross-env": "5.2.0",
