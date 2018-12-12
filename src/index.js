@@ -29,21 +29,7 @@ app.funcs = {
    * Apply the route path and render the current page based on the route
    */
   setRouter: (path) => {
-    if (path === undefined) {
-      path = window.location.pathname;
-    }
-    // if the last string is a /, 
-    // remove the / 
-    const lastIndex = path.length - 1;
-    if (path[lastIndex] === '/') {
-      path = path.slice(0,lastIndex);
-    }
-
-    let currentPage = routes[path];
-
-    let dynamicPathPage = app.getDynamicPage(currentPage);
-    currentPage = currentPage || dynamicPathPage;
-
+    let currentPage = app.getPathPage(path);
     app.state['currentPage'] = currentPage;
     app.loadView();
   },
@@ -54,9 +40,7 @@ app.funcs = {
    */
   linkHandler: (elem) => {
     let destination = elem.getAttribute("href");
-    let {
-      origin
-    } = window.location;
+    let { origin } = window.location;
     // preparing the route to switch to
     let href = `${origin}${destination}`;
 
@@ -76,14 +60,15 @@ app.funcs = {
    * by reading the href attribute of the anchor tag
    */
   changeRoute: (destination) => {
-    let {
-      origin
-    } = window.location;
+    let { origin } = window.location;
     // preparing the route to switch to
     let href = `${origin}${destination}`;
 
     // pushing prepared route to the window history object 
     window.history.pushState({}, '', href);
+
+    // set the new page route
+    app.funcs.setRouter(destination);
 
     // run any of the functions attached to a particular route when the route is navigated to
     router.handlers[destination] ? router.handlers[destination]() : null;

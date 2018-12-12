@@ -3,18 +3,45 @@ import SideBar from '../layouts/SideBar'
 import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
 import Parcel from '../components/Parcel';
+import { getAllUserParcels } from '../services/actions/parcel';
+import events from '../services/events/events';
+import subscriptions from '../services/events/subscriptions';
+import stackRequests from '../services/utils/stackRequests';
 
 export default class UserProfile {
   constructor() {
     document.title = "User Profile - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    stackRequests('getUserParcels', getAllUserParcels);
+    events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, this.listOrders.bind(this));
   }
-  renderProduct() {
-    let productHTML = '';
-    for(let i=0; i < 12; i++) {
-      productHTML += Parcel();
+
+  listOrders(parcels) {
+    let parcelHTML = '';
+    parcels = window.app.state['allUserParcels'] || [];
+
+    parcels.map(parcel => {
+      parcelHTML += Parcel(parcel);
+    });
+
+    if(parcels.length === 0) {
+      this.renderCreateOrder();
     }
-    return productHTML;
+    
+    let target = document.getElementById('orders-list');
+
+    target.innerHTML = parcelHTML;
   }
+
+  renderCreateOrder() {
+    let leadHTML = `
+      <div>
+        Create Order
+      </div>
+    `;
+    let target = document.getElementById('create-order-view');
+    target.innerHTML = leadHTML;
+  }
+
   render() {
     return (`
       <div>
@@ -66,8 +93,10 @@ export default class UserProfile {
                     <section class="page-section items-list all-parcels">
                       <div class="header"><span>All Parcels</span></div>
 
-                      <div class="body row auto-container gutter-20">
-                        ${this.renderProduct()}
+                      <div id="create-order-view"></div>
+
+                      <div class="body row auto-container gutter-20" id="orders-list">
+                        <!-- orders list -->
                       </div>
                     </section>
                   </div>

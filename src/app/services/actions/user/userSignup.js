@@ -31,7 +31,7 @@ const userSignup = async (e) => {
         {actionBox, action: 'userSignup', normalText: 'Login'}
       );
       
-      window.location.href = '/signup/welcome';
+      window.app.funcs.changeRoute('/signup/welcome');
     }
     catch(error) {
       const message = computeMessage(error.message, error.status);

@@ -28,11 +28,6 @@ export default class App {
     this.state = {};
     this.currentPage = this.setInitialPage();
     this.store = store;
-
-    /**
-     * I can get all the funcs and set them as direct properties of this class
-     * instead of accessing as object.funcs.functionName
-     */
   }
   
   setInitialPage() {
@@ -60,11 +55,14 @@ export default class App {
     if (path === undefined) {
       path = window.location.pathname;
     }
-    // if the last string is a /, 
-    // remove the / 
     const lastIndex = path.length - 1;
-    if (path[lastIndex] === '/') {
-      path = path.slice(0,lastIndex);
+    // if it is not the home page route
+    if(path !== '/') {
+      // if the last string is a /, 
+      // remove the / so that the routes can match corresponding pages
+      if (path[lastIndex] === '/') {
+        path = path.slice(0,lastIndex);
+      }
     }
 
     let currentPage = routes[path];

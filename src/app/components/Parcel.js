@@ -3,7 +3,7 @@ import Link from './Link';
 const Parcel = ({
   description, 
   status, 
-  sentOn, 
+  sentOn,
   deliveredOn,
   cost,
   currentLocation,
