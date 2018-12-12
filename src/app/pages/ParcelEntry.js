@@ -80,13 +80,13 @@ export default class ParcelEntry {
                   </div>
                 </div>
                 <div class="item actions">
-                  <a href="#modal" class="btn danger medium-btn">Cancel Order</a>
+                  <button class="btn danger medium-btn">Cancel Order</button>
                   <a href="edit-order.html" class="btn medium-btn bg-light-orange">Edit Order</a>
                 </div>
               </div>
               <div class="images column col-5">
                 <div class="image">
-                  <img src="assets/img/packages/package-1.png" alt="">
+                  <img src="/assets/img/packages/package-1.png" alt="">
                 </div>
               </div>
             </div>

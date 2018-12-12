@@ -68,6 +68,23 @@ export const userSignup = (data) => {
   })
 };
 
+export const refreshToken = (data) => {
+  return fetch(`${BASE_URL}/auth/refresh`, {
+    credentials: 'same-origin',
+    method: 'PATCH',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': data.token,
+    }),
+  })
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  })
+};
+
 
 // postFile('https://appdividend.com/api/v1/users', 'input[type="file"].avatar')
 //   .then(data => console.log(data))

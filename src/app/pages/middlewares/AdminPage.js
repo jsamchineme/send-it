@@ -1,4 +1,6 @@
 import { retrieveAuthUser } from "../../services/localStorage";
+import { refreshToken } from '../../services/actions/user';
+import stackRequests from '../../services/utils/stackRequests';
 
 export default class AdminPage {
   static guard() {
@@ -17,12 +19,14 @@ export default class AdminPage {
       // return the function that renders the loading view
       return next;
     }
+
     
     /**
      * providing a higher order function that returns the supplied component
      * this will return the component if the user is authenticated as a valid client
      */
     next = (component) => {
+      stackRequests('refreshToken', refreshToken);
       return component;
     }
     return next;

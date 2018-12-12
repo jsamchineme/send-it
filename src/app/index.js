@@ -28,11 +28,6 @@ export default class App {
     this.state = {};
     this.currentPage = this.setInitialPage();
     this.store = store;
-
-    /**
-     * I can get all the funcs and set them as direct properties of this class
-     * instead of accessing as object.funcs.functionName
-     */
   }
   
   setInitialPage() {

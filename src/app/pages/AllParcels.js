@@ -24,8 +24,8 @@ export default class AllParcels {
     });
     
     let target = document.getElementById('orders-list');
-
-    target.innerHTML = parcelHTML;
+    
+    target ? target.innerHTML = parcelHTML : null;
   }
 
   render() {
