@@ -85,6 +85,76 @@ export const refreshToken = (data) => {
   })
 };
 
+export const cancelOrder = (data) => {
+  return fetch(`${BASE_URL}/parcels/${data.parcelId}/cancel`, {
+    credentials: 'same-origin',
+    method: 'PUT',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': data.token,
+    }),
+  })
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  })
+};
+
+export const editDestination = (data, parcelId, token) => {
+  return fetch(`${BASE_URL}/parcels/${parcelId}/destination`, {
+    credentials: 'same-origin',
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  })
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  })
+};
+
+export const editPresentLocation = (data, parcelId, token) => {
+  return fetch(`${BASE_URL}/parcels/${parcelId}/presentLocation`, {
+    credentials: 'same-origin',
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  })
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  })
+};
+
+export const createOrder = (data, token) => {
+  return fetch(`${BASE_URL}/parcels`, {
+    credentials: 'same-origin',
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  })
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  })
+};
 
 // postFile('https://appdividend.com/api/v1/users', 'input[type="file"].avatar')
 //   .then(data => console.log(data))

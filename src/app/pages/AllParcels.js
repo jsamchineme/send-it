@@ -1,8 +1,7 @@
-import Link from '../components/Link';
 import SideBar from '../layouts/SideBar'
 import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
-import Parcel from '../components/Parcel';
+import PaginatedParcelList, { bindPageButtons } from '../containers/PaginatedParcelList';
 import { getAllUserParcels } from '../services/actions/parcel';
 import events from '../services/events/events';
 import subscriptions from '../services/events/subscriptions';
@@ -10,22 +9,20 @@ import stackRequests from '../services/utils/stackRequests';
 
 export default class AllParcels {
   constructor() {
-    document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "User Profile - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
-    events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, this.listOrders);
+    events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
+    events.on(subscriptions.PAGINATION_TARGET_SELECTED, (startPage) => this.listOrders({ startPage }));
   }
 
-  listOrders() {
-    let parcelHTML = '';
-    let parcels = window.app.state['allUserParcels'] || [];
-
-    parcels.map(parcel => {
-      parcelHTML += Parcel(parcel);
-    });
-    
+  listOrders(props = {}) {
+    let startPage = props.startPage || 1;
+    let parcels = window.app.state['allUserParcels'] || []; 
+    let parcelHTML = PaginatedParcelList({ numberPerPage: 8, parcels, startPage });
     let target = document.getElementById('orders-list');
-    
     target ? target.innerHTML = parcelHTML : null;
+    bindPageButtons();
+    return parcelHTML;
   }
 
   render() {
@@ -52,7 +49,7 @@ export default class AllParcels {
                     <section class="page-section items-list all-parcels">
                       <div class="header"><span>All Parcels</span></div>
                       <div class="body row auto-container gutter-20" id='orders-list'>
-                        <!-- orders list -->
+                        ${this.listOrders()}
                       </div>
                     </section>
                   </div>

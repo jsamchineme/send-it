@@ -564,6 +564,7 @@ a {
   border-radius: 3px;
   font-family: 'LatoLig';
   font-weight: bold;
+  margin-right: 5px;
 }
 
 .btn.submit {
@@ -598,6 +599,29 @@ a {
   background: #f7cf84;
   border: 1px solid orange;
 }
+
+.btn.confirm-modal-btn {
+  background: #c32536;
+  color: white;
+}
+
+.btn.decline-modal-btn {
+  background: #f7cf84;
+}
+
+.paginated-view-btn {
+  outline: 0;
+  padding: 5px 10px;
+  margin-right: 5px;
+  background: white;
+  border: 1px solid orange;
+}
+.paginated-view-btn.active {
+  color: white;
+  background: orange;
+}
+
+/* Button Styles end */
 
 .text-num {
   margin-top: 20px;
@@ -640,6 +664,7 @@ a {
   height: 40px;
   background: orange;
   position: fixed;
+  z-index: 1100;
   width: 100%;
   display: -ms-flexbox;
   display: flex;
@@ -715,7 +740,9 @@ a {
   background: #ffffff;
   border-left: 1px solid #cccccc;
   border-right: 1px solid #cccccc;
-  padding: 3px 10px;
+  /* padding: 3px 10px; */
+  width: 0px;
+  overflow: hidden;
   opacity: 0;
   font-size: 15px;
   line-height: 0px;
@@ -731,6 +758,7 @@ a {
   opacity: 1;
   line-height: 12px;
   padding: 5px 5px;
+  width: 100%;
 }
 
 .mobile-side-menu {
@@ -753,8 +781,9 @@ a {
   position: fixed;
   top: 40px;
   bottom: 0;
-  display: none;
   right: 0;
+  left: 0;
+  display: none;
   z-index: 0;
   opacity: 0;
   transition: all 300ms ease-in-out;
@@ -782,11 +811,19 @@ a {
 .side-links li {
   display: block;
   border-bottom: 1px solid orange;
+  cursor: pointer;
 }
 
 .side-links li a {
   display: block;
   padding: 10px;
+  pointer-events: none;
+}
+
+.side-links li:hover a {
+  background-color: #000000;
+  color: orange;
+  transition: all 300ms ease-in-out;
 }
 
 .side-links li a:hover {
@@ -852,6 +889,14 @@ a {
   float: left;
 }
 
+.summary-card.no-avatar .image {
+  display: none;
+}
+
+.summary-card.no-avatar .text-info {
+  padding-left: 0px;
+}
+
 .summary-card .image img {
   object-fit: cover;
   height: 100%;
@@ -915,6 +960,12 @@ a {
 
 .items-list .body>.item .description {
   padding: 10px;
+  font-size: 20px;
+}
+
+
+.items-list .body>.item .description .view-more {
+  color: orange;
   font-size: 20px;
 }
 
@@ -1053,6 +1104,9 @@ label {
   height: 0px;
   overflow: hidden;
   transition: all 300ms ease-in-out;
+}
+
+.login-box .error-box {
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -1071,6 +1125,120 @@ label {
   margin-top: 20px;
   font-family: 'LatoLig';
 }
+
+/* Modal styles begin */
+.modal-view {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  z-index: 100;
+  opacity: 0;
+  background-color: transparent;
+  transition: opacity 300ms ease-in-out, background-color 300ms ease-in-out;
+  position: fixed;
+  display: none;
+}
+
+.modal-view.active {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+.modal-view.hidden {
+  display: none;
+}
+
+.modal-view .confirm-modal {
+  max-width: 400px;
+  margin-top: -500px;
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding: 20px; */
+  border-radius: 5px;
+  transition: all 300ms ease-in-out;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.modal-view.active .confirm-modal {
+  margin-top: 120px;
+  opacity: 1;
+}
+
+.confirm-modal {
+  margin-top: 120px;
+  opacity: 1;
+}
+
+.confirm-modal header {
+  padding: 15px 20px;
+  font-size: 17px;
+  font-weight: bold;
+  background: orange;
+}
+
+.confirm-modal .description {
+  padding: 20px;
+  font-size: 17px;
+  line-height: 20px;
+}
+
+.confirm-modal .actions {
+  padding: 20px;
+  border-top: 1px solid #f5eded;
+}
+
+/* Modal styles end */
+
+/* Toast styles start here */
+#toast-place-holder {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1001;
+  padding: 20px;
+  left: 0;
+  right: 0;
+}
+.toast-box {
+  padding: 15px;
+  background: white;
+  font-size: 14px;
+  color: black;
+  max-width: 240px;
+  transition: all 300ms ease-in-out;
+  margin-left: auto;
+  margin-top: -200px;
+  border-radius: 3px;
+  opacity: 0;
+  text-align: center;
+}
+.toast-box.success {
+  background: #057705;
+  color: white;
+}
+.toast-box.pending {
+  background: #02547a;
+  color: white;
+}
+.toast-box.warning {
+  background: #d3a117;
+  color: black;
+}
+.toast-box.error {
+  background: #921515;
+  color: white;
+}
+.toast-box.active {
+  opacity: 1;
+  margin-top: 20px;
+}
+
+/* Toast styles end here */
 
 
 /* over-riding styles */
@@ -1178,6 +1346,10 @@ label {
   .col-12 {
     -ms-flex-preferred-size: 100%;
     flex-basis: 100%;
+  }
+
+  .single-view .info-sections .item {
+    width: 400px;
   }
 }
 
@@ -1362,7 +1534,7 @@ label {
 
   .items-list .body>.item .description {
     padding: 10px;
-    font-size: 20px;
+    font-size: 15px;
     min-height: 70px;
   }
 

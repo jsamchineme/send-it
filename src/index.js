@@ -67,6 +67,7 @@ app.funcs = {
     // pushing prepared route to the window history object 
     window.history.pushState({}, '', href);
 
+    console.log('Destination', destination);
     // set the new page route
     app.funcs.setRouter(destination);
 

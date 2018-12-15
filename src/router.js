@@ -25,6 +25,7 @@ export const routes = {
   "/admin-dashboard/pending-parcels": "AdminPendingParcels",
   "/admin-dashboard/delivered-parcels": "AdminDeliveredParcels",
   "/not-found": "NotFound",
+  "/logout": "Logout",
 }
 
 export const router = new Router();

@@ -2,7 +2,7 @@
 // server-side error messages
 const preparedMessages = {
   credentialsNotFound: "Wrong credentials used. Please check that you are using the appropriate email and password",
-  unknown: "There seems to an error with your login. Please check your internet connection",
+  unknown: "There seems to be an error with your request. Please check your internet connection",
   badLoginInput: "Please enter valid email and password",
   required: "Please this field is required",
   badSignupInput: "Please fill all required fields",

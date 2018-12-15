@@ -7,20 +7,25 @@ import MakeOrder from './pages/MakeOrder';
 import InviteUsers from './pages/InviteUsers';
 import AllParcels from './pages/AllParcels';
 import ParcelEntry from './pages/ParcelEntry';
-import NotFound from './pages/NotFound';
-import AdminLogin from './pages/admin/Login';
+import ParcelEntryEdit from './pages/ParcelEntryEdit';
 import PendingParcels from './pages/PendingParcels';
 import DeliveredParcels from './pages/DeliveredParcels';
-import UserProfile from './pages/UserProfile';
 import AdminAllParcels from './pages/admin/AllParcels';
+import AdminParcelEntry from './pages/admin/ParcelEntry';
+import AdminParcelEntryEdit from './pages/admin/ParcelEntryEdit';
 import AdminPendingParcels from './pages/admin/PendingParcels';
 import AdminDeliveredParcels from './pages/admin/DeliveredParcels';
+import NotFound from './pages/NotFound';
+import AdminLogin from './pages/admin/Login';
+import UserProfile from './pages/UserProfile';
 import { routes } from '../router';
 import AdminPage from './pages/middlewares/AdminPage';
 import UserPage from './pages/middlewares/UserPage';
 import store from './store';
 import services from './services';
 import delay from './services/utils/delay';
+import MobileMenu from './services/events/MobileMenu';
+import Logout from './pages/middlewares/Logout';
 
 export default class App {
   constructor() {
@@ -34,18 +39,55 @@ export default class App {
     return this.getPathPage();
   }
 
-  getDynamicPage(currentPage) {
+  isAdminRoute(urlParts) {
+    // if the route is not formed with "admin-dashboard" path
+    // then return public page 
+    // else return admin page
+    let adminSearchIndex = urlParts.indexOf('admin-dashboard');
+    if(adminSearchIndex === -1) {
+      return false;
+    } 
+    return true;
+  }
+
+  getDynamicPage(currentPage, url) {
     // handing route parameter
     // Currently handling /all-parcels/
     if(!currentPage) {
-      let url = window.location.href;
+      // checking if their parameter of parcelId in the url 
+      // matching url like "localhost:3001/all-parcels/1"
+      // if correct, paramterIndex one position after the index of 'all/parcels'
       let urlParts = url.split('/');
       let parcelHomeIndex = urlParts.indexOf('all-parcels');
       let parameterIndex = parcelHomeIndex + 1;
-      if(parameterIndex) {
+      
+      if(urlParts[parameterIndex] !== undefined) {
         let parameterValue = urlParts[parameterIndex];
         this.state['selectedParcelId'] = parameterValue;
-        currentPage = 'ParcelEntry';
+        let isAdminRoute = this.isAdminRoute(urlParts);
+        if(!isAdminRoute) {
+          currentPage = 'ParcelEntry';
+        } else {
+          currentPage = 'AdminParcelEntry';
+        }
+      }
+      // checking if their parameter of parcelId in the url 
+      // matching url like "localhost:3001/all-parcels/edit/1"
+      // action is something like "edit"
+      parcelHomeIndex = urlParts.indexOf('all-parcels');
+      let actionIndex = parcelHomeIndex + 1;
+      parameterIndex = parcelHomeIndex + 2;
+      if(urlParts[actionIndex] !== undefined 
+        && urlParts[parameterIndex] !== undefined
+      ) {
+        let parameterValue = urlParts[parameterIndex];
+        this.state['selectedParcelId'] = parameterValue;
+        let isAdminRoute = this.isAdminRoute(urlParts);
+        if(!isAdminRoute) {
+          currentPage = 'ParcelEntryEdit';
+        } else {
+          currentPage = 'AdminParcelEntryEdit';
+        }
       }
     }
     return currentPage;
@@ -66,7 +108,7 @@ export default class App {
     }
 
     let currentPage = routes[path];
-    let dynamicPathPage = this.getDynamicPage(currentPage);
+    let dynamicPathPage = this.getDynamicPage(currentPage, path);
     currentPage = currentPage || dynamicPathPage;
 
     if(!currentPage) {
@@ -159,15 +201,30 @@ export default class App {
     // console.clear();
   }
 
+  bindClassNames(className, eventName, listener) {
+    let collection = document.getElementsByClassName(className);
+    // console.log('item::', collection.length);
+    if(collection.length > 0) {
+
+      for(let i = 0; i < collection.length; i++) {
+        let item = collection[i];
+        // console.log('item::', item);
+        item.addEventListener(eventName, listener);
+      }
+    }
+  }
+
   addEventListeners() {
     // I fetch the item at index 1 because the first one will be behind in the 
     // exiting view
-    let adminLoginForm = document.getElementsByClassName('admin-login-form')[0];
-    let userLoginForm = document.getElementsByClassName('user-login-form')[0];
-    let signupForm = document.getElementsByClassName('signup-login-form')[0];
+    let adminLoginForm = document.querySelector('.admin-login-form');
+    let userLoginForm = document.querySelector('.user-login-form');
+    let signupForm = document.querySelector('.user-signup-form');
+    let createOrderForm = document.querySelector('.create-order-form');
 
     // attach event handlers to elements
     let { actions } = services;
+
     if(adminLoginForm) { 
       adminLoginForm.addEventListener('submit', actions.adminLogin);
       adminLoginForm.addEventListener('input', actions.saveInput.bind(this, 'adminLogin'));
@@ -180,6 +237,14 @@ export default class App {
       signupForm.addEventListener('submit', actions.userSignup);
       signupForm.addEventListener('input', actions.saveInput.bind(this, 'userSignup'));
     }
+    if(createOrderForm) { 
+      createOrderForm.addEventListener('submit', actions.createOrder);
+      createOrderForm.addEventListener('input', actions.saveInput.bind(this, 'createOrder'));
+    }
+
+    // attach mobile menu events
+    let menuIcon = document.getElementById('toggle-mobile-menu');
+    if (menuIcon) { MobileMenu.init(); } 
   }
 
   /**
@@ -230,6 +295,7 @@ export default class App {
       case 'InviteUsers': Page = UserPage.guard()(new InviteUsers()); break;
       case 'AllParcels': Page = UserPage.guard()(new AllParcels()); break;
       case 'ParcelEntry': Page = UserPage.guard()(new ParcelEntry()); break;
+      case 'ParcelEntryEdit': Page = UserPage.guard()(new ParcelEntryEdit()); break;
       case 'PendingParcels': Page = UserPage.guard()(new PendingParcels()); break;
       case 'DeliveredParcels': Page = UserPage.guard()(new DeliveredParcels()); break;
       case 'UserProfile': Page = UserPage.guard()(new UserProfile()); break;
@@ -237,6 +303,9 @@ export default class App {
       case 'AdminAllParcels': Page = AdminPage.guard()(new AdminAllParcels()); break;
       case 'AdminPendingParcels': Page = AdminPage.guard()(new AdminPendingParcels()); break;
       case 'AdminDeliveredParcels': Page = AdminPage.guard()(new AdminDeliveredParcels()); break;
+      case 'AdminParcelEntry': Page = AdminPage.guard()(new AdminParcelEntry()); break;
+      case 'AdminParcelEntryEdit': Page = AdminPage.guard()(new AdminParcelEntryEdit()); break;
+      case 'Logout': Page = new Logout(); break;
       default: Page = new NotFound();
     }
     return Page;

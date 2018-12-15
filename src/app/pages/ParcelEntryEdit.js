@@ -1,14 +1,15 @@
 import SideBar from '../layouts/SideBar'
 import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
-import { fetchParcel, cancelOrder } from '../services/actions/parcel';
+import { fetchParcel, cancelOrder, editDestination } from '../services/actions/parcel';
+import saveInput from '../services/actions/saveInput';
 import events from '../services/events/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 import confirmModalBox from '../components/modals/confirmModal';
 import Link from '../components/Link';
 
-export default class ParcelEntry {
+export default class ParcelEntryEdit {
   constructor() {
     document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
 
@@ -18,6 +19,7 @@ export default class ParcelEntry {
 
     events.on(subscriptions.FETCH_PARCEL_SUCCESS, this.renderParcel);
     events.on(subscriptions.CANCEL_PARCEL_ORDER_SUCCESS, this.renderParcel);
+    events.on(subscriptions.EDIT_PARCEL_ORDER_SUCCESS, this.renderParcel);
   }
 
   renderParcel(parcel) {
@@ -47,14 +49,16 @@ export default class ParcelEntry {
       : '';
     
     // allow editing destination only if status is neither 'cancelled' nor 'delivered'
-    let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
-        `${Link({
-            to:`/all-parcels/edit/${id}`, 
-            text:`Edit Order`,
-            className: 'btn medium-btn bg-light-orange'
-          })}
-        `
-      : '';
+    let toSection = status !== 'cancelled' && status !== 'delivered' ? 
+      `<div id='to-error-box' class='error-box'></div>
+        <input class='line-input' name='to' type="text" placeholder="type here" value='${to}'/>
+        <br>
+        <button 
+          class='btn small-btn save-edit' 
+          id='editDestination-action-button'
+          data-parcel-id=${id}
+        >Save</button>`
+      : `${to}`;
 
     let parcelHTML = `
       <section class="page-section single">
@@ -79,18 +83,18 @@ export default class ParcelEntry {
             <div class="body row">
               <div class="info-sections column col-7">
                 <div class="item">
-                  <div class="field">Present Location</div>
+                  <div class="field">Present Location </div>
                   <div class="value">
                     ${currentLocation}
                   </div>
                   <div class="actions">
-                    ${mapViewButton}
+                    <!-- ${mapViewButton} -->
                   </div>
                 </div>
                 <div class="item">
                   <div class="field">Delivery Location</div>
                   <div class="value">
-                    ${to}
+                    ${toSection}
                   </div>
                 </div>
                 <div class="item">
@@ -101,7 +105,6 @@ export default class ParcelEntry {
                 </div>
                 <div class="item actions">
                   ${cancelOrderButton}
-                  ${editOrderButton}
                 </div>
               </div>
               <div class="images column col-5">
@@ -125,6 +128,18 @@ export default class ParcelEntry {
         description: 'This action cannot be undone. Do you wish to continue?',
       })
     });
+
+    window.app.bindClassNames('save-edit', 'click', 
+      (e) => {
+        let parcelId = e.target.dataset.parcelId;
+        confirmModalBox({ title: 'Save Edit', yesAction: () => editDestination(parcelId),
+        description: 'Do you wish to continue?',
+      })
+    });
+
+    document
+      .querySelector('.info-sections')
+      .addEventListener('input', (e) => saveInput('editDestination', e));
   }
 
   render() {

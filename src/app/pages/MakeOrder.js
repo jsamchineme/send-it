@@ -7,6 +7,7 @@ export default class MakeOrder {
   constructor() {
     document.title = "Create Order - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
   }
+
   render() {
     return (`
       <div>
@@ -38,32 +39,85 @@ export default class MakeOrder {
                       <div class="single-view">
                         <div class="container">
                           <div class="body row">
-                            <form class='' action="">
-                              <div class="info-sections column col-7">
+                            <form 
+                              class='create-order-form' 
+                              action=""
+                            >
+                            <div class="info-sections column col-7">
+                                <div class="item">
+                                  <div id='server-error-box' class='error-box'></div>
+                                </div>
                                 <div class="item">
                                   <div class="field">Pickup Location</div>
+                                  <div id='from-error-box' class='error-box'></div>
                                   <div class="value">
                                     <!-- Where do you want us to come pick up the parcel? -->
-                                    <input class='line-input' type="text" id='destination' placeholder="Provide Pickup location" />
+                                    <input 
+                                      class='line-input' 
+                                      type="text" 
+                                      name='from'
+                                      value="5 Victoria Land Street, Ikeja"
+                                      placeholder="Provide Pickup location"
+                                    />
                                   </div>
                                 </div>
                                 <div class="item">
                                   <div class="field">Delivery Location</div>
+                                  <div id='to-error-box' class='error-box'></div>
                                   <div class="value">
                                     <!-- Where should the parcel be delivered? -->
-                                    <input class='line-input' type="text" id='deliveryLocation' placeholder="Provide delivery location" />
+                                    <input 
+                                      class='line-input' 
+                                      type="text" 
+                                      name='to'
+                                      value="5 Victoria Land Street, Ikeja"
+                                      placeholder="Provide delivery location" 
+                                    />
+                                  </div>
+                                </div>
+                                <div class="item">
+                                  <div class="field">Present Location</div>
+                                  <div id='currentLocation-error-box' class='error-box'></div>
+                                  <div class="value">
+                                    <!-- Where should the parcel be delivered? -->
+                                    <input 
+                                      class='line-input' 
+                                      type="text" 
+                                      name='currentLocation'
+                                      value="5 Victoria Land Street, Ikeja"
+                                      placeholder="Provide your present location" 
+                                    />
                                   </div>
                                 </div>
                                 <div class="item">
                                   <div class="field">Parcel Description</div>
+                                  <div id='description-error-box' class='error-box'></div>
                                   <div class="value">
                                     <!-- Describe the parcel -->
-                                    <textarea class='line-input' id='description' placeholder="Provide brief description"></textarea>
+                                    <textarea
+                                      class='line-input' 
+                                      name='description'
+                                      placeholder="Provide brief description"
+                                    >Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias eum quia numquam doloremque placeat dignissimos aperiam distinctio necessitatibus provident, deserunt dolorem soluta sit voluptas</textarea>
+                                  </div>
+                                </div>
+                                <div class="item">
+                                  <div class="field">Approximate weight of the parcel</div>
+                                  <div id='weight-error-box' class='error-box'></div>
+                                  <div class="value">
+                                    <!-- Where should the parcel be delivered? -->
+                                    <input 
+                                      class='line-input' 
+                                      type="text" 
+                                      name='weight'
+                                      value=25
+                                      placeholder="Provide the approximate weight of the parcel" 
+                                    />
                                   </div>
                                 </div>
       
                                 <div class="item actions">
-                                  <a href="#map-modal" class="btn bg-light-orange medium-btn">Save Order</a>
+                                  <button class="btn bg-light-orange medium-btn" id="createOrder-action-button">Create Order</button>
                                 </div>
                               </div>
                               <div class="images column col-5">

@@ -7,7 +7,12 @@ const persistAuthUser = (data) => {
   localStorage.setItem('authUser', JSON.stringify(data));
 }
 
+const clearAuthUser = () => {
+  localStorage.removeItem('authUser');
+}
+
 export {
   retrieveAuthUser,
-  persistAuthUser
+  persistAuthUser,
+  clearAuthUser
 };

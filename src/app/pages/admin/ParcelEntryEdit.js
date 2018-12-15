@@ -1,14 +1,14 @@
-import SideBar from '../layouts/SideBar'
-import MobileHeader from '../layouts/MobileHeader';
-import MainPageHeader from '../layouts/MainPageHeader';
-import { fetchParcel, cancelOrder } from '../services/actions/parcel';
-import events from '../services/events/events';
-import subscriptions from '../services/events/subscriptions';
-import stackRequests from '../services/utils/stackRequests';
-import confirmModalBox from '../components/modals/confirmModal';
-import Link from '../components/Link';
+import SideBar from '../../layouts/SideBar'
+import MobileHeader from '../../layouts/MobileHeader';
+import MainPageHeader from '../../layouts/MainPageHeader';
+import { fetchParcel, cancelOrder } from '../../services/actions/parcel';
+import events from '../../services/events/events';
+import subscriptions from '../../services/events/subscriptions';
+import stackRequests from '../../services/utils/stackRequests';
+import confirmModalBox from '../../components/modals/confirmModal';
+import Link from '../../components/Link';
 
-export default class ParcelEntry {
+export default class ParcelEntryEdit {
   constructor() {
     document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
 
@@ -36,20 +36,15 @@ export default class ParcelEntry {
       id,
     } = parcel;
 
-    // allow map view only if status is not 'cancelled'
     let mapViewButton = status !== 'cancelled' ? 
       `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
       : '';
-    
-    // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
     let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
       `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
       : '';
-    
-    // allow editing destination only if status is neither 'cancelled' nor 'delivered'
     let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
         `${Link({
-            to:`/all-parcels/edit/${id}`, 
+            to:'/all-parcels/edit', 
             text:`Edit Order`,
             className: 'btn medium-btn bg-light-orange'
           })}
@@ -81,27 +76,26 @@ export default class ParcelEntry {
                 <div class="item">
                   <div class="field">Present Location</div>
                   <div class="value">
-                    ${currentLocation}
+                    <input class='line-input' type="text" placeholder="type here" value='${currentLocation}'/> 
                   </div>
                   <div class="actions">
-                    ${mapViewButton}
+                    <!-- ${mapViewButton} -->
                   </div>
                 </div>
                 <div class="item">
                   <div class="field">Delivery Location</div>
                   <div class="value">
-                    ${to}
+                    <input class='line-input' type="text" placeholder="type here" value='${to}'/> 
                   </div>
                 </div>
                 <div class="item">
                   <div class="field">Pickup Location</div>
                   <div class="value">
-                    ${from}
+                    <input class='line-input' type="text" placeholder="type here" value='${from}'/> 
                   </div>
                 </div>
                 <div class="item actions">
                   ${cancelOrderButton}
-                  ${editOrderButton}
                 </div>
               </div>
               <div class="images column col-5">

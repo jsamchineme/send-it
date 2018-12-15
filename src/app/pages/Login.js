@@ -7,6 +7,7 @@ export default class Login {
   render() {
     return (`
       <div class="wrapper">
+        <div id="toast-place-holder"></div>
         <section class="page-content">
           <section class="mast no-bg paddless">
             ${Link({

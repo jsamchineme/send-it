@@ -14,12 +14,24 @@ const Parcel = ({
   presentMapPointer,
   id,
 }) => {
+
+  let caption = description.slice(0, 30);
+  let dotLink = `
+    ${Link({
+      to:`/all-parcels/${id}`, 
+      text: '...',
+      className: 'view-more'
+    })}
+  `;
+  caption += dotLink;
+
+
   return (`
     <div class="item column col-3">
       <div class="container">
         <div class="upper-section">
           <div class="description">
-            <span>${description}</span>
+            <span>${caption}</span>
             <!--<div class='text-num order-id'>Tracking ID: <span>#${id}</span></div>-->
           </div>
           <!-- <div class="image">

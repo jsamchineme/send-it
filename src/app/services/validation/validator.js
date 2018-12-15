@@ -16,19 +16,39 @@ const handleRule = (rule, inputName, inputValue, fieldErrors) => {
       }
       return fieldErrors;
     case 'max':
-      if (inputValue.length > rule.ruleValue) {
-        return [...fieldErrors, computeMessage(rule, inputName)]
+      // if the rule has property of number then use number check
+      // else use string check
+      if (rule.numeric) {
+        // number check
+        if (Number(inputValue) > rule.ruleValue) {
+          return [...fieldErrors, computeMessage(rule, inputName)];
+        }
+      } else {
+        // string check
+        if (inputValue.length > rule.ruleValue) {
+          return [...fieldErrors, computeMessage(rule, inputName)];
+        }
       }
       return fieldErrors;
     case 'min':
-      if (inputValue.length < rule.ruleValue) {
-        return [...fieldErrors, computeMessage(rule, inputName)]
+      // if the rule has property of number then use number check
+      // else use string check
+      if (rule.numeric) {
+        // number check
+        if (Number(inputValue) < rule.ruleValue) {
+          return [...fieldErrors, computeMessage(rule, inputName)];
+        }
+      } else {
+        // string check
+        if (inputValue.length < rule.ruleValue) {
+          return [...fieldErrors, computeMessage(rule, inputName)];
+        }
       }
       return fieldErrors;
     case 'email':
       if (!validateEmail(inputValue)) {
 
-        return [...fieldErrors, computeMessage(rule, inputName)]
+        return [...fieldErrors, computeMessage(rule, inputName)];
       }
       return fieldErrors;
     default:

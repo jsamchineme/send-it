@@ -38,7 +38,7 @@ const userLogin = async (e) => {
       if(authUser.isAdmin) {
         window.app.funcs.changeRoute('/admin-dashboard/all-parcels');
       } else {
-        window.app.funcs.changeRoute('/all-parcels');
+        window.app.funcs.changeRoute('/user-profile');
       }
     }
     catch(error) {

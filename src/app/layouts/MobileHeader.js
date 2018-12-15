@@ -17,9 +17,19 @@ const MobileHeader = () => {
             </span>
             <div class="drop-down">
               <ul>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="login.html">Logout</a></li>
+                <!-- <li><a href="#">Settings</a></li> -->
+                <li>
+                  ${Link({
+                    to:'/user-profile', 
+                    text:`Profile`, 
+                  })}
+                </li>
+                <li>
+                  ${Link({
+                    to:'/logout', 
+                    text:`Logout`, 
+                  })}
+                </li>
               </ul>
             </div>
           </span>
@@ -30,40 +40,39 @@ const MobileHeader = () => {
       </div>
       <div class="mobile-side-menu" id="mobile-side-menu">
         <ul class="side-links">
-          <li>
+          <li class='mobile-side-link' data-link-to='/make-order'>
             ${Link({
               to:'/make-order', 
               text:`<i class=""></i>Make an Order`, 
+              noAction: true,
             })}
           </li>
-          <li>
-            ${Link({
-              to:'/invite-users', 
-              text:`<i class=""></i>Invite Users`, 
-            })}
-          </li>
-          <li>
+          <li class='mobile-side-link' data-link-to='/all-parcels'>
             ${Link({
               to:'/all-parcels', 
               text:`<i class=""></i>See Your Parcels`, 
+              noAction: true,
             })}
           </li>
-          <li>
+          <li class='mobile-side-link' data-link-to='/pending-parcels'>
             ${Link({
-              to:'/track-parcels', 
+              to:'/pending-parcels', 
               text:`<i class=""></i>Pending Parcels`, 
+              noAction: true,
             })}
           </li>
-          <li>
+          <li class='mobile-side-link' data-link-to='/delivered-parcels'>
             ${Link({
               to:'/delivered-parcels', 
               text:`<i class=""></i>Delivered Parcels`, 
+              noAction: true,
             })}
           </li>
-          <li>
+          <li class='mobile-side-link' data-link-to='/user-profile'>
             ${Link({
               to:'/user-profile', 
               text:`<i class=""></i>My Profile`, 
+              noAction: true,
             })}
           </li>
         </ul>
