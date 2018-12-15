@@ -1,40 +1,37 @@
-import Link from '../components/Link';
 import SideBar from '../layouts/SideBar'
 import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
-import Parcel from '../components/Parcel';
+import PaginatedParcelList, { bindPageButtons } from '../containers/PaginatedParcelList';
 import { getAllUserParcels } from '../services/actions/parcel';
 import events from '../services/events/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 
-export default class UserProfile {
+export default class AllParcels {
   constructor() {
-    document.title = "User Profile - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
-    events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, this.listOrders.bind(this));
+    events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
+    events.on(subscriptions.PAGINATION_TARGET_SELECTED, (startPage) => this.listOrders({ startPage }));
   }
 
-  listOrders(parcels) {
-    let parcelHTML = '';
-    parcels = window.app.state['allUserParcels'] || [];
-
-    parcels.map(parcel => {
-      parcelHTML += Parcel(parcel);
-    });
-
-    if(parcels.length === 0) {
-      this.renderCreateOrder();
-    }
-    
+  listOrders(props = {}) {
+    let startPage = props.startPage || 1;
+    let parcels = window.app.state['allUserParcels'] || []; 
+    let parcelHTML = PaginatedParcelList({ numberPerPage: 8, parcels, startPage });
     let target = document.getElementById('orders-list');
+    target ? target.innerHTML = parcelHTML : null;
+    bindPageButtons();
+    return parcelHTML;
+  }
 
-    target.innerHTML = parcelHTML;
+  renderSummaryCard() {
+
   }
 
   renderCreateOrder() {
     let leadHTML = `
-      <div>
+      <div class='create-order'>
         Create Order
       </div>
     `;
@@ -63,7 +60,7 @@ export default class UserProfile {
                 <div class="main-content">
                   <div class="container">
 
-                    <div class="summary-card row">
+                    <div class="summary-card row no-avatar">
                       <div class="left column col-8">
                         <div class="image round">
                           <img src="/assets/img/users/amilolo.jpg" alt="Profile Picture">
@@ -74,7 +71,7 @@ export default class UserProfile {
                           <div class="v-gap-1"></div>
                           <!-- <div class="text-3"><span class='inset-text'>joined</span> 24th Dec 2018</div> -->
                           <div>
-                            <button class='btn small-btn'>Edit</button>
+                            <!-- <button class='btn small-btn'>Edit</button> -->
                           </div>
                         </div>
                       </div>
@@ -96,7 +93,7 @@ export default class UserProfile {
                       <div id="create-order-view"></div>
 
                       <div class="body row auto-container gutter-20" id="orders-list">
-                        <!-- orders list -->
+                        ${this.listOrders()}
                       </div>
                     </section>
                   </div>

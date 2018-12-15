@@ -20,13 +20,21 @@ export const computeMessage = (rule, substring) => {
 
   switch(rule.name) {
     case 'required': 
-      message = "Please provide the " + substring;
+      message = "Please fill this";
       break;
     case 'max': 
-      message = "The " + substring + " should not be more than " + rule.ruleValue + " characters";
+      if(rule.numeric) {
+        message = "Value should not be greater than " + rule.ruleValue;
+      } else {
+        message = "Input should not be more than " + rule.ruleValue + " characters";
+      }
       break;
     case 'min': 
-      message = "The " + substring + " should not be less than " + rule.ruleValue + " characters";
+      if(rule.numeric) {
+        message = "Value should not be less than " + rule.ruleValue;
+      } else {
+        message = "Input should not be less than " + rule.ruleValue + " characters";
+      }
       break;
     case 'email': 
       message = "Please provide a valid email";

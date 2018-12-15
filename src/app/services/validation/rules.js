@@ -54,3 +54,37 @@ export const adminLoginRules = {
   ],
 }
 
+export const createOrderRules = { 
+  currentLocation: [
+    {name: "required"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100}
+  ],
+  to: [
+    {name: "required"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100},
+  ],
+  from: [
+    {name: "required"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100},
+  ],
+  description: [
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 200},
+  ],
+  weight: [
+    {name: "required"},
+    {name: "min", ruleValue: 10, numeric: true},
+    {name: "max", ruleValue: 100, numeric: true},
+  ],
+}
+
+export const editDestinationRules = { 
+  to: [
+    {name: "required"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100},
+  ]
+}

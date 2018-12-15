@@ -6,12 +6,8 @@ import subscriptions from '../../events/subscriptions';
 const getAllParcels = async () => {
   const authUser = retrieveAuthUser();
 
-  console.log('authUser', authUser);
-
   try {
     const response = await api.getParcels(authUser);
-
-    console.log('response', response);
     
     // store the parcels data in the window.app.state namespace
     window.app.state['allParcels'] = response.data;

@@ -20,7 +20,7 @@ export default class Signup {
           </section>
           <div class="login-box">
             <form 
-              class="signup-login-form"
+              class="user-signup-form"
               action="/user-profile"
             >
               <div class="form-header">

@@ -1,12 +1,15 @@
 const Link = (props) => {
-  let {to, text, className, style} = props;
+  let {to, text, className, style, noAction} = props;
   style = (style === undefined || style === null) ? '' : style;
   className = (className === undefined || className === null) ? '' : className;
+  let action = (noAction === undefined || noAction === null) ? 
+    `onclick='window.app.funcs.linkHandler(this); return false;'` 
+    : '';
 
   return (`
     <a 
       href='${to}'
-      onclick='window.app.funcs.linkHandler(this); return false;' 
+      ${action}
       class='${className}' style='${style}'
     > 
       ${text}

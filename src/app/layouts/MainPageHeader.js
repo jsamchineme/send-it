@@ -3,6 +3,7 @@ import Link from '../components/Link';
 const MainPageHeader = () => {
   return (`
     <div class="page-header row">
+      <div id="toast-place-holder"></div>
       <div class="text">
         <div class="name"><span>Hi, </span>Solomonowen</div>
       </div>
@@ -16,14 +17,18 @@ const MainPageHeader = () => {
           </span>
           <div class="drop-down">
             <ul>
+              <!-- <li><a href="#">Settings</a></li> -->
               <li>
-                <a href="#">Settings</a>
+                ${Link({
+                  to:'/user-profile', 
+                  text:`Profile`,
+                })}
               </li>
               <li>
-                <a href="#">Profile</a>
-              </li>
-              <li>
-                <a href="login.html">Logout</a>
+                ${Link({
+                  to:'/logout', 
+                  text:`Logout`, 
+                })}
               </li>
             </ul>
           </div>
