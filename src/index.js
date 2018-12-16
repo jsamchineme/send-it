@@ -1,3 +1,5 @@
+'use strict';
+
 import App from './app';
 import { router, routes } from './router';
 import services from './app/services';

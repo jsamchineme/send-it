@@ -1,4 +1,4 @@
-import SideBar from '../layouts/SideBar'
+import SideBar from '../layouts/SideBar';
 import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
 import { fetchParcel, cancelOrder } from '../services/actions/parcel';
