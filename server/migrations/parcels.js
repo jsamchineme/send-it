@@ -17,6 +17,12 @@ const parcelSchema = {
       name: 'cost', type: 'string', length: 20, notNull: true,
     },
     {
+      name: 'contactPhone', type: 'string', length: 20
+    },
+    {
+      name: 'contactEmail', type: 'string', length: 100
+    },
+    {
       name: 'status', type: 'string', length: 30, notNull: true,
     },
     {
