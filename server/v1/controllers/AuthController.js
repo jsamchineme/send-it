@@ -28,6 +28,8 @@ class AuthController {
 
     const newUser = await User.create(newUserData);
 
+    delete newUser.password;
+
     return Response.success(res, newUser);
   }
 
