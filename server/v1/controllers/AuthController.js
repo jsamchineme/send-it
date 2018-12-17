@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
 import Response from '../helpers/Response';
 import { EXPIRES_IN } from '../constants/jwtOptions';
-import delay from '../helpers/utils/delayPromise';
 
 const User = new UserModel();
 
@@ -81,6 +80,7 @@ class AuthController {
       id: decoded.id,
       email: decoded.email,
       isAdmin: decoded.isAdmin,
+      token: refreshedToken
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRES_IN });

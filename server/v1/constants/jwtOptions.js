@@ -1,4 +1,4 @@
-const EXPIRES_IN = 60 * 15; // 15 minutes
+const EXPIRES_IN = 60 * 60; // 1 hour
 
 const jwtOptions = {
   EXPIRES_IN
