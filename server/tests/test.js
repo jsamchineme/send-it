@@ -25,9 +25,7 @@ describe('Test cases for the API landing routes', () => {
       .set('Content-Type', 'application/json')
       .expect(200)
       .end((err, res) => {
-        expect(res.body).deep.equal({
-          message: 'Send-IT API v1',
-        });
+        expect(res.body.message).to.equal('Send-IT API v1');
         done();
       });
   });
