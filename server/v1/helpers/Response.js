@@ -8,6 +8,9 @@ const responses = {
   success: (res, data) => res.status(200).json({
     data,
   }),
+  created: (res, data) => res.status(201).json({
+    data,
+  }),
   unauthorised: res => res.status(401).json({
     message: 'You lack privileges to access resource',
   }),

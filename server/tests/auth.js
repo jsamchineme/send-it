@@ -19,7 +19,7 @@ describe('Test case for the "auth" resource endpoints', () => {
           email: 'samcotech@example.io',
           password: 'secretpass',
         })
-        .expect(200)
+        .expect(201)
         .end((err, res) => {
           adminToken = res.body.data.token;
           done();
@@ -33,7 +33,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       };
       request.post('/api/v1/auth/signup')
         .send(newUserData)
-        .expect(200)
+        .expect(201)
         .end((err, res) => {
           newUser = res.body.data;
           expect(res.body.data.id !== undefined).to.equal(true);
@@ -99,7 +99,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       };
       request.post('/api/v1/auth/signup')
         .send(newUserData)
-        .expect(200)
+        .expect(201)
         .end((err, res) => {
           newUser = res.body.data;
           expect(newUser.email).to.equal(newUserData.email);
