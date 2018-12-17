@@ -73,7 +73,7 @@ class ParcelController {
     newParcelData.cost = cost;
     const newParcel = await Parcel.create(newParcelData);
 
-    return Response.success(res, newParcel);
+    return Response.created(res, newParcel);
   }
 
   /**

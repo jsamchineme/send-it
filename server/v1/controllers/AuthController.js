@@ -30,7 +30,7 @@ class AuthController {
 
     delete newUser.password;
 
-    return Response.success(res, newUser);
+    return Response.created(res, newUser);
   }
 
   /**
