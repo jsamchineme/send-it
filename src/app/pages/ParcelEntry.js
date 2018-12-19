@@ -7,6 +7,7 @@ import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 import confirmModalBox from '../components/modals/confirmModal';
 import Link from '../components/Link';
+import Map from '../services/Map';
 
 export default class ParcelEntry {
   constructor() {
@@ -36,10 +37,13 @@ export default class ParcelEntry {
       id,
     } = parcel;
 
-    // allow map view only if status is not 'cancelled'
-    let mapViewButton = status !== 'cancelled' ? 
-      `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
-      : '';
+    
+    let mapViewButton = '';
+    if(!window.mapReady) {
+      mapViewButton = status !== 'cancelled' ? 
+        `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
+        : '';
+    }
     
     // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
     let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
@@ -77,7 +81,7 @@ export default class ParcelEntry {
               </div>
             </div>
             <div class="body row">
-              <div class="info-sections column col-7">
+              <div class="info-sections column col-5">
                 <div class="item">
                   <div class="field">Present Location</div>
                   <div class="value">
@@ -104,10 +108,11 @@ export default class ParcelEntry {
                   ${editOrderButton}
                 </div>
               </div>
-              <div class="images column col-5">
-                <div class="image">
-                  <!-- <img src="/assets/img/packages/package-1.png" alt=""> -->
+              <div class="map-view column col-7">
+                <div class='info-sections'>
+                  <div class="item" id="output"></div>
                 </div>
+                <div id="map"></div>
               </div>
             </div>
           </div>
@@ -117,6 +122,10 @@ export default class ParcelEntry {
 
     let target = document.getElementById('parcel-view');
     target.innerHTML = parcelHTML;
+
+    if(window.mapReady) {
+      Map.initMap(from, to);
+    }
 
     window.app.bindClassNames('cancel-order', 'click', 
       (e) => {

@@ -11,6 +11,13 @@ import { persistAuthUser, retrieveAuthUser } from "../../localStorage";
  */
 class TokenRefresh {
   /**
+   * Initialise the Token Refresh process
+   */
+  static init() {
+    TokenRefresh.failedTrialsCount = 0;
+    TokenRefresh.refreshToken();
+  }
+  /**
    * This will refresh the authentication token 
    * using the last registered authentication data.
    * It will also instantiate a set interval to 
@@ -22,18 +29,27 @@ class TokenRefresh {
    */
   static async refreshToken() {
     const oldAuthData = retrieveAuthUser() || {};
-    
+
     try {
       const response = await api.refreshToken(oldAuthData);
       const newAuthData = response.data;
+      // reset failed trails count
+      TokenRefresh.failedTrialsCount = 0;
   
       persistAuthUser(newAuthData);
     }
     catch(error) {
       if(oldAuthData.isAdmin) {
-        window.app.funcs.changeRoute('/admin-login');
+        TokenRefresh.failedTrialsCount++;
+        // Redirect to login if failed refresh trails is up to 3
+        if(TokenRefresh.failedTrialsCount > 3) {
+          window.app.funcs.changeRoute('/admin-login');
+        }
       } else {
-        window.app.funcs.changeRoute('/login');
+        // Redirect to login if failed refresh trails is up to 3
+        if(TokenRefresh.failedTrialsCount > 3) {
+          window.app.funcs.changeRoute('/login');
+        }
       }
     }
 
@@ -50,7 +66,7 @@ class TokenRefresh {
    */
   static refreshOverInterval() {
     // refresh token every 10 minutes
-    const refreshInterval = 60 * 1000 * 10;
+    const refreshInterval = 60 * 1000 * 30;
     clearInterval(TokenRefresh.setRefreshInterval);
   
     TokenRefresh.setRefreshInterval = setInterval(async () => {
@@ -61,13 +77,10 @@ class TokenRefresh {
         persistAuthUser(response.data);
       }
       catch(error) {
-        // console.log('Failed to refresh token', error.message);
+        console.log('Failed to refresh token', error.message);
       }
     }, refreshInterval);
   }
-
-
 }
 
-
-export default TokenRefresh.refreshToken;
+export default TokenRefresh;

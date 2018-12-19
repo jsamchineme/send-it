@@ -13,7 +13,6 @@ export const modalConfirmAction = (yes) => {
   closeModal();
 
   let { yesAction } = window.confirmModal;
-  console.log('typeof yesAction', typeof yesAction)
 
   if (typeof yesAction === 'function') {
     yesAction();

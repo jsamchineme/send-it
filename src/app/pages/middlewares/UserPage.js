@@ -1,5 +1,5 @@
 import { retrieveAuthUser } from "../../services/localStorage";
-import { refreshToken } from '../../services/actions/user';
+import RefreshToken from '../../services/actions/user/refreshToken';
 import stackRequests from '../../services/utils/stackRequests';
 
 export default class UserPage {
@@ -25,7 +25,7 @@ export default class UserPage {
      * this will return the component if the user is authenticated as a valid client
      */
     next = (component) => {
-      stackRequests('refreshToken', refreshToken);
+      stackRequests('refreshToken', RefreshToken.init);
       return component;
     }
     return next;

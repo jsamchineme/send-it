@@ -18,7 +18,7 @@ import AdminDeliveredParcels from './pages/admin/DeliveredParcels';
 import NotFound from './pages/NotFound';
 import AdminLogin from './pages/admin/Login';
 import UserProfile from './pages/UserProfile';
-import { routes } from '../router';
+import { routes } from './router';
 import AdminPage from './pages/middlewares/AdminPage';
 import UserPage from './pages/middlewares/UserPage';
 import store from './store';
