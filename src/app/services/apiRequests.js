@@ -1,9 +1,11 @@
 import ResponseException from './ResponseException';
 
-// const BASE_URL = 'https://johnnysam-sendit.herokuapp.com/api/v1';
-// const BASE_URL = 'http://localhost:8001/api/v1';
-const BASE_URL = 'http://172.20.10.2:8001/api/v1';
-
+const BASE_URL = process.env.NODE_ENV === 'development' ?
+  'http://localhost:8001/api/v1' :
+  'https://johnnysam-sendit.herokuapp.com/api/v1';
+  
+  // 'http://192.168.43.91:8001/api/v1' :
+  // 'http://172.20.10.2:8001/api/v1' :
 
 export const getParcels = (data) => {
   return fetch(`${BASE_URL}/parcels?token=${data.token}`)

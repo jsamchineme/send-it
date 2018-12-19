@@ -7,6 +7,7 @@ import events from '../services/events/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 import confirmModalBox from '../components/modals/confirmModal';
+import Map from '../services/Map';
 import Link from '../components/Link';
 
 export default class ParcelEntryEdit {
@@ -38,10 +39,14 @@ export default class ParcelEntryEdit {
       id,
     } = parcel;
 
-    // allow map view only if status is not 'cancelled'
-    let mapViewButton = status !== 'cancelled' ? 
-      `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
-      : '';
+
+    let mapViewButton = '';    
+    if(!window.mapReady) {
+      mapViewButton = status !== 'cancelled' ? 
+        `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
+        : '';
+    }
+    
     
     // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
     let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
@@ -57,7 +62,13 @@ export default class ParcelEntryEdit {
           class='btn small-btn save-edit' 
           id='editDestination-action-button'
           data-parcel-id=${id}
-        >Save</button>`
+        >Save</button>
+        ${Link({ 
+          to: `/all-parcels/${id}`, 
+          className: 'btn small-btn',
+          text: 'View'
+        })}
+      `
       : `${to}`;
 
     let parcelHTML = `
@@ -81,7 +92,7 @@ export default class ParcelEntryEdit {
               </div>
             </div>
             <div class="body row">
-              <div class="info-sections column col-7">
+              <div class="info-sections column col-5">
                 <div class="item">
                   <div class="field">Present Location </div>
                   <div class="value">
@@ -107,10 +118,11 @@ export default class ParcelEntryEdit {
                   ${cancelOrderButton}
                 </div>
               </div>
-              <div class="images column col-5">
-                <div class="image">
-                  <!-- <img src="/assets/img/packages/package-1.png" alt=""> -->
+              <div class="map-view column col-7">
+                <div class='info-sections'>
+                  <div class="item" id="output"></div>
                 </div>
+                <div id="map"></div>
               </div>
             </div>
           </div>
@@ -128,6 +140,10 @@ export default class ParcelEntryEdit {
         description: 'This action cannot be undone. Do you wish to continue?',
       })
     });
+
+    if(window.mapReady) {
+      Map.initMap(from, to);
+    }
 
     window.app.bindClassNames('save-edit', 'click', 
       (e) => {

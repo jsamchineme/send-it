@@ -1,8 +1,7 @@
 'use strict';
 
 import App from './app';
-import { router, routes } from './router';
-import services from './app/services';
+import { router } from './app/router';
 
 
 let app = new App();
@@ -81,4 +80,5 @@ app.funcs = {
 
 
 window.app = app;
+window.initMap = () => window.mapReady = true;
 window.app.funcs.init();

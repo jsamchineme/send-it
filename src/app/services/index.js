@@ -4,7 +4,6 @@ import {
   userLogin, 
   userSignup, 
   adminLogin,
-  refreshToken
 } from './actions/user/index';
 import { getAllParcels, cancelOrder, createOrder } from './actions/parcel/index';
 
@@ -17,7 +16,6 @@ export default {
     adminLogin,
     userSignup,
     getAllParcels,
-    refreshToken,
     cancelOrder,
     createOrder
   }

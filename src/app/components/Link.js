@@ -1,5 +1,4 @@
-const Link = (props) => {
-  let {to, text, className, style, noAction} = props;
+const Link = ({ to, text, className, style, noAction }) => {
   style = (style === undefined || style === null) ? '' : style;
   className = (className === undefined || className === null) ? '' : className;
   let action = (noAction === undefined || noAction === null) ? 
