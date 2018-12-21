@@ -90,6 +90,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '10.22',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
@@ -110,6 +112,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '10.22',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
@@ -130,6 +134,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '20.22',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
@@ -150,6 +156,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '20.22',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
@@ -170,6 +178,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '52.22',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
@@ -190,6 +200,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '90.22',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
@@ -268,6 +280,8 @@ describe('Test case for the "parcel" resource endpoints', () => {
         from: 'dummy value',
         weight: '20',
         presentMapPointer: 'dummy value',
+        contactPhone: '08134876924',
+        contactEmail: 'jsamchineme@gmail.com'
       };
       request.post('/api/v1/parcels')
         .set('x-access-token', authToken)
