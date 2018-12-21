@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 // load the api/v1 home route
 app.get('/api/v1', (req, res) => {
-  res.status(404);
+  res.status(200);
   res.json({
     message: 'Send-IT API v1',
     documentation: `${req.protocol}://${req.headers.host}/docs`,
