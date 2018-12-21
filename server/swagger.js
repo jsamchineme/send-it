@@ -19,7 +19,6 @@ module.exports = {
         tags: ['Auth'],
         summary: 'Create a new user account',
         description: 'Users need to create an account so that they can login and perform tasks related with creating and managing parcels',
-        operationId: 'postSignup',
         consumes: [
           'application/x-www-form-urlencoded',
         ],
@@ -114,6 +113,106 @@ module.exports = {
           },
           401: {
             description: 'Credentials not found or Invalid token provided'
+          },
+          500: {
+            description: 'Server Error'
+          }
+        }
+      }
+    },
+    '/auth/refresh': {
+      patch: {
+        tags: ['Auth'],
+        summary: 'Refresh authentication token',
+        consumes: ['application/x-www-form-urlencoded'],
+        parameters: [
+          {
+            name: 'x-access-token',
+            in: 'header',
+            description: 'Authorization token',
+            required: true,
+            type: 'string'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Token refreshed'
+          },
+          401: {
+            description: 'Invalid or expired token'
+          },
+          500: {
+            description: 'Server Error'
+          }
+        }
+      }
+    },
+    '/auth/reset': {
+      post: {
+        tags: ['Auth'],
+        summary: 'Request password reset',
+        consumes: ['application/x-www-form-urlencoded'],
+        parameters: [
+          {
+            name: 'x-access-token',
+            in: 'header',
+            description: 'Authorization token',
+            required: true,
+            type: 'string'
+          },
+          {
+            name: 'email',
+            in: 'formData',
+            description: 'User email',
+            required: true,
+            type: 'string'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Request Success'
+          },
+          401: {
+            description: 'Invalid or expired token'
+          },
+          500: {
+            description: 'Server Error'
+          }
+        }
+      },
+      put: {
+        tags: ['Auth'],
+        summary: 'Change user password',
+        consumes: ['application/x-www-form-urlencoded'],
+        parameters: [
+          {
+            name: 'x-access-token',
+            in: 'header',
+            description: 'Authorization token',
+            required: true,
+            type: 'string'
+          },
+          {
+            name: 'resetToken',
+            in: 'formData',
+            description: 'User email',
+            required: true,
+            type: 'string'
+          },
+          {
+            name: 'password',
+            in: 'formData',
+            description: 'New password',
+            required: true,
+            type: 'string'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Password changed successfully'
+          },
+          401: {
+            description: 'Invalid or expired token'
           },
           500: {
             description: 'Server Error'
@@ -236,12 +335,53 @@ module.exports = {
         }
       }
     },
+    '/users/{userId}': {
+      get: {
+        tags: ['User'],
+        summary: 'Get a user profile',
+        description: 'Get a user\'s profile',
+        consumes: ['application/x-www-form-urlencoded'],
+        parameters: [
+          {
+            name: 'x-access-token',
+            in: 'header',
+            description: 'The authorization token',
+            required: true,
+            type: 'string'
+          },
+          {
+            name: 'userId',
+            in: 'path',
+            description: 'The ID of the owner user',
+            required: true,
+            type: 'number'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'A list of Parcels',
+            schema: {
+              type: 'array',
+              items: {
+                $ref: '#/definitions/Parcel'
+              }
+            }
+          },
+          401: {
+            description: 'Unauthorised'
+          },
+          500: {
+            description: 'Unexpected server error'
+          }
+        }
+      }
+    },
     '/users/{userId}/parcels': {
       get: {
         tags: ['Parcels'],
         summary: 'Get all parcel delivery orders for a specific user',
         description: 'This allows a user access to all parcels they have created',
-        consumes: ['application/json'],
+        consumes: ['application/x-www-form-urlencoded'],
         parameters: [
           {
             name: 'x-access-token',

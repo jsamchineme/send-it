@@ -2,7 +2,12 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
 import Response from '../helpers/Response';
-import { EXPIRES_IN } from '../constants/jwtOptions';
+import { EXPIRES_IN, PASSWORD_RESET_EXPIRES_IN } from '../constants/jwtOptions';
+import UserEmitter, {
+  PASSWORD_RESET_REQUEST,
+  PASSWORD_RESET_COMPLETE,
+} from '../helpers/events/UserEmitter';
+
 
 const User = new UserModel();
 
@@ -108,7 +113,7 @@ class AuthController {
 
   /**
    * Clear the token refreshed tokens already expired
-   * @returns {*} - no return
+   * @returns {void}
    */
   static clearRefreshedToken() {
     // initialize refreshed tokens for the AuthController
@@ -154,6 +159,74 @@ class AuthController {
     if (deleted) {
       return Response.noContent(res);
     }
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static async requestPasswordReset(req, res) {
+    const { email } = req.body;
+    const foundUser = await User.where({ email }).getOne();
+
+    let data;
+    if (foundUser) {
+      const payload = {
+        id: foundUser.id,
+        email: foundUser.email,
+      };
+
+      const token = jwt.sign(
+        payload,
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: PASSWORD_RESET_EXPIRES_IN }
+      );
+
+      data = {
+        message: 'mail has been sent',
+      };
+
+      // for internal use only
+      // the resetToken should not be returned in production
+      // it is only meant to be used in tests
+      if (req.body.scope === 'testing') {
+        data.resetToken = token;
+      }
+      foundUser.token = token;
+
+      UserEmitter.publish(PASSWORD_RESET_REQUEST, foundUser);
+
+      return Response.success(res, data);
+    }
+    return Response.notFound(res);
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static async resetPassword(req, res) {
+    const { email, password } = req.body;
+    const foundUser = await User.where({ email }).getOne();
+
+    let data;
+    if (foundUser) {
+      data = { password };
+      const saltRounds = 10;
+      const hashedPassword = bcrypt.hashSync(password, saltRounds);
+      data.password = hashedPassword;
+      const user = await User.update(foundUser.id, data);
+
+      UserEmitter.publish(PASSWORD_RESET_COMPLETE, foundUser);
+
+      delete user.isAdmin;
+      delete user.password;
+
+      return Response.success(res, user);
+    }
+    return Response.notFound(res);
   }
 }
 
