@@ -27,8 +27,8 @@ describe('Test case for the "auth" resource endpoints', () => {
     });
     it('should process signup', (done) => {
       const newUserData = {
-        username: 'newusername1',
-        email: 'newemail1@example.io',
+        username: 'newusername134',
+        email: 'newemail134@example.io',
         password: 'secretpass',
       };
       request.post('/api/v1/auth/signup')
@@ -37,6 +37,7 @@ describe('Test case for the "auth" resource endpoints', () => {
         .end((err, res) => {
           newUser = res.body.data;
           expect(res.body.data.id !== undefined).to.equal(true);
+
           done();
         });
     });
@@ -116,6 +117,7 @@ describe('Test case for the "auth" resource endpoints', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.body.data.id !== undefined).to.equal(true);
+          if (err) return done(err);
           done();
         });
     });
@@ -127,7 +129,8 @@ describe('Test case for the "auth" resource endpoints', () => {
     request.post('/api/v1/auth/login')
       .send(newUserData)
       .expect(422)
-      .end(() => {
+      .end((err) => {
+        if (err) return done(err);
         done();
       });
   });
@@ -141,6 +144,7 @@ describe('Test case for the "auth" resource endpoints', () => {
       .expect(401)
       .end((err, res) => {
         expect(res.body.message).to.equal('Provide correct login credentials');
+        if (err) return done(err);
         done();
       });
   });

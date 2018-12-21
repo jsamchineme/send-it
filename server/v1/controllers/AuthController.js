@@ -8,7 +8,7 @@ const User = new UserModel();
 
 /**
  * @export
- * @class ParcelController
+ * @class AuthController
  */
 class AuthController {
   /**

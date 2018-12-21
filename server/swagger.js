@@ -9,7 +9,7 @@ module.exports = {
       email: 'jsamchineme@gmail.com'
     }
   },
-  host: 'johnnysam-sendit.herokuapp.com',
+  host: 'sendit-app-doc.herokuapp.com',
   basePath: '/api/v1/',
   produces: ['application/json'],
   schemes: ['https'],
@@ -22,7 +22,6 @@ module.exports = {
         operationId: 'postSignup',
         consumes: [
           'application/x-www-form-urlencoded',
-          'application/json'
         ],
         parameters: [
           {
@@ -91,7 +90,6 @@ module.exports = {
         description: 'Users need to login so that they can perform tasks related with creating and managing parcels',
         operationId: 'postLogin',
         consumes: [
-          'application/json',
           'application/x-www-form-urlencoded'
         ],
         parameters: [
@@ -128,7 +126,6 @@ module.exports = {
         tags: ['Parcels'],
         summary: 'Create new parcel delivery order',
         consumes: [
-          'application/json',
           'application/x-www-form-urlencoded'
         ],
         parameters: [
@@ -239,7 +236,7 @@ module.exports = {
         }
       }
     },
-    '/users/:userId/parcels/:parcelId': {
+    '/users/{userId}/parcels': {
       get: {
         tags: ['Parcels'],
         summary: 'Get all parcel delivery orders for a specific user',
@@ -252,6 +249,13 @@ module.exports = {
             description: 'The authorization token',
             required: true,
             type: 'string'
+          },
+          {
+            name: 'userId',
+            in: 'path',
+            description: 'The ID of the owner user',
+            required: true,
+            type: 'number'
           }
         ],
         responses: {
@@ -273,7 +277,7 @@ module.exports = {
         }
       }
     },
-    '/parcels/:parcelId': {
+    '/parcels/{parcelId}': {
       get: {
         tags: ['Parcels'],
         summary: 'Get a specific parcel order',
@@ -313,7 +317,7 @@ module.exports = {
         }
       }
     },
-    '/parcels/:parcelId/cancel': {
+    '/parcels/{parcelId}/cancel': {
       put: {
         tags: ['Parcels'],
         summary: 'Cancel a parcel delivery order',
@@ -353,12 +357,11 @@ module.exports = {
         }
       }
     },
-    '/parcels/:parcelId/status': {
+    '/parcels/{parcelId}/status': {
       put: {
         tags: ['Parcels'],
         summary: 'Change the status of a parcel delivery order',
         consumes: [
-          'application/json',
           'application/x-www-form-urlencoded'
         ],
         parameters: [
@@ -403,11 +406,11 @@ module.exports = {
         }
       }
     },
-    '/parcels/:parcelId/destination': {
+    '/parcels/{parcelId}/destination': {
       put: {
         tags: ['Parcels'],
         summary: "Change a parcel's destination",
-        consumes: ['application/json'],
+        consumes: ['application/x-www-form-urlencoded'],
         parameters: [
           {
             name: 'x-access-token',
@@ -450,11 +453,11 @@ module.exports = {
         }
       }
     },
-    '/parcels/:parcelId/presentLocation': {
+    '/parcels/{parcelId}/presentLocation': {
       put: {
         tags: ['Parcels'],
         summary: 'Change the current location of a parcel',
-        consumes: ['application/json'],
+        consumes: ['application/x-www-form-urlencoded'],
         parameters: [
           {
             name: 'x-access-token',

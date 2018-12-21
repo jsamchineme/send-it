@@ -17,6 +17,7 @@ describe('Test cases for the API landing routes', () => {
         expect(res.body).deep.equal({
           message: 'Welcome to Send-IT',
         });
+        if (err) return done(err);
         done();
       });
   });
@@ -26,6 +27,7 @@ describe('Test cases for the API landing routes', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.message).to.equal('Send-IT API v1');
+        if (err) return done(err);
         done();
       });
   });
@@ -37,6 +39,7 @@ describe('Test cases for the API landing routes', () => {
         expect(res.body).deep.equal({
           message: 'Route Not Found',
         });
+        if (err) return done(err);
         done();
       });
   });
