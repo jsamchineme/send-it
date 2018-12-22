@@ -158,24 +158,13 @@ describe('Test case for the "auth" resource endpoints', () => {
     });
   });
   describe('Password Reset', () => {
-    let userToken;
-    let userData;
-    before((done) => {
-      userData = {
-        email: 'jsamchineme@gmail.com',
-        password: 'secretpass',
-      };
-      request.post('/api/v1/auth/login')
-        .send(userData)
-        .expect(200)
-        .end((err, res) => {
-          userToken = res.body.data.token;
-          done();
-        });
-    });
+    const data = {
+      email: 'jsamchineme@gmail.com',
+      scope: 'testing',
+    };
     it('should be able to request password change', (done) => {
       request.post('/api/v1/auth/reset')
-        .send({ email: userData.email, scope: 'testing' })
+        .send(data)
         .expect(200)
         .end((err, res) => {
           expect(res.body.data.message === 'mail has been sent').to.equal(true);
