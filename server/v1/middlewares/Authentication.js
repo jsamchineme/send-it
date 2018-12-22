@@ -15,7 +15,7 @@ class Authentication {
    * @return {Object} - response with error messages
    */
   static async verifyToken(req, res, next) {
-    const token = req.headers['x-access-token'] || req.query.token;
+    const token = req.headers['x-access-token'] || req.query.token || req.body.token;
 
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {

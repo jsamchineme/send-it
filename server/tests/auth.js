@@ -121,31 +121,103 @@ describe('Test case for the "auth" resource endpoints', () => {
           done();
         });
     });
+    it('should return error message on missing LOGIN input', (done) => {
+      const newUserData = {
+        email: 'jaden@example.io',
+      };
+      request.post('/api/v1/auth/login')
+        .send(newUserData)
+        .expect(422)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+    it('should return unauthorised when wrong login credentials are supplied', (done) => {
+      const newUserData = {
+        email: 'jaden@example.io',
+        password: 'sssasasadadsads',
+      };
+      request.post('/api/v1/auth/login')
+        .send(newUserData)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.body.message).to.equal('Provide correct login credentials');
+          if (err) return done(err);
+          done();
+        });
+    });
+    after((done) => {
+      // prepare admin authToken
+      request.delete(`/api/v1/auth/users/${newUser.id}`)
+        .set('x-access-token', adminToken)
+        .expect(200)
+        .end(() => {
+          done();
+        });
+    });
   });
-  it('should return error message on missing LOGIN input', (done) => {
-    const newUserData = {
-      email: 'jaden@example.io',
+  describe('Password Reset', () => {
+    const data = {
+      email: 'jsamchineme@gmail.com',
+      scope: 'testing',
     };
-    request.post('/api/v1/auth/login')
-      .send(newUserData)
-      .expect(422)
-      .end((err) => {
-        if (err) return done(err);
-        done();
-      });
+    it('should be able to request password change', (done) => {
+      request.post('/api/v1/auth/reset')
+        .send(data)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.data.message === 'mail has been sent').to.equal(true);
+          expect(res.body.data.resetToken !== undefined).to.equal(true);
+          if (err) return done(err);
+          done();
+        });
+    });
   });
-  it('should return unauthorised when wrong login credentials are supplied', (done) => {
-    const newUserData = {
-      email: 'jaden@example.io',
-      password: 'sssasasadadsads',
-    };
-    request.post('/api/v1/auth/login')
-      .send(newUserData)
-      .expect(401)
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Provide correct login credentials');
-        if (err) return done(err);
-        done();
-      });
+  describe('Password Change', () => {
+    let passwordResetToken;
+    let userData;
+    before((done) => {
+      userData = {
+        email: 'jsamchineme@gmail.com',
+        scope: 'testing',
+      };
+      request.post('/api/v1/auth/reset')
+        .send(userData)
+        .expect(200)
+        .end((err, res) => {
+          passwordResetToken = res.body.data.resetToken;
+          done();
+        });
+    });
+    it('should be able to change password', (done) => {
+      request.put('/api/v1/auth/reset')
+        .send({
+          email: userData.email,
+          token: passwordResetToken,
+          password: 'secretpass'
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.data.id !== undefined).to.equal(true);
+          if (err) return done(err);
+          done();
+        });
+    });
+    after((done) => {
+      // change the password back to the initial
+      request.put('/api/v1/auth/reset')
+        .send({
+          email: userData.email,
+          token: passwordResetToken,
+          password: 'secretpass'
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body.data.id !== undefined).to.equal(true);
+          if (err) return done(err);
+          done();
+        });
+    });
   });
 });
