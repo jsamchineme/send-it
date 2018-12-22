@@ -154,13 +154,6 @@ module.exports = {
         consumes: ['application/x-www-form-urlencoded'],
         parameters: [
           {
-            name: 'x-access-token',
-            in: 'header',
-            description: 'Authorization token',
-            required: true,
-            type: 'string'
-          },
-          {
             name: 'email',
             in: 'formData',
             description: 'User email',
@@ -186,16 +179,9 @@ module.exports = {
         consumes: ['application/x-www-form-urlencoded'],
         parameters: [
           {
-            name: 'x-access-token',
-            in: 'header',
-            description: 'Authorization token',
-            required: true,
-            type: 'string'
-          },
-          {
-            name: 'resetToken',
+            name: 'token',
             in: 'formData',
-            description: 'User email',
+            description: 'Token sent to user\'s email on reset request',
             required: true,
             type: 'string'
           },
@@ -231,7 +217,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'Authorization token',
+            description: 'Authorization token (for User)',
             required: true,
             type: 'string'
           },
@@ -314,7 +300,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'The authorization token',
+            description: 'Authorization token (for Admin)',
             required: true,
             type: 'string'
           }
@@ -345,7 +331,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'The authorization token',
+            description: 'The authorization token (for Admin or User)',
             required: true,
             type: 'string'
           },
@@ -386,7 +372,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'The authorization token',
+            description: 'The authorization token (for User or Admin)',
             required: true,
             type: 'string'
           },
@@ -426,7 +412,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'Authorization token',
+            description: 'The authorization token (for User who owns the parcel or Admin)',
             required: true,
             type: 'string'
           },
@@ -466,7 +452,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'Authorization token',
+            description: 'The authorization token (for User who owns the parcel)',
             required: true,
             type: 'string'
           },
@@ -508,7 +494,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'Authorization token',
+            description: 'The authorization token (for Admin)',
             required: true,
             type: 'string'
           },
@@ -555,7 +541,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'Authorization token',
+            description: 'The authorization token (for User who owns the parcel)',
             required: true,
             type: 'string'
           },
@@ -602,7 +588,7 @@ module.exports = {
           {
             name: 'x-access-token',
             in: 'header',
-            description: 'Authorization token',
+            description: 'The authorization token (for Admin)',
             required: true,
             type: 'string'
           },
@@ -702,6 +688,49 @@ module.exports = {
         deliveredOn: {
           type: 'string'
         }
+      }
+    },
+    User: {
+      type: 'object',
+      required: [
+        'username',
+        'email',
+        'password',
+      ],
+      properties: {
+        id: {
+          type: 'string'
+        },
+        username: {
+          type: 'string'
+        },
+        firstname: {
+          type: 'string'
+        },
+        lastname: {
+          type: 'string'
+        },
+        othernames: {
+          type: 'string'
+        },
+        isAdmin: {
+          type: 'string'
+        },
+        email: {
+          type: 'string'
+        },
+        password: {
+          type: 'string'
+        },
+        verified: {
+          type: 'number'
+        },
+        registered: {
+          type: 'string'
+        },
+        updated: {
+          type: 'string'
+        },
       }
     }
   }
