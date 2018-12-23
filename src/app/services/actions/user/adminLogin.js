@@ -36,9 +36,9 @@ const adminLogin = async (e) => {
       );
       
       if(authUser.isAdmin) {
-        window.app.funcs.changeRoute('/admin-dashboard/all-parcels');
+        window.app.funcs.changeRoute('/admin-dashboard/orders');
       } else {
-        window.app.funcs.changeRoute('/all-parcels');
+        window.app.funcs.changeRoute('/orders');
       }
     }
     catch(error) {

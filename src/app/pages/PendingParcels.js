@@ -13,14 +13,14 @@ export default class DeliveredParcels {
     document.title = "Pending Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
     events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
-    events.on(subscriptions.PAGINATION_TARGET_SELECTED, (startPage) => this.listOrders({ startPage }));
+    events.on(subscriptions.PAGINATION_TARGET_SELECTED, (currentPage) => this.listOrders({ currentPage }));
   }
 
   listOrders(props = {}) {
-    let startPage = props.startPage || 1;
+    let currentPage = props.currentPage || 1;
     let parcels = window.app.state['allUserParcels'] || [];
     parcels = parcels.filter(item => item.status === 'transiting' || item.status === 'placed');
-    let parcelHTML = PaginatedParcelList({ numberPerPage: 4, parcels, startPage });
+    let parcelHTML = PaginatedParcelList({ numberPerPage: 4, parcels, currentPage });
     let target = document.getElementById('orders-list');
     target ? target.innerHTML = parcelHTML : null;
     bindPageButtons();

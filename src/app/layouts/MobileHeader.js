@@ -47,9 +47,9 @@ const MobileHeader = () => {
               noAction: true,
             })}
           </li>
-          <li class='mobile-side-link' data-link-to='/all-parcels'>
+          <li class='mobile-side-link' data-link-to='/orders'>
             ${Link({
-              to:'/all-parcels', 
+              to:'/orders', 
               text:`<i class=""></i>See Your Parcels`, 
               noAction: true,
             })}

@@ -53,7 +53,7 @@ export default class ParcelEntry {
     // allow editing destination only if status is neither 'cancelled' nor 'delivered'
     let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
         `${Link({
-            to:`/all-parcels/edit/${id}`, 
+            to:`/orders/edit/${id}`, 
             text:`Edit Order`,
             className: 'btn medium-btn bg-light-orange'
           })}

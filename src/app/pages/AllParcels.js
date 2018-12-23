@@ -12,13 +12,13 @@ export default class AllParcels {
     document.title = "User Profile - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
     events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
-    events.on(subscriptions.PAGINATION_TARGET_SELECTED, (startPage) => this.listOrders({ startPage }));
+    events.on(subscriptions.PAGINATION_TARGET_SELECTED, (currentPage) => this.listOrders({ currentPage }));
   }
 
   listOrders(props = {}) {
-    let startPage = props.startPage || 1;
+    let currentPage = props.currentPage || 1;
     let parcels = window.app.state['allUserParcels'] || []; 
-    let parcelHTML = PaginatedParcelList({ numberPerPage: 8, parcels, startPage });
+    let parcelHTML = PaginatedParcelList({ numberPerPage: 8, parcels, currentPage });
     let target = document.getElementById('orders-list');
     target ? target.innerHTML = parcelHTML : null;
     bindPageButtons();

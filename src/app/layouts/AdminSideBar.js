@@ -15,7 +15,7 @@ const SideBar = () => {
         <ul class="side-links">
           <li>
             ${Link({
-              to:'/admin-dashboard/all-parcels', 
+              to:'/admin-dashboard/orders', 
               text:`<i class=""></i>All Orders`, 
             })}
           </li>

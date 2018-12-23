@@ -1,5 +1,5 @@
 class Toast {
-  static show({ message, type, autoHide }) {
+  static show({ message, type, autoHide, hideAfter }) {
     let className = 'toast-box';
     className += type === 'success' ? ' success' : ' warning';
     let classNames = {
@@ -9,6 +9,9 @@ class Toast {
       pending: 'error',
       undefined: 'error',
     }
+    
+    Toast.hideTimeoutSeconds = hideAfter === undefined ? 3000 : hideAfter;
+
     let styleClassName = classNames[type];
     // if the type passed does not match any class value
     // then use pending as default
@@ -35,7 +38,7 @@ class Toast {
   static attachClickEvent() {
     let toastBox = document.querySelector('#toast-place-holder .toast-box');
     toastBox.onclick =  () => {
-      clearTimeout(Toast.timeToHide);
+      clearTimeout(Toast.toastHideTimeout);
       Toast.toastHide();
     }
   }
@@ -55,11 +58,10 @@ class Toast {
   }
 
   static initiateToastHide() {
-    clearTimeout(Toast.timeToHide);
-    let timeout = 3000;
-    this.timeToHide = setTimeout(() => {
+    clearTimeout(Toast.toastHideTimeout);
+    this.toastHideTimeout = setTimeout(() => {
       Toast.toastHide();
-    }, timeout);
+    }, Toast.hideTimeoutSeconds);
   }
 }
 

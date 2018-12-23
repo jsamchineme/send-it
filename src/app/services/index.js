@@ -4,6 +4,8 @@ import {
   userLogin, 
   userSignup, 
   adminLogin,
+  changePassword,
+  resetPassword
 } from './actions/user/index';
 import { getAllParcels, cancelOrder, createOrder } from './actions/parcel/index';
 
@@ -17,6 +19,8 @@ export default {
     userSignup,
     getAllParcels,
     cancelOrder,
-    createOrder
+    createOrder,
+    changePassword,
+    resetPassword
   }
 };

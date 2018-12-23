@@ -64,7 +64,7 @@ export default class ParcelEntryEdit {
           data-parcel-id=${id}
         >Save</button>
         ${Link({ 
-          to: `/all-parcels/${id}`, 
+          to: `/orders/${id}`, 
           className: 'btn small-btn',
           text: 'View'
         })}

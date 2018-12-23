@@ -54,6 +54,23 @@ export const adminLoginRules = {
   ],
 }
 
+export const resetPasswordRules = {
+  email: [
+    {name: "required"},
+    {name: "email"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100}
+  ],
+}
+
+export const changePasswordRules = {
+  password: [
+    {name: "required"},
+    {name: "min", ruleValue: 8},
+    {name: "max", ruleValue: 40},
+  ],
+}
+
 export const createOrderRules = { 
   currentLocation: [
     {name: "required"},

@@ -44,7 +44,7 @@ export default class ParcelEntry {
       : '';
     let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
         `${Link({
-            to:'/all-parcels/edit', 
+            to:'/orders/edit', 
             text:`Edit Order`,
             className: 'btn medium-btn bg-light-orange'
           })}
