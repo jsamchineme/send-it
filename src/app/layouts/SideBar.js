@@ -21,7 +21,7 @@ const SideBar = () => {
           </li>
           <li>
             ${Link({
-              to:'/all-parcels', 
+              to:'/orders', 
               text:`<i class=""></i>See Your Parcels`, 
             })}
           </li>

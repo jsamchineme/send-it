@@ -4,7 +4,6 @@ import { computeMessage } from '../../validation/serverErrorMessages';
 import { showMessages } from '../../validation/index';
 import subscriptions from '../../events/subscriptions';
 import events from '../../events';
-import delay from '../../utils/delay';
 import Toast from '../../../components/Toast';
 
 const createOrder = async (e) => {

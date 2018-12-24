@@ -18,7 +18,7 @@ const Parcel = ({
   let caption = description.slice(0, 30);
   let dotLink = `
     ${Link({
-      to:`/all-parcels/${id}`, 
+      to:`/orders/${id}`, 
       text: '...',
       className: 'view-more'
     })}
@@ -50,7 +50,7 @@ const Parcel = ({
           </div>
           <div class="actions">
             ${Link({
-              to:`/all-parcels/${id}`, 
+              to:`/orders/${id}`, 
               text: 'View Order',
               className: 'btn medium-btn'
             })}

@@ -1,5 +1,6 @@
 import events from './events';
 import subscriptions from './events/subscriptions';
+import Toast from '../components/Toast';
 
 export default class Map {
   static init() {
@@ -43,7 +44,12 @@ export default class Map {
       avoidTolls: false
     }, (response, status) => {
       if (status !== 'OK') {
-        alert('Error was: ' + status);
+        // alert('Error was: ' + status);
+        Toast.show({ 
+          message: `Map Error: ${status}`, 
+          type: 'error', 
+          hideAfter: 7000 
+        });
       } else {
         let originList = response.originAddresses;
         let destinationList = response.destinationAddresses;
@@ -62,7 +68,11 @@ export default class Map {
                 icon: icon
               }));
             } else {
-              alert('Geocode was not successful due to: ' + status);
+              Toast.show({ 
+                message: `Geocode was not successful due to: ${status}`, 
+                type: 'error', 
+                hideAfter: 7000 
+              });
             }
           };
         };
@@ -80,11 +90,13 @@ export default class Map {
           for (let j = 0; j < results.length; j++) {
             geocoder.geocode({'address': destinationList[j]},
             showGeocodedAddressOnMap(true));
+            let distance = results[j].distance || {};
+            let duration = results[j].duration || {};
             outputDiv.innerHTML += `<span class='from-text'>${originList[i]}</span>  to 
               <span class='to-text'>${destinationList[j]}</span>
               <div class='map-computation'>
-                <span class='info-group'><label>Distance:</label> ${results[j].distance.text}</span>
-                <br><span class='info-group'><label>Drive Time</label>: ${results[j].duration.text}</span>
+                <span class='info-group'><label>Distance:</label> ${distance.text}</span>
+                <br><span class='info-group'><label>Drive Time</label>: ${duration.text}</span>
               </div>
               `;
           }
@@ -125,7 +137,11 @@ export default class Map {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
       } else {
-        window.alert('Directions request failed due to ' + status);
+        Toast.show({ 
+          message: `Directions request failed due to: ${status}`, 
+          type: 'error', 
+          hideAfter: 7000 
+        });
       }
     });
   }

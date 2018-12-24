@@ -1,10 +1,12 @@
 import Link from '../components/Link';
 
-export default class ForgotPassword {
+export default class ChangePassword {
   constructor() {
-    document.title = "Forgot password - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Change password - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
+    let email = window.app.state['userEmail'];
+
     return (`
       <div class="wrapper">
         <section class="page-content">
@@ -21,25 +23,28 @@ export default class ForgotPassword {
           <div class="login-box">
             <form 
               action=""
-              class="password-reset-form"
+              class="password-change-form"
             >
               <div class="form-header">
-                <span>Password Recovery</span>
-                <div class='tip'>Please Enter the email associated with your account</div>
+                <span>Change Password</span>
                 <div id='server-error-box' class='error-box'></div>
               </div>
               <div class="form-body">
                 <div class="input-group transparent-box">
                   <label for="email">Email</label>
-                  <div id='email-error-box' class='error-box'></div>
-                  <input type="email" name='email' placeholder='your email' required/>
+                  <input type="email" id='email' placeholder='your email' value='${email}' disabled />
+                </div>
+                <div class="input-group transparent-box">
+                  <label for="email">Email</label>
+                  <div id='password-error-box' class='error-box'></div>
+                  <input type="password" name='password' placeholder='new password' required/>
                 </div>
                 <div class="input-footer"></div>
                 <div class="v-gap-2"></div>
                 
                 <div class="row text-center">
                   <div class="column">
-                    <button class="btn submit" id="resetPassword-action-button">Request Password Reset</button>
+                    <button class="btn submit" id="changePassword-action-button">Change Password</button>
                   </div>
                   <div class="actions column text-center">
                     <div class="v-gap-2"></div>

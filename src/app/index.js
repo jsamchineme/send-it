@@ -3,6 +3,7 @@ import Signup from './pages/Signup';
 import SignupWelcome from './pages/SignupWelcome';
 import Home from './pages/Home';
 import ForgotPassword from './pages/ForgotPassword';
+import ChangePassword from './pages/ChangePassword';
 import MakeOrder from './pages/MakeOrder';
 import InviteUsers from './pages/InviteUsers';
 import AllParcels from './pages/AllParcels';
@@ -52,16 +53,17 @@ export default class App {
 
   getDynamicPage(currentPage, url) {
     // handing route parameter
-    // Currently handling /all-parcels/
+    // Currently handling /orders/
     if(!currentPage) {
-      // checking if their parameter of parcelId in the url 
-      // matching url like "localhost:3001/all-parcels/1"
+      // checking if there is parameter of parcelId in the url 
+      // matching url like "localhost:3001/orders/1"
       // if correct, paramterIndex one position after the index of 'all/parcels'
       let urlParts = url.split('/');
-      let parcelHomeIndex = urlParts.indexOf('all-parcels');
+      let parcelHomeIndex = urlParts.indexOf('orders');
       let parameterIndex = parcelHomeIndex + 1;
       
-      if(urlParts[parameterIndex] !== undefined) {
+      if(urlParts[parcelHomeIndex] !== undefined
+        && urlParts[parameterIndex] !== undefined) {
         let parameterValue = urlParts[parameterIndex];
         this.state['selectedParcelId'] = parameterValue;
         let isAdminRoute = this.isAdminRoute(urlParts);
@@ -71,14 +73,37 @@ export default class App {
           currentPage = 'AdminParcelEntry';
         }
       }
+
+      // checking if their is parameter of email in the url 
+      // matching url like "localhost:3001/password-reset/email/{email}/token/{resetToken}"
+      let emailIndex = urlParts.indexOf('email');
+      let emailParameterIndex = emailIndex + 1;
+      
+      if(urlParts[emailIndex] !== undefined
+        && urlParts[emailParameterIndex] !== undefined) {
+        let emailValue = urlParts[emailParameterIndex];
+        this.state['userEmail'] = emailValue;
+        currentPage = 'ChangePassword';
+        // checking if their is parameter of token in the url 
+        // matching url like "localhost:3001/password-reset/email/{email}/token/{resetToken}"
+        let tokenIndex = urlParts.indexOf('token');
+        let tokenParameterIndex = tokenIndex + 1;
+        if(urlParts[tokenIndex] !== undefined
+          && urlParts[tokenParameterIndex] !== undefined) {
+          let tokenValue = urlParts[tokenParameterIndex];
+          this.state['resetToken'] = tokenValue;
+        }
+      }
+
       // checking if their parameter of parcelId in the url 
-      // matching url like "localhost:3001/all-parcels/edit/1"
+      // matching url like "localhost:3001/orders/edit/1"
       // action is something like "edit"
-      parcelHomeIndex = urlParts.indexOf('all-parcels');
+      parcelHomeIndex = urlParts.indexOf('orders');
       let actionIndex = parcelHomeIndex + 1;
       parameterIndex = parcelHomeIndex + 2;
       if(urlParts[actionIndex] !== undefined 
         && urlParts[parameterIndex] !== undefined
+        && urlParts[parcelHomeIndex] !== undefined // 'all-parcel' is found
       ) {
         let parameterValue = urlParts[parameterIndex];
         this.state['selectedParcelId'] = parameterValue;
@@ -90,6 +115,13 @@ export default class App {
         }
       }
     }
+
+    console.log({
+      url,
+      currentPage,
+      state: this.state
+    });
+    
     return currentPage;
   }
   
@@ -113,7 +145,7 @@ export default class App {
 
     if(!currentPage) {
       // show a not found page
-      window.location = '/not-found';
+      window.app.funcs.changeRoute('/not-found');
     }
 
     return currentPage;
@@ -221,6 +253,8 @@ export default class App {
     let userLoginForm = document.querySelector('.user-login-form');
     let signupForm = document.querySelector('.user-signup-form');
     let createOrderForm = document.querySelector('.create-order-form');
+    let passwordChangeForm = document.querySelector('.password-change-form');
+    let passwordResetForm = document.querySelector('.password-reset-form');
 
     // attach event handlers to elements
     let { actions } = services;
@@ -240,6 +274,16 @@ export default class App {
     if(createOrderForm) { 
       createOrderForm.addEventListener('submit', actions.createOrder);
       createOrderForm.addEventListener('input', actions.saveInput.bind(this, 'createOrder'));
+    }
+
+    if(passwordChangeForm) {
+      passwordChangeForm.addEventListener('submit', actions.changePassword);
+      passwordChangeForm.addEventListener('input', actions.saveInput.bind(this, 'changePassword'));
+    }
+
+    if(passwordResetForm) {
+      passwordResetForm.addEventListener('submit', actions.resetPassword);
+      passwordResetForm.addEventListener('input', actions.saveInput.bind(this, 'resetPassword'));
     }
 
     // attach mobile menu events
@@ -291,6 +335,7 @@ export default class App {
       case 'SignUp': Page = new Signup(); break;
       case 'SignUpWelcome': Page = new SignupWelcome(); break;
       case 'ForgotPassword': Page = new ForgotPassword(); break;
+      case 'ChangePassword': Page = new ChangePassword(); break;
       case 'MakeOrder': Page = UserPage.guard()(new MakeOrder()); break;
       case 'InviteUsers': Page = UserPage.guard()(new InviteUsers()); break;
       case 'AllParcels': Page = UserPage.guard()(new AllParcels()); break;
