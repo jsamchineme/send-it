@@ -24,7 +24,6 @@ const getAllUserParcels = async () => {
 
   }
   catch(error) {
-    console.log('Error', error);
   }
 
 }

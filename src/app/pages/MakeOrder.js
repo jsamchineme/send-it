@@ -1,11 +1,10 @@
-import Link from '../components/Link';
 import SideBar from '../layouts/SideBar'
 import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
 
 export default class MakeOrder {
   constructor() {
-    document.title = "Create Order - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Create Order - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
   }
 
   render() {
@@ -56,7 +55,7 @@ export default class MakeOrder {
                                       class='line-input' 
                                       type="text" 
                                       name='from'
-                                      value="5 Victoria Land Street, Ikeja"
+                                      value=""
                                       placeholder="Provide Pickup location"
                                     />
                                   </div>
@@ -70,7 +69,7 @@ export default class MakeOrder {
                                       class='line-input' 
                                       type="text" 
                                       name='to'
-                                      value="5 Victoria Land Street, Ikeja"
+                                      value=""
                                       placeholder="Provide delivery location" 
                                     />
                                   </div>
@@ -84,7 +83,7 @@ export default class MakeOrder {
                                       class='line-input' 
                                       type="text" 
                                       name='currentLocation'
-                                      value="5 Victoria Land Street, Ikeja"
+                                      value=""
                                       placeholder="Provide your present location" 
                                     />
                                   </div>
@@ -98,7 +97,7 @@ export default class MakeOrder {
                                       class='line-input' 
                                       name='description'
                                       placeholder="Provide brief description"
-                                    >Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias eum quia numquam doloremque placeat dignissimos aperiam distinctio necessitatibus provident, deserunt dolorem soluta sit voluptas</textarea>
+                                    ></textarea>
                                   </div>
                                 </div>
                                 <div class="item">
@@ -110,7 +109,6 @@ export default class MakeOrder {
                                       class='line-input' 
                                       type="text" 
                                       name='weight'
-                                      value=25
                                       placeholder="Provide the approximate weight of the parcel" 
                                     />
                                   </div>

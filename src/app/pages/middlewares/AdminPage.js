@@ -20,7 +20,6 @@ export default class AdminPage {
       return next;
     }
 
-    
     /**
      * providing a higher order function that returns the supplied component
      * this will return the component if the user is authenticated as a valid client

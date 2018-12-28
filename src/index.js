@@ -57,8 +57,6 @@ app.funcs = {
   /**
    * changing route programmatically, dynamically
    * for example, after successful login, change to the home page
-   * this will determine the url to navigate to
-   * by reading the href attribute of the anchor tag
    */
   changeRoute: (destination) => {
     let { origin } = window.location;
@@ -67,8 +65,7 @@ app.funcs = {
 
     // pushing prepared route to the window history object 
     window.history.pushState({}, '', href);
-
-    console.log('Destination', destination);
+    
     // set the new page route
     app.funcs.setRouter(destination);
 

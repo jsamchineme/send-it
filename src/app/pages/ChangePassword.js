@@ -2,7 +2,7 @@ import Link from '../components/Link';
 
 export default class ChangePassword {
   constructor() {
-    document.title = "Change password - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Change password - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
     let email = window.app.state['userEmail'];

@@ -7,10 +7,16 @@ import events from '../services/events/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 
-export default class DeliveredParcels {
+export default class DeliveredOrders {
   constructor() {
-    document.title = "Delivered Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Delivered Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
+    // clear existing subscriptions from other components
+    // to avoid conflicts with other Page Components
+    events.off(subscriptions.PAGINATION_TARGET_SELECTED);
+    events.off(subscriptions.FETCH_USER_PARCELS_SUCCESS);
+
+    // attach new subscriptions
     events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
     events.on(subscriptions.PAGINATION_TARGET_SELECTED, (currentPage) => this.listOrders({ currentPage }));
   }
@@ -48,7 +54,7 @@ export default class DeliveredParcels {
                   <div class="container">
 
                     <section class="page-section items-list all-parcels">
-                    <div class="header"><span>Parcels <strong>Delivered</strong></span></div>
+                    <div class="header"><span>Orders <strong>Delivered</strong></span></div>
 
                       <div class="body row auto-container gutter-20" id='orders-list'>
                         ${this.listOrders()}

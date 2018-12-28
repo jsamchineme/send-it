@@ -1,14 +1,3 @@
-
-// server-side error messages
-export const errorMessages = {
-  credentialsNotFound: "Wrong credentials used. Please check that you are using the appropriate email and password",
-  unknown: "There seems to an error with your login. Please check your internet connection",
-  badInput: "Please enter valid email and password",
-  required: "Please this field is required",
-  badSignupInput: "Please fill all required fields",
-  usedEmail: "The email has already been used",
-}
-
 export const computeMessage = (rule, substring) => {
   let message = "";
   var substring = substring.replace(/_id/g, ""); // replace the "_id" portion of anything_id eg institution_id to an empty "" string

@@ -105,3 +105,11 @@ export const editDestinationRules = {
     {name: "max", ruleValue: 100},
   ]
 }
+
+export const editPresentLocationRules = { 
+  currentLocation: [
+    {name: "required"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100},
+  ]
+}

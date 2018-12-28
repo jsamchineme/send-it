@@ -13,9 +13,9 @@ import PendingParcels from './pages/PendingParcels';
 import DeliveredParcels from './pages/DeliveredParcels';
 import AdminAllParcels from './pages/admin/AllParcels';
 import AdminParcelEntry from './pages/admin/ParcelEntry';
-import AdminParcelEntryEdit from './pages/admin/ParcelEntryEdit';
 import AdminPendingParcels from './pages/admin/PendingParcels';
 import AdminDeliveredParcels from './pages/admin/DeliveredParcels';
+import AdminCancelledParcels from './pages/admin/CancelledParcels';
 import NotFound from './pages/NotFound';
 import AdminLogin from './pages/admin/Login';
 import UserProfile from './pages/UserProfile';
@@ -25,7 +25,7 @@ import UserPage from './pages/middlewares/UserPage';
 import store from './store';
 import services from './services';
 import delay from './services/utils/delay';
-import MobileMenu from './services/events/MobileMenu';
+import MobileMenu from './components/MobileMenu';
 import Logout from './pages/middlewares/Logout';
 
 export default class App {
@@ -111,16 +111,9 @@ export default class App {
         if(!isAdminRoute) {
           currentPage = 'ParcelEntryEdit';
         } else {
-          currentPage = 'AdminParcelEntryEdit';
         }
       }
     }
-
-    console.log({
-      url,
-      currentPage,
-      state: this.state
-    });
     
     return currentPage;
   }
@@ -154,8 +147,6 @@ export default class App {
   setState(key, value) {
     this.state[key] = value;
     this.reRender();
-    
-    console.log(this.state);
   }
 
   async prepareRerender() {
@@ -169,7 +160,6 @@ export default class App {
     activeView.innerHTML = activeViewHTML;
 
     let result = await target.appendChild(activeView);
-    console.log('RESULT', result);
   }
 
   async prepareView() {
@@ -214,7 +204,7 @@ export default class App {
 
     await this.animateTransition(activeView, exitingView);
 
-    console.log('DOM-READY');
+    // console.log('DOM-READY');
   }
 
   async animateTransition(activeView, exitingView) {
@@ -235,12 +225,10 @@ export default class App {
 
   bindClassNames(className, eventName, listener) {
     let collection = document.getElementsByClassName(className);
-    // console.log('item::', collection.length);
     if(collection.length > 0) {
 
       for(let i = 0; i < collection.length; i++) {
         let item = collection[i];
-        // console.log('item::', item);
         item.addEventListener(eventName, listener);
       }
     }
@@ -305,7 +293,6 @@ export default class App {
     actions.forEach(action => {
       // fire the action
       allRequests[action]();
-      console.log(`${action} dispatched`);
       // remove the request/action from the stack
       delete allRequests[action];
     });
@@ -348,8 +335,8 @@ export default class App {
       case 'AdminAllParcels': Page = AdminPage.guard()(new AdminAllParcels()); break;
       case 'AdminPendingParcels': Page = AdminPage.guard()(new AdminPendingParcels()); break;
       case 'AdminDeliveredParcels': Page = AdminPage.guard()(new AdminDeliveredParcels()); break;
+      case 'AdminCancelledParcels': Page = AdminPage.guard()(new AdminCancelledParcels()); break;
       case 'AdminParcelEntry': Page = AdminPage.guard()(new AdminParcelEntry()); break;
-      case 'AdminParcelEntryEdit': Page = AdminPage.guard()(new AdminParcelEntryEdit()); break;
       case 'Logout': Page = new Logout(); break;
       default: Page = new NotFound();
     }

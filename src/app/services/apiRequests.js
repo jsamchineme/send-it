@@ -123,6 +123,24 @@ export const editDestination = (data, parcelId, token) => {
   })
 };
 
+export const changeStatus = (data, parcelId, token) => {
+  return fetch(`${BASE_URL}/parcels/${parcelId}/status`, {
+    credentials: 'same-origin',
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  })
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  })
+};
+
 export const editPresentLocation = (data, parcelId, token) => {
   return fetch(`${BASE_URL}/parcels/${parcelId}/presentLocation`, {
     credentials: 'same-origin',

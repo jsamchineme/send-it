@@ -77,7 +77,6 @@ class TokenRefresh {
         persistAuthUser(response.data);
       }
       catch(error) {
-        console.log('Failed to refresh token', error.message);
       }
     }, refreshInterval);
   }

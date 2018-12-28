@@ -22,19 +22,19 @@ const SideBar = () => {
           <li>
             ${Link({
               to:'/orders', 
-              text:`<i class=""></i>See Your Parcels`, 
+              text:`<i class=""></i>See Your Orders`, 
             })}
           </li>
           <li>
             ${Link({
-              to:'/pending-parcels', 
-              text:`<i class=""></i>Pending Parcels`, 
+              to:'/pending-orders', 
+              text:`<i class=""></i>Pending Orders`, 
             })}
           </li>
           <li>
             ${Link({
-              to:'/delivered-parcels', 
-              text:`<i class=""></i>Delivered Parcels`, 
+              to:'/delivered-orders', 
+              text:`<i class=""></i>Delivered Orders`, 
             })}
           </li>
           <li>

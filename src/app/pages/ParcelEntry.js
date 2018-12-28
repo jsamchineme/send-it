@@ -8,10 +8,12 @@ import stackRequests from '../services/utils/stackRequests';
 import confirmModalBox from '../components/modals/confirmModal';
 import Link from '../components/Link';
 import Map from '../services/Map';
+import DateFormater from '../services/DateFormater';
+import parcelStatuses from '../constants/parcelStatuses';
 
 export default class ParcelEntry {
   constructor() {
-    document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "All Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
 
     let parcelId = window.app.state.selectedParcelId;
 
@@ -46,7 +48,7 @@ export default class ParcelEntry {
     }
     
     // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
-    let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
+    let cancelOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
       `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
       : '';
     
@@ -59,6 +61,10 @@ export default class ParcelEntry {
           })}
         `
       : '';
+    
+    let parcelStatus = parcelStatuses[status];
+
+    sentOn = DateFormater.formatDate(sentOn);
 
     let parcelHTML = `
       <section class="page-section single">
@@ -76,7 +82,7 @@ export default class ParcelEntry {
                   Created on <span class="inset-text">${sentOn}</span>
                 </div>
                 <div>
-                  Status on <span class="inset-text">${status}</span>
+                  Status on <span class="inset-text">${parcelStatus}</span>
                 </div>
               </div>
             </div>

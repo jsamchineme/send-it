@@ -29,13 +29,6 @@ export default class MobileMenu {
   }
 
   /**
-   * Side Link Click
-   */
-  handleMenuLink(e) {
-    
-  }
-
-  /**
    * Toggle the state of the side menu
    * @param {Event} e - event object
    */
