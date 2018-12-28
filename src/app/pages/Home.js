@@ -2,7 +2,7 @@ import Link from '../components/Link';
 
 export default class Home {
   constructor() {
-    document.title = "Home - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Home - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
     return (`

@@ -44,7 +44,6 @@ export default class Map {
       avoidTolls: false
     }, (response, status) => {
       if (status !== 'OK') {
-        // alert('Error was: ' + status);
         Toast.show({ 
           message: `Map Error: ${status}`, 
           type: 'error', 
@@ -77,11 +76,11 @@ export default class Map {
           };
         };
 
-        // Direction Service and Way Points Setups 
+        // Direction Service, renderer and Way Points Setups 
         var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        directionsDisplay.setMap(map);
-        Map.calculateAndDisplayRoute(from, to, directionsService, directionsDisplay);
+        var directionsRenderer = new google.maps.DirectionsRenderer;
+        directionsRenderer.setMap(map);
+        Map.calculateAndDisplayRoute(from, to, directionsService, directionsRenderer);
   
         for (let i = 0; i < originList.length; i++) {
           let results = response.rows[i].elements;
@@ -121,10 +120,11 @@ export default class Map {
    * @static
    * @param {String} from - the pickup location
    * @param {String} to - the destination location
-   * @param {Object} to - the destination location
+   * @param {Object} directionsService - google directions service
+   * @param {Object} directionsRenderer - google directions renderer
    * @returns {void}
    */
-  static calculateAndDisplayRoute(from, to, directionsService, directionsDisplay) {
+  static calculateAndDisplayRoute(from, to, directionsService, directionsRenderer) {
     var waypts = [];
 
     directionsService.route({
@@ -135,7 +135,7 @@ export default class Map {
       travelMode: 'DRIVING'
     }, function(response, status) {
       if (status === 'OK') {
-        directionsDisplay.setDirections(response);
+        directionsRenderer.setDirections(response);
       } else {
         Toast.show({ 
           message: `Directions request failed due to: ${status}`, 

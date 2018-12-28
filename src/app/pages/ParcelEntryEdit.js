@@ -12,7 +12,7 @@ import Link from '../components/Link';
 
 export default class ParcelEntryEdit {
   constructor() {
-    document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "All Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
 
     let parcelId = window.app.state.selectedParcelId;
 

@@ -25,15 +25,12 @@ export const closeModal = () => {
 }
 
 export const activateModal = () => {
-  console.log('activating div');
   let modalWindow = document.getElementById('modal-window');
   modalWindow.className = 'modal-view active';
 }
 
 const confirmModalBox = ({title, description, yesAction, noAction}) => {
   window.confirmModal = { title, yesAction, noAction };
-  console.log(window);
-
 
   let boxHTML =`
     <div class='confirm-modal'>
@@ -69,11 +66,9 @@ const confirmModalBox = ({title, description, yesAction, noAction}) => {
 
 const attachEventListeners = () => {
   let yesBtn = document.getElementById('yes-btn') || {};
-  console.log('yesBtn', yesBtn);
   yesBtn.addEventListener('click', modalConfirmAction);
 
   let noBtn = document.getElementById('no-btn') || {};
-  console.log('noBtn', noBtn);
   noBtn.addEventListener('click', modalCancelAction);
 
 }

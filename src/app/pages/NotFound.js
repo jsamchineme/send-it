@@ -2,7 +2,7 @@ import Link from '../components/Link';
 
 export default class NotFound {
   constructor() {
-    document.title = "Not found - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Not found - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
     return (`

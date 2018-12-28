@@ -506,7 +506,7 @@ form .form-body {
 }
 
 .input-group:first-child {
-  border-top: 10px solid #ffffff;
+  /* border-top: 10px solid #ffffff; */
 }
 
 .input-group input,
@@ -615,6 +615,7 @@ a {
   margin-right: 5px;
   background: white;
   border: 1px solid orange;
+  cursor: pointer;
 }
 .paginated-view-btn.active {
   color: white;
@@ -1337,6 +1338,11 @@ label {
   background-color: black;
   color: orange;
   margin-top: 20px;
+}
+
+.btn.pending {
+    pointer-events: none;
+    background: #ccc;
 }
 
 /* Overiding Styles end */

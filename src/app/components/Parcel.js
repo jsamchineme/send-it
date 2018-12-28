@@ -1,4 +1,6 @@
 import Link from './Link';
+import DateFormater from '../services/DateFormater';
+import parcelStatuses from '../constants/parcelStatuses';
 
 const Parcel = ({
   description, 
@@ -13,18 +15,21 @@ const Parcel = ({
   weightmetric,
   presentMapPointer,
   id,
+  scope
 }) => {
 
   let caption = description.slice(0, 30);
+  let productLink = scope === 'admin' ? `/admin-dashboard/orders/${id}` : `/orders/${id}`;
   let dotLink = `
     ${Link({
-      to:`/orders/${id}`, 
+      to: productLink, 
       text: '...',
       className: 'view-more'
     })}
   `;
   caption += dotLink;
 
+  let parcelStatus = parcelStatuses[status];
 
   return (`
     <div class="item column col-3">
@@ -41,16 +46,16 @@ const Parcel = ({
         <div class="lower-section">
           <div class="quick-info">
             <div class="item">
-              <span class='field'><span class='inset-text'>Delivery ${status}</span></span>
+              <span class='field'>Order<span class='inset-text'> ${parcelStatus}</span></span>
               <!-- <span class='value'>View Order</span> -->
             </div>
             <div class="item">
-              <span class="field">Created on <span class='inset-text style-1'>${sentOn}</span></span>
+              <span class="field">Created on <span class='inset-text style-1'>${DateFormater.formatDate(sentOn)}</span></span>
             </div>
           </div>
           <div class="actions">
             ${Link({
-              to:`/orders/${id}`, 
+              to: productLink, 
               text: 'View Order',
               className: 'btn medium-btn'
             })}

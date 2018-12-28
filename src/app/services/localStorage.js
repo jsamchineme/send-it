@@ -4,7 +4,9 @@ const retrieveAuthUser = () => {
 }
 
 const persistAuthUser = (data) => {
-  localStorage.setItem('authUser', JSON.stringify(data));
+  if(data) {
+    localStorage.setItem('authUser', JSON.stringify(data));
+  }
 }
 
 const clearAuthUser = () => {

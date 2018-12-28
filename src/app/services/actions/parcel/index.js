@@ -4,6 +4,8 @@ import fetchParcel from './fetchParcel';
 import cancelOrder from './cancelOrder';
 import createOrder from './createOrder';
 import editDestination from './editDestination';
+import editPresentLocation from './editPresentLocation';
+import changeStatus from './changeStatus';
 
 export {
   getAllParcels,
@@ -11,5 +13,7 @@ export {
   getAllUserParcels,
   cancelOrder,
   createOrder,
-  editDestination
+  editDestination,
+  editPresentLocation,
+  changeStatus
 }

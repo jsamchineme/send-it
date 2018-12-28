@@ -3,25 +3,20 @@ import events from '../services/events';
 import subscriptions from '../services/events/subscriptions';
 
 
-const PaginatedParcelList = ({ numberPerPage, currentPage = 1, parcels = [] }) => {
+const PaginatedParcelList = ({ numberPerPage, currentPage = 1, parcels = [], scope }) => {
   // set 4 as the default number per page
   numberPerPage = numberPerPage !== undefined ? numberPerPage : 4;
+  numberPerPage = 8;
   // set 4 as the default number per page
   // currentPage = currentPage !== undefined ? currentPage : 0;
 
   let pageParcels = getPageParcels(parcels, currentPage, numberPerPage);
 
-  // logParcels(pageParcels);
-
-  let parcelHTML = getViewHTML(pageParcels);
+  let parcelHTML = getViewHTML(pageParcels, scope);
 
   parcelHTML += paginationNav(numberPerPage, parcels, currentPage);
 
   return parcelHTML;
-}
-
-const logParcels = (parcels) => {
-  parcels.forEach(i => console.log(i.id));
 }
 
 const getPageParcels = (parcels, currentPage, numberPerPage) => {
@@ -42,11 +37,21 @@ const getPageParcels = (parcels, currentPage, numberPerPage) => {
   return pageParcels;
 }
 
-const getViewHTML = (parcels) => {
+const getViewHTML = (parcels, scope) => {
   let eachHTML = '';
-  parcels.forEach(parcel => {
-    eachHTML += Parcel(parcel);
-  });
+  if(parcels.length > 0) {
+    parcels.forEach(parcel => {
+      parcel.scope = scope;
+      eachHTML += Parcel(parcel);
+    });
+  } else {
+    // prepare html prompting user to create new order
+    eachHTML += `
+      <div class='create-order-prompt'>
+        <h1>Create New Order</h1>
+      </div>
+    `;
+  }
   return eachHTML;
 }
 
@@ -60,7 +65,7 @@ const paginationNav = (numberPerPage, list, currentPage) => {
       if (Number(currentPage) === serial) { 
         activeStatus = ' active';
       }
-      pageTargetHTML += `<button class='paginated-view-btn ${activeStatus}' data-start-page=${serial}>${serial}</button>`;
+      pageTargetHTML += `<button class='paginated-view-btn ${activeStatus}' data-current-page=${serial}>${serial}</button>`;
     };
   }
   pageTargetHTML += "</div>"; // end of column

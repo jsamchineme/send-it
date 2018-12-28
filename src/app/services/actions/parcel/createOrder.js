@@ -23,11 +23,8 @@ const createOrder = async (e) => {
 
     const authUser = retrieveAuthUser();
 
-    // await delay(3000);
-
     try {
       const response = await api.createOrder(data, authUser.token);
-      window.app.store.authUser = response.data;
       errorBox.innerHTML = '';
 
       events.emit(
@@ -35,6 +32,8 @@ const createOrder = async (e) => {
         {actionBox, action: 'createOrder', normalText: 'Create Order'}
       );
       Toast.show({message: 'The Parcel has been created', type: 'success'});
+
+      window.app.funcs.changeRoute(`/orders/${response.data.id}`);
     }
     catch(error) {
       const message = computeMessage(error.message, error.status);

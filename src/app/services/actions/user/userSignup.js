@@ -4,7 +4,6 @@ import { computeMessage } from '../../../services/validation/serverErrorMessages
 import { showMessages } from '../../../services/validation/index';
 import subscriptions from '../../../services/events/subscriptions';
 import events from '../../../services/events';
-import delay from '../../../services/utils/delay';
 
 const userSignup = async (e) => {
   e.preventDefault();
@@ -15,11 +14,9 @@ const userSignup = async (e) => {
 
   if(canProceed) { 
     events.emit(
-      subscriptions.REQUEST_PENDING, 
-      {actionBox, action: 'userSignup', normalText: 'Login'}
+      subscriptions.REQUEST_PENDING,
+      {actionBox, action: 'userSignup', normalText: 'Sign up'}
     );
-
-    // await delay(2000);
 
     try {
       const response = await api.userSignup(data);
@@ -28,7 +25,7 @@ const userSignup = async (e) => {
 
       events.emit(
         subscriptions.REQUEST_DONE, 
-        {actionBox, action: 'userSignup', normalText: 'Login'}
+        {actionBox, action: 'userSignup', normalText: 'Sign up'}
       );
       
       window.app.funcs.changeRoute('/signup/welcome');
@@ -39,7 +36,7 @@ const userSignup = async (e) => {
 
       events.emit(
         subscriptions.REQUEST_DONE, 
-        {actionBox, action: 'userSignup', normalText: 'Login'}
+        {actionBox, action: 'userSignup', normalText: 'Sign up'}
       );
     }
   } else {

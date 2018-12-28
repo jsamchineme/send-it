@@ -8,12 +8,8 @@ const fetchAParcel = async (parcelId) => {
 
   let data = { token: authUser.token, parcelId };
 
-  console.log('----DAta', data);
-
   try {
     const response = await api.fetchAParcel(data);
-
-    console.log('Response-----', response);
     
     // store the parcels data in the window.app.state namespace
     window.app.state['selectedParcel'] = response.data;
@@ -25,7 +21,6 @@ const fetchAParcel = async (parcelId) => {
 
   }
   catch(error) {
-    console.log('Error', error.status);
   }
 
 }

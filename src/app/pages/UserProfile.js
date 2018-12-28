@@ -7,9 +7,9 @@ import events from '../services/events/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 
-export default class AllParcels {
+export default class AllOrders {
   constructor() {
-    document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "All Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
     events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
     events.on(subscriptions.PAGINATION_TARGET_SELECTED, (currentPage) => this.listOrders({ currentPage }));
@@ -88,7 +88,7 @@ export default class AllParcels {
                     </div>
 
                     <section class="page-section items-list all-parcels">
-                      <div class="header"><span>All Parcels</span></div>
+                      <div class="header"><span>All Orders</span></div>
 
                       <div id="create-order-view"></div>
 

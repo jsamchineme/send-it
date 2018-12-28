@@ -2,7 +2,7 @@ import Link from '../components/Link';
 
 export default class Login {
   constructor() {
-    document.title = "Login - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "Login - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
   }
   render() {
     return (`

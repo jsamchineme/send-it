@@ -1,26 +1,34 @@
-import SideBar from '../../layouts/SideBar'
+import SideBar from '../../layouts/AdminSideBar';
 import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
-import { fetchParcel, cancelOrder } from '../../services/actions/parcel';
+import { 
+  fetchParcel, 
+  changeStatus, 
+  editPresentLocation
+} from '../../services/actions/parcel';
 import events from '../../services/events/events';
+import saveInput from '../../services/actions/saveInput';
 import subscriptions from '../../services/events/subscriptions';
 import stackRequests from '../../services/utils/stackRequests';
 import confirmModalBox from '../../components/modals/confirmModal';
-import Link from '../../components/Link';
+import Map from '../../services/Map';
+import DateFormater from '../../services/DateFormater';
+import parcelStatuses from '../../constants/parcelStatuses';
 
 export default class ParcelEntry {
   constructor() {
-    document.title = "All Parcels - Send IT - Send Parcels Anywhere | Timely Delivery | Real Time Tracking";
+    document.title = "All Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
 
     let parcelId = window.app.state.selectedParcelId;
 
     stackRequests('fetchSingleParcel', fetchParcel.bind(this, parcelId));
 
     events.on(subscriptions.FETCH_PARCEL_SUCCESS, this.renderParcel);
-    events.on(subscriptions.CANCEL_PARCEL_ORDER_SUCCESS, this.renderParcel);
+    events.on(subscriptions.EDIT_PARCEL_ORDER_SUCCESS, this.renderParcel);
   }
 
-  renderParcel(parcel) {
+  renderParcel() {
+    let parcel = window.app.state['selectedParcel'];
     let {
       description, 
       status, 
@@ -36,20 +44,35 @@ export default class ParcelEntry {
       id,
     } = parcel;
 
-    let mapViewButton = status !== 'cancelled' ? 
-      `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
-      : '';
-    let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
-      `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
-      : '';
-    let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
-        `${Link({
-            to:'/orders/edit', 
-            text:`Edit Order`,
-            className: 'btn medium-btn bg-light-orange'
-          })}
-        `
-      : '';
+    
+    let mapViewButton = '';
+    if(!window.mapReady) {
+      mapViewButton = status !== 'cancelled' ? 
+        `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
+        : '';
+    }
+    
+    // allow editing destination only if status is neither 'cancelled' nor 'delivered'
+    let statusChangeSelect = `<select class='status-change' name='status_change'>
+      <option value='transiting' ${status === 'transiting' && 'selected'}>Transiting</option>
+      <option value='placed' ${status === 'placed' && 'selected'}>Placed</option>
+      <option value='cancelled' ${status === 'cancelled' && 'selected'}>Cancelled</option>
+      <option value='delivered' ${status === 'delivered' && 'selected'}>Delivered</option>
+    </select>`;
+
+    let presentLocationSection = `<div id='currentLocation-error-box' class='error-box'></div>
+        <input class='line-input' name='currentLocation' type="text" placeholder="type location here" value='${currentLocation}'/>
+        <br>
+        <button 
+          class='btn small-btn save-edit' 
+          id='editPresentLocation-action-button'
+          data-parcel-id=${id}
+        >Save</button>
+      `
+    
+    let parcelStatus = parcelStatuses[status];
+
+    sentOn = DateFormater.formatDate(sentOn);
 
     let parcelHTML = `
       <section class="page-section single">
@@ -67,19 +90,16 @@ export default class ParcelEntry {
                   Created on <span class="inset-text">${sentOn}</span>
                 </div>
                 <div>
-                  Status on <span class="inset-text">${status}</span>
+                  Order <span class="inset-text">${parcelStatus}</span>
                 </div>
               </div>
             </div>
             <div class="body row">
-              <div class="info-sections column col-7">
+              <div class="info-sections column col-5">
                 <div class="item">
                   <div class="field">Present Location</div>
                   <div class="value">
-                    ${currentLocation}
-                  </div>
-                  <div class="actions">
-                    ${mapViewButton}
+                    ${presentLocationSection}
                   </div>
                 </div>
                 <div class="item">
@@ -95,14 +115,16 @@ export default class ParcelEntry {
                   </div>
                 </div>
                 <div class="item actions">
-                  ${cancelOrderButton}
-                  ${editOrderButton}
+                  <div class="input-group">
+                    ${statusChangeSelect}
+                  </div>
                 </div>
               </div>
-              <div class="images column col-5">
-                <div class="image">
-                  <!-- <img src="/assets/img/packages/package-1.png" alt=""> -->
+              <div class="map-view column col-7">
+                <div class='info-sections'>
+                  <div class="item" id="output"></div>
                 </div>
+                <div id="map"></div>
               </div>
             </div>
           </div>
@@ -113,11 +135,22 @@ export default class ParcelEntry {
     let target = document.getElementById('parcel-view');
     target.innerHTML = parcelHTML;
 
-    window.app.bindClassNames('cancel-order', 'click', 
+    if(window.mapReady) {
+      Map.initMap(from, to);
+    }
+
+    let statusSelect = document.querySelector('.status-change');
+    statusSelect.addEventListener('change', (e) => changeStatus(id, e.target.value));
+
+    document
+      .querySelector('.info-sections')
+      .addEventListener('input', (e) => saveInput('editPresentLocation', e));
+    
+    window.app.bindClassNames('save-edit', 'click', 
       (e) => {
         let parcelId = e.target.dataset.parcelId;
-        confirmModalBox({ title: 'Cancel Order', yesAction: () => cancelOrder(parcelId),
-        description: 'This action cannot be undone. Do you wish to continue?',
+        confirmModalBox({ title: 'Save Edit', yesAction: () => editPresentLocation(parcelId),
+        description: 'Do you wish to continue?',
       })
     });
   }

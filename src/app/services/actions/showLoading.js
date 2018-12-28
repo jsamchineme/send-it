@@ -4,6 +4,7 @@
 const showLoading = ({ actionBox }) => {
   const loadingText = 'Processing...';
   actionBox.innerHTML = loadingText;
+  actionBox.classList.add('pending');
 }
 
 export default showLoading;

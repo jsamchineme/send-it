@@ -21,14 +21,20 @@ const SideBar = () => {
           </li>
           <li>
             ${Link({
-              to:'/admin-dashboard/pending-parcels', 
+              to:'/admin-dashboard/pending-orders', 
               text:`<i class=""></i>Pending Orders`, 
             })}
           </li>
           <li>
             ${Link({
-              to:'/admin-dashboard/delivered-parcels', 
-              text:`<i class=""></i>Delivered Parcels`, 
+              to:'/admin-dashboard/delivered-orders', 
+              text:`<i class=""></i>Delivered Orders`, 
+            })}
+          </li>
+          <li>
+            ${Link({
+              to:'/admin-dashboard/cancelled-orders', 
+              text:`<i class=""></i>Cancelled Orders`, 
             })}
           </li>
         </ul>

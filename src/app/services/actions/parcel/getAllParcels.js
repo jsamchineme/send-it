@@ -19,7 +19,6 @@ const getAllParcels = async () => {
 
   }
   catch(error) {
-    console.log('Error', error.status);
   }
 
 }
