@@ -29,9 +29,12 @@ SendIT can be found on pivotal tracker with the link below.
 The API is hosted at (https://johnnysam-sendit.herokuapp.com/api/v1)
 
 ### UI Templates
-The ui templates are currently hosted on gh-pages 
+The ui templates are currently hosted on gh-pages
 (https://jsamchineme.github.io/send-it/UI/)
 
+### API Documentation
+The API documentation can be found through this url 
+(https://johnnysam-sendit.herokuapp.com/docs)
 
 ## Features
 - Fetch all parcel delivery orders
@@ -65,26 +68,31 @@ https://www.pivotaltracker.com/file_attachments/93331262/download?inline=true
 <table>
 <tr><th>HTTP VERB</th><th>ENDPOINT</th><th>TASK</th></tr>
 
-<tr><td>GET</td> <td>parcels?token={{adminToken}}</td> <td> Fetch all parcel delivery orders</td></tr>
+<tr><td>GET</td> <td>parcels?token={adminToken}</td> <td> Fetch all parcel delivery orders</td></tr>
 
-<tr><td>POST</td> <td>parcels?token={{userToken}}</td> <td> Create a parcel delivery order </td></tr>
+<tr><td>POST</td> <td>parcels?token={userToken}</td> <td> Create a parcel delivery order </td></tr>
 
-<tr><td>GET</td> <td>parcels/:id?token={{ownerAuthToken}}</td> <td> Fetch a specific parcel delivery order</td></tr>
+<tr><td>GET</td> <td>parcels/:id?token={ownerAuthToken}</td> <td> Fetch a specific parcel delivery order</td></tr>
 
-<tr><td>GET</td> <td>users/:id/parcels?{{ownerAuthToken}}</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
+<tr><td>GET</td> <td>users/:id/parcels?{ownerAuthToken}</td> <td> Fetch all parcel delivery orders by a specific user </td></tr>
 
-<tr><td>PUT</td> <td>parcels/:id/cancel?token={{ownerAuthToken}}</td> <td> Cancel the specific parcel delivery order</td></tr> 
+<tr><td>PUT</td> <td>parcels/:id/cancel?token={ownerAuthToken}</td> <td> Cancel the specific parcel delivery order</td></tr> 
 
-<tr><td>PUT</td> <td>parcels/:id/status?{{adminAuthToken}}</td> <td> Change the status of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/status?{adminAuthToken}</td> <td> Change the status of a parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>parcels/:id/destination?token={{ownerAuthToken}}</td> <td>Change the destination of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/destination?token={ownerAuthToken}</td> <td>Change the destination of a parcel delivery order</td></tr>
 
-<tr><td>PUT</td> <td>parcels/:id/to?token={{ownerAuthToken}}</td> <td>Change the present location of a parcel delivery order</td></tr>
+<tr><td>PUT</td> <td>parcels/:id/presentLocation?token={ownerAuthToken}</td> <td>Change the present location of a parcel delivery order</td></tr>
 
 <tr><td>POST</td> <td>auth/signup</td> <td> User Signup </td></tr>
 
 <tr><td>POST</td> <td>auth/login</td> <td> User Login </td></tr>
 
+<tr><td>GET</td> <td>users/:id</td> <td> Get User profile </td></tr>
+
+<tr><td>POST</td> <td>auth/reset</td> <td> Request Password Reset </td></tr>
+
+<tr><td>PUT</td> <td>auth/reset</td> <td> Change User password </td></tr>
 
 </table>
 
