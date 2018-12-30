@@ -15,12 +15,9 @@ const adminHeader = () => {
     <div class="mobile-header hide-for-large">
       <div class="top-bar">
         <div class="text">
-          <div class="name">John Doe</div>
+          <div class="name"></div>
         </div>
         <div class="icons">
-          <a class="icon-group notification">
-            <span class="fa fa-bell"></span>
-          </a>
           <span href="#" class="drop-down-container">
             <span href="#" class='icon-group'>
               <span class="fa fa-user"></span>
@@ -81,13 +78,13 @@ const userHeader = () => {
   return (`
     <div class="mobile-header hide-for-large">
       <div class="top-bar">
-        <div class="text">
-          <div class="name">John Doe</div>
+        <div class="text" style='padding-left: 0px'>
+          <div class="name"></div>
+          <span href="#" class="icon-group" id="toggle-mobile-menu">
+            <span class="fa fa-navicon"></span>
+          </span>
         </div>
         <div class="icons">
-          <a class="icon-group notification">
-            <span class="fa fa-bell"></span>
-          </a>
           <span href="#" class="drop-down-container">
             <span href="#" class='icon-group'>
               <span class="fa fa-user"></span>
@@ -110,9 +107,7 @@ const userHeader = () => {
               </ul>
             </div>
           </span>
-          <span href="#" class="icon-group" id="toggle-mobile-menu">
-            <span class="fa fa-navicon"></span>
-          </span>
+          
         </div>
       </div>
       <div class="mobile-side-menu" id="mobile-side-menu">

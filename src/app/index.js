@@ -27,12 +27,15 @@ import services from './services';
 import delay from './services/utils/delay';
 import MobileMenu from './components/MobileMenu';
 import Logout from './pages/middlewares/Logout';
+import events from './services/events';
+import subscriptions from './services/events/subscriptions';
 
 export default class App {
   constructor() {
 
     this.state = {};
     this.currentPage = this.setInitialPage();
+    this.events = events;
     this.store = store;
   }
   
@@ -204,7 +207,7 @@ export default class App {
 
     await this.animateTransition(activeView, exitingView);
 
-    // console.log('DOM-READY');
+    events.emit(subscriptions.DOM_READY);
   }
 
   async animateTransition(activeView, exitingView) {
@@ -305,11 +308,29 @@ export default class App {
     this.addEventListeners();
   }
 
+  clearEventSubscriptions() {
+    // clear existing subscriptions from all components
+    // to avoid conflicts with other Pages Components
+    let eventsToSkip = [
+      subscriptions.REQUEST_PENDING,
+      subscriptions.REQUEST_DONE
+    ];
+
+    let allEvents = Object.keys(this.events.events);
+    allEvents.forEach(item => {
+      // if item is not found in the list of events to skip
+      // then put them off
+      if(eventsToSkip.find(i => i === item ) === undefined) {
+        this.events.off(item);
+      }
+    });
+
+    console.log({event: events.events})
+  }
+
   async loadView() {
     await this.prepareView();
-
     this.dispatchRequests();
-    
     this.addEventListeners();
   }
 

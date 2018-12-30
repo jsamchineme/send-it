@@ -3,7 +3,7 @@ import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
 import { fetchParcel, cancelOrder, editDestination } from '../services/actions/parcel';
 import saveInput from '../services/actions/saveInput';
-import events from '../services/events/events';
+import events from '../services/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 import confirmModalBox from '../components/modals/confirmModal';

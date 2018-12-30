@@ -3,16 +3,20 @@ import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
 import PaginatedParcelList, { bindPageButtons } from '../containers/PaginatedParcelList';
 import { getAllUserParcels } from '../services/actions/parcel';
-import events from '../services/events/events';
+import events from '../services/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
+import getUserProfile from '../services/actions/parcel/getUserProfile';
 
-export default class AllOrders {
+export default class UserProfile {
   constructor() {
     document.title = "All Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
+    stackRequests('getUserProfile', getUserProfile);
+    
     events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
     events.on(subscriptions.PAGINATION_TARGET_SELECTED, (currentPage) => this.listOrders({ currentPage }));
+    events.on(subscriptions.FETCH_USER_PROFILE_SUCCESS, (data) => this.renderProflie(data));
   }
 
   listOrders(props = {}) {
@@ -25,18 +29,57 @@ export default class AllOrders {
     return parcelHTML;
   }
 
-  renderSummaryCard() {
+  renderProflie() {
+    let userProfileData = window.app.state['userProfileData'] || {};
+    let { username, email, parcels = {} } = userProfileData;
 
-  }
+    
+    let summaryHTML = "";
+    if(username !== undefined) {
+      username = username === undefined ? "" : username;
+      email = email === undefined ? "" : email;
+  
+      let numberDelivered = "";
+      let numberCancelled = "";
+      let numberPending = "";
+  
+      if(parcels.transiting !== undefined) {
+        numberDelivered = parcels.delivered.count;
+        numberCancelled = parcels.cancelled.count;
+        numberPending = parcels.placed.count + parcels.transiting.count;
+      }
+  
+      summaryHTML += `
+        <div class="summary-card row no-avatar">
+          <div class="left column col-8">
+            <div class="image round">
+              <img src="/assets/img/users/amilolo.jpg" alt="Profile Picture">
+            </div>
+            <div class="text-info">
+              <div class="text-1">${username}</div>
+              <div class="text-2">${email}</div>
+            </div>
+          </div>
+          <div class="right column col-4">
+            <div class="activity-summary">
+              <div class="container">
+                <span class="text-1 declined"><span class="num">${numberDelivered}</span>Delivered</span>
+                <span class="text-2 pending"><span class="num">${numberPending}</span>Pending</span>
+                <span class="text-3 pending"><span class="num">${numberCancelled}</span>Cancelled</span>
+                <!-- <span class="text-2 pending"><span class="num">1</span>Pending</span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
 
-  renderCreateOrder() {
-    let leadHTML = `
-      <div class='create-order'>
-        Create Order
-      </div>
-    `;
-    let target = document.getElementById('create-order-view');
-    target.innerHTML = leadHTML;
+      let summaryCardContainer = document.getElementById('summary-card-container');
+      if (summaryCardContainer) {
+        summaryCardContainer.innerHTML = summaryHTML;
+      }
+    }
+
+    return summaryHTML;
   }
 
   render() {
@@ -60,31 +103,8 @@ export default class AllOrders {
                 <div class="main-content">
                   <div class="container">
 
-                    <div class="summary-card row no-avatar">
-                      <div class="left column col-8">
-                        <div class="image round">
-                          <img src="/assets/img/users/amilolo.jpg" alt="Profile Picture">
-                        </div>
-                        <div class="text-info">
-                          <div class="text-1">Solomonowen Jalamiaweyes</div>
-                          <div class="text-2">solomonowenjalamiaweyes@gmail.com</div>
-                          <div class="v-gap-1"></div>
-                          <!-- <div class="text-3"><span class='inset-text'>joined</span> 24th Dec 2018</div> -->
-                          <div>
-                            <!-- <button class='btn small-btn'>Edit</button> -->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="right column col-4">
-                        <div class="activity-summary">
-                          <div class="container">
-                            <span class="text-1 declined"><span class="num">15</span>Delivered</span>
-                            <span class="text-2 pending"><span class="num">1</span>In Transit</span>
-                            <span class="text-3 pending"><span class="num">3</span>Cancelled</span>
-                            <!-- <span class="text-2 pending"><span class="num">1</span>Pending</span> -->
-                          </div>
-                        </div>
-                      </div>
+                    <div id='summary-card-container'>
+                      ${this.renderProflie()}
                     </div>
 
                     <section class="page-section items-list all-parcels">

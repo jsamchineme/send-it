@@ -6,7 +6,7 @@ import {
   changeStatus, 
   editPresentLocation
 } from '../../services/actions/parcel';
-import events from '../../services/events/events';
+import events from '../../services/events';
 import saveInput from '../../services/actions/saveInput';
 import subscriptions from '../../services/events/subscriptions';
 import stackRequests from '../../services/utils/stackRequests';
