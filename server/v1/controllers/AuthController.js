@@ -87,7 +87,7 @@ class AuthController {
       id: decoded.id,
       email: decoded.email,
       isAdmin: decoded.isAdmin,
-      token: refreshedToken
+      date: new Date()
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRES_IN });
