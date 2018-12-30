@@ -661,8 +661,12 @@ a {
   display: block;
 }
 
+.drop-down-container {
+  cursor: pointer;
+}
+
 .mobile-header .top-bar {
-  height: 40px;
+  height: 50px;
   background: orange;
   position: fixed;
   z-index: 1100;
@@ -685,7 +689,7 @@ a {
 }
 
 .mobile-header .icons {
-  height: 40px;
+  height: 50px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
@@ -714,6 +718,7 @@ a {
 
 .drop-down {
   position: absolute;
+  right: 10px;
 }
 
 .drop-down ul {
@@ -764,7 +769,7 @@ a {
 
 .mobile-side-menu {
   position: fixed;
-  top: 40px;
+  top: 50px;
   bottom: 0px;
   width: 200px;
   background-color: #f1f2f3;
@@ -853,7 +858,7 @@ a {
 }
 
 .main-content {
-  margin-top: 5px;
+  margin-top: 15px;
   padding: 10px;
 }
 
@@ -1214,7 +1219,7 @@ label {
 }
 
 .to-text {
-  color: #ce0f0f;
+  color: #e46729;
   font-family: 'merriweather-regular';
   /* font-size: 15px; */
 }
@@ -1223,6 +1228,11 @@ label {
   padding: 0px;
   margin: 0px;
   font-size: 13px;
+}
+
+.map-view #output span {
+  font-size: 14px;
+  line-height: 25px;
 }
 
 .map-view .field {
@@ -1256,7 +1266,7 @@ label {
   top: 0;
   width: 100%;
   z-index: 1001;
-  padding: 20px;
+  /* padding: 20px; */
   left: 0;
   right: 0;
 }
@@ -1566,7 +1576,7 @@ label {
     flex: 1;
     font-size: 20px;
     font-family: 'raleway-bold';
-    padding: 10px;
+    padding: 10px 18px;
     color: #ffffff;
   }
 
@@ -1671,5 +1681,7 @@ label {
     font-weight: bold;
     margin-right: 5px;
     color: orange;
+    width: 15px;
+    display: inline-block;
   }
 }

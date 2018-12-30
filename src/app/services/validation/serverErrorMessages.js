@@ -49,6 +49,14 @@ export const computeMessage = (serverMessage, responseStatus = null) => {
           message = serverMessage;
       }
       break;
+    case 404:
+      switch(serverMessage) {
+        case 'Provide correct login credentials': 
+          message = preparedMessages['badLoginInput']; break;
+        default:
+          message = serverMessage;
+      }
+      break;
     default: message = preparedMessages['unknown'];
   }
 

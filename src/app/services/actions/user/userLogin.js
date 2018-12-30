@@ -4,7 +4,6 @@ import { computeMessage } from '../../../services/validation/serverErrorMessages
 import { showMessages } from '../../../services/validation/index';
 import subscriptions from '../../../services/events/subscriptions';
 import events from '../../../services/events';
-import delay from '../../../services/utils/delay';
 
 const userLogin = async (e) => {
   e.preventDefault();
@@ -18,8 +17,6 @@ const userLogin = async (e) => {
       subscriptions.REQUEST_PENDING, 
       {actionBox, action: 'userLogin', normalText: 'Login'}
     );
-
-    await delay(2000);
 
     try {
       const response = await api.userLogin(data);

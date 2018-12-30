@@ -3,7 +3,7 @@ import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
 import PaginatedParcelList, { bindPageButtons } from '../../containers/PaginatedParcelList';
 import { getAllParcels } from '../../services/actions/parcel';
-import events from '../../services/events/events';
+import events from '../../services/events';
 import subscriptions from '../../services/events/subscriptions';
 import stackRequests from '../../services/utils/stackRequests';
 

@@ -91,7 +91,7 @@ export default class Map {
             showGeocodedAddressOnMap(true));
             let distance = results[j].distance || {};
             let duration = results[j].duration || {};
-            outputDiv.innerHTML += `<span class='from-text'>${originList[i]}</span>  to 
+            outputDiv.innerHTML += `<span class='from-text'>${originList[i]}</span>  <span>to</span> 
               <span class='to-text'>${destinationList[j]}</span>
               <div class='map-computation'>
                 <span class='info-group'><label>Distance:</label> ${distance.text}</span>

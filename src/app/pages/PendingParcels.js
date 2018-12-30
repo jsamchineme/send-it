@@ -4,7 +4,7 @@ import MobileHeader from '../layouts/MobileHeader';
 import MainPageHeader from '../layouts/MainPageHeader';
 import PaginatedParcelList, { bindPageButtons } from '../containers/PaginatedParcelList';
 import { getAllUserParcels } from '../services/actions/parcel';
-import events from '../services/events/events';
+import events from '../services/events';
 import subscriptions from '../services/events/subscriptions';
 import stackRequests from '../services/utils/stackRequests';
 
@@ -12,11 +12,6 @@ export default class PendingOrders {
   constructor() {
     document.title = "Pending Orders - Send IT - Send Orders Anywhere | Timely Delivery | Real Time Tracking";
     stackRequests('getUserParcels', getAllUserParcels);
-    // clear existing subscriptions from other components
-    // to avoid conflicts with other Page Components
-    events.off(subscriptions.PAGINATION_TARGET_SELECTED);
-    events.off(subscriptions.FETCH_USER_PARCELS_SUCCESS);
-
     // attach new subscriptions
     events.on(subscriptions.FETCH_USER_PARCELS_SUCCESS, () => this.listOrders());
     events.on(subscriptions.PAGINATION_TARGET_SELECTED, (currentPage) => this.listOrders({ currentPage }));

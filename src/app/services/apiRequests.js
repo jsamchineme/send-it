@@ -27,6 +27,16 @@ export const getUserParcels = (data) => {
   });
 }
 
+export const getUserProfile = (data) => {
+  return fetch(`${BASE_URL}/users/${data.userId}?token=${data.token}`)
+  .then(async res => { 
+    if(!res.ok) {
+      throw await ResponseException.prepare(res);
+    }
+    return res.json();
+  });
+}
+
 export const fetchAParcel = (data) => {
   return fetch(`${BASE_URL}/parcels/${data.parcelId}?token=${data.token}`)
   .then(async res => { 

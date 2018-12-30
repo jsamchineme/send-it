@@ -30,6 +30,9 @@ app.funcs = {
    * Apply the route path and render the current page based on the route
    */
   setRouter: (path) => {
+    // remove subscriptions attached to previous page 
+    app.clearEventSubscriptions();
+
     let currentPage = app.getPathPage(path);
     app.state['currentPage'] = currentPage;
     app.loadView();

@@ -1,10 +1,10 @@
 import * as api from '../../apiRequests';
-import { retrieveAuthUser } from "../../localStorage";
 import { computeMessage } from '../../../services/validation/serverErrorMessages';
 import { showMessages } from '../../../services/validation/index';
 import subscriptions from '../../../services/events/subscriptions';
 import events from '../../../services/events';
 import Toast from '../../../components/Toast';
+import delay from '../../utils/delay';
 
 const resetPassword = async (e) => {
   e.preventDefault();
@@ -18,6 +18,8 @@ const resetPassword = async (e) => {
       subscriptions.REQUEST_PENDING,
       {actionBox, action: 'resetPassword', normalText: 'Request Password Request'}
     );
+
+    await delay(2000);
 
     try {
       Toast.show({message: 'Request processing', type: 'error', hideAfter: 7000});

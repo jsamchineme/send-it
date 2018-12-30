@@ -1,6 +1,7 @@
 import Parcel from '../components/Parcel';
 import events from '../services/events';
 import subscriptions from '../services/events/subscriptions';
+import Link from '../components/Link';
 
 
 const PaginatedParcelList = ({ numberPerPage, currentPage = 1, parcels = [], scope }) => {
@@ -47,8 +48,30 @@ const getViewHTML = (parcels, scope) => {
   } else {
     // prepare html prompting user to create new order
     eachHTML += `
-      <div class='create-order-prompt'>
-        <h1>Create New Order</h1>
+      <div class="item column col-3">
+        <div class="container">
+          <div class="upper-section">
+            <div class="description">
+              <span>No record found</span>
+            </div>
+          </div>
+          <div class="lower-section">
+            <div class="quick-info">
+              <div class="item">
+              </div>
+              <div class="item">
+              </div>
+            </div>
+            <div class="actions">
+              ${Link({
+                to: '/make-order', 
+                text: 'Create New Order',
+                className: 'btn medium-btn'
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     `;
   }
