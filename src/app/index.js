@@ -11,6 +11,7 @@ import ParcelEntry from './pages/ParcelEntry';
 import ParcelEntryEdit from './pages/ParcelEntryEdit';
 import PendingParcels from './pages/PendingParcels';
 import DeliveredParcels from './pages/DeliveredParcels';
+import CancelledParcels from './pages/CancelledParcels';
 import AdminAllParcels from './pages/admin/AllParcels';
 import AdminParcelEntry from './pages/admin/ParcelEntry';
 import AdminPendingParcels from './pages/admin/PendingParcels';
@@ -299,12 +300,10 @@ export default class App {
       // remove the request/action from the stack
       delete allRequests[action];
     });
-    
   }
 
   async reRender() {
     await this.prepareRerender();
-
     this.addEventListeners();
   }
 
@@ -324,8 +323,6 @@ export default class App {
         this.events.off(item);
       }
     });
-
-    console.log({event: events.events})
   }
 
   async loadView() {
@@ -351,6 +348,7 @@ export default class App {
       case 'ParcelEntryEdit': Page = UserPage.guard()(new ParcelEntryEdit()); break;
       case 'PendingParcels': Page = UserPage.guard()(new PendingParcels()); break;
       case 'DeliveredParcels': Page = UserPage.guard()(new DeliveredParcels()); break;
+      case 'CancelledParcels': Page = UserPage.guard()(new CancelledParcels()); break;
       case 'UserProfile': Page = UserPage.guard()(new UserProfile()); break;
       case 'AdminLogin': Page = new AdminLogin(); break;
       case 'AdminAllParcels': Page = AdminPage.guard()(new AdminAllParcels()); break;

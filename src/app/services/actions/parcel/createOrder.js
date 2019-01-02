@@ -1,10 +1,11 @@
 import * as api from '../../apiRequests';
-import { persistAuthUser, retrieveAuthUser } from "../../localStorage";
+import { retrieveAuthUser } from "../../localStorage";
 import { computeMessage } from '../../validation/serverErrorMessages';
 import { showMessages } from '../../validation/index';
 import subscriptions from '../../events/subscriptions';
 import events from '../../events';
 import Toast from '../../../components/Toast';
+import delay from '../../utils/delay';
 
 const createOrder = async (e) => {
   e.preventDefault();
@@ -32,6 +33,8 @@ const createOrder = async (e) => {
         {actionBox, action: 'createOrder', normalText: 'Create Order'}
       );
       Toast.show({message: 'The Parcel has been created', type: 'success'});
+
+      await delay(2000);
 
       window.app.funcs.changeRoute(`/orders/${response.data.id}`);
     }

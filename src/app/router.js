@@ -22,6 +22,7 @@ export const routes = {
   "/orders": "AllParcels",
   "/pending-orders": "PendingParcels",
   "/delivered-orders": "DeliveredParcels",
+  "/cancelled-orders": "CancelledParcels",
   "/admin-dashboard/orders": "AdminAllParcels",
   "/admin-dashboard/pending-orders": "AdminPendingParcels",
   "/admin-dashboard/delivered-orders": "AdminDeliveredParcels",

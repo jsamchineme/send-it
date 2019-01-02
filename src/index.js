@@ -80,5 +80,4 @@ app.funcs = {
 
 
 window.app = app;
-window.initMap = () => window.mapReady = true;
 window.app.funcs.init();
