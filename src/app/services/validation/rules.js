@@ -91,9 +91,20 @@ export const createOrderRules = {
     {name: "min", ruleValue: 10},
     {name: "max", ruleValue: 200},
   ],
+  contactPhone: [
+    {name: "required"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 20},
+  ],
+  contactEmail: [
+    {name: "required"},
+    {name: "email"},
+    {name: "min", ruleValue: 10},
+    {name: "max", ruleValue: 100}
+  ],
   weight: [
     {name: "required"},
-    {name: "min", ruleValue: 10, numeric: true},
+    {name: "min", ruleValue: 1, numeric: true},
     {name: "max", ruleValue: 100, numeric: true},
   ],
 }

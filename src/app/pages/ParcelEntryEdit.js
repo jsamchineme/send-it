@@ -21,141 +21,152 @@ export default class ParcelEntryEdit {
     events.on(subscriptions.FETCH_PARCEL_SUCCESS, this.renderParcel);
     events.on(subscriptions.CANCEL_PARCEL_ORDER_SUCCESS, this.renderParcel);
     events.on(subscriptions.EDIT_PARCEL_ORDER_SUCCESS, this.renderParcel);
+    events.on(subscriptions.MAP_SCRIPT_READY, this.renderParcel);
   }
 
   renderParcel(parcel) {
-    let {
-      description, 
-      status, 
-      sentOn, 
-      deliveredOn,
-      cost,
-      currentLocation,
-      from,
-      to,
-      weight,
-      weightmetric,
-      presentMapPointer,
-      id,
-    } = parcel;
+    if (window.app.state['selectedParcel'] !== undefined 
+      && window.app.state['selectedParcel'] !== null) {
+      parcel = window.app.state['selectedParcel'];
+    }
 
-
-    let mapViewButton = '';    
-    if(!window.mapReady) {
-      mapViewButton = status !== 'cancelled' ? 
-        `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
+    let parcelHTML = 'Loading Data...';
+    if(parcel) {
+      let {
+        description, 
+        status, 
+        sentOn, 
+        deliveredOn,
+        cost,
+        currentLocation,
+        from,
+        to,
+        weight,
+        weightmetric,
+        presentMapPointer,
+        id,
+      } = parcel;
+  
+  
+      let mapViewButton = '';    
+      if(!window.mapReady) {
+        mapViewButton = status !== 'cancelled' ? 
+          `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
+          : '';
+      }
+      
+      
+      // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
+      let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
+        `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
         : '';
-    }
-    
-    
-    // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
-    let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
-      `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
-      : '';
-    
-    // allow editing destination only if status is neither 'cancelled' nor 'delivered'
-    let toSection = status !== 'cancelled' && status !== 'delivered' ? 
-      `<div id='to-error-box' class='error-box'></div>
-        <input class='line-input' name='to' type="text" placeholder="type here" value='${to}'/>
-        <br>
-        <button 
-          class='btn small-btn save-edit' 
-          id='editDestination-action-button'
-          data-parcel-id=${id}
-        >Save</button>
-        ${Link({ 
-          to: `/orders/${id}`, 
-          className: 'btn small-btn',
-          text: 'View'
-        })}
-      `
-      : `${to}`;
-
-    let parcelHTML = `
-      <section class="page-section single">
-        <div class="header">
-          <div class="order-info heading">
-            <span>Order ID <span class="inset-text">#${id}</span></span>
+      
+      // allow editing destination only if status is neither 'cancelled' nor 'delivered'
+      let toSection = status !== 'cancelled' && status !== 'delivered' ? 
+        `<div id='to-error-box' class='error-box'></div>
+          <input class='line-input' name='to' type="text" placeholder="type here" value='${to}'/>
+          <br>
+          <button 
+            class='btn small-btn save-edit' 
+            id='editDestination-action-button'
+            data-parcel-id=${id}
+          >Save</button>
+          ${Link({ 
+            to: `/orders/${id}`, 
+            className: 'btn small-btn',
+            text: 'View'
+          })}
+        `
+        : `${to}`;
+  
+      let parcelHTML = `
+        <section class="page-section single">
+          <div class="header">
+            <div class="order-info heading">
+              <span>Order ID <span class="inset-text">#${id}</span></span>
+            </div>
           </div>
-        </div>
-        <div class="single-view">
-          <div class="container">
-            <div class="header">
-              <span class='title'>${description}</span>
-              <div class="stats-info">
-                <div>
-                  Created on <span class="inset-text">${sentOn}</span>
+          <div class="single-view">
+            <div class="container">
+              <div class="header">
+                <span class='title'>${description}</span>
+                <div class="stats-info">
+                  <div>
+                    Created on <span class="inset-text">${sentOn}</span>
+                  </div>
+                  <div>
+                    Status on <span class="inset-text">${status}</span>
+                  </div>
                 </div>
-                <div>
-                  Status on <span class="inset-text">${status}</span>
+              </div>
+              <div class="body row">
+                <div class="info-sections column col-5">
+                  <div class="item">
+                    <div class="field">Present Location </div>
+                    <div class="value">
+                      ${currentLocation}
+                    </div>
+                    <div class="actions">
+                      <!-- ${mapViewButton} -->
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Delivery Location</div>
+                    <div class="value">
+                      ${toSection}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Pickup Location</div>
+                    <div class="value">
+                      ${from}
+                    </div>
+                  </div>
+                  <div class="item actions">
+                    ${cancelOrderButton}
+                  </div>
+                </div>
+                <div class="map-view column col-7">
+                  <div class='info-sections'>
+                    <div class="item" id="output"></div>
+                  </div>
+                  <div id="map"></div>
                 </div>
               </div>
             </div>
-            <div class="body row">
-              <div class="info-sections column col-5">
-                <div class="item">
-                  <div class="field">Present Location </div>
-                  <div class="value">
-                    ${currentLocation}
-                  </div>
-                  <div class="actions">
-                    <!-- ${mapViewButton} -->
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="field">Delivery Location</div>
-                  <div class="value">
-                    ${toSection}
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="field">Pickup Location</div>
-                  <div class="value">
-                    ${from}
-                  </div>
-                </div>
-                <div class="item actions">
-                  ${cancelOrderButton}
-                </div>
-              </div>
-              <div class="map-view column col-7">
-                <div class='info-sections'>
-                  <div class="item" id="output"></div>
-                </div>
-                <div id="map"></div>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-    `;
+        </section>
+      `;
+  
+      let target = document.getElementById('parcel-view');
+      target.innerHTML = parcelHTML;
+  
+      window.app.bindClassNames('cancel-order', 'click', 
+        (e) => {
+          let parcelId = e.target.dataset.parcelId;
+          confirmModalBox({ title: 'Cancel Order', yesAction: () => cancelOrder(parcelId),
+          description: 'This action cannot be undone. Do you wish to continue?',
+        })
+      });
+  
+      if(window.mapReady) {
+        Map.initMap(from, to);
+      }
+  
+      window.app.bindClassNames('save-edit', 'click', 
+        (e) => {
+          let parcelId = e.target.dataset.parcelId;
+          confirmModalBox({ title: 'Save Edit', yesAction: () => editDestination(parcelId),
+          description: 'Do you wish to continue?',
+        })
+      });
+  
+      document
+        .querySelector('.info-sections')
+        .addEventListener('input', (e) => saveInput('editDestination', e));
+    } 
 
-    let target = document.getElementById('parcel-view');
-    target.innerHTML = parcelHTML;
-
-    window.app.bindClassNames('cancel-order', 'click', 
-      (e) => {
-        let parcelId = e.target.dataset.parcelId;
-        confirmModalBox({ title: 'Cancel Order', yesAction: () => cancelOrder(parcelId),
-        description: 'This action cannot be undone. Do you wish to continue?',
-      })
-    });
-
-    if(window.mapReady) {
-      Map.initMap(from, to);
-    }
-
-    window.app.bindClassNames('save-edit', 'click', 
-      (e) => {
-        let parcelId = e.target.dataset.parcelId;
-        confirmModalBox({ title: 'Save Edit', yesAction: () => editDestination(parcelId),
-        description: 'Do you wish to continue?',
-      })
-    });
-
-    document
-      .querySelector('.info-sections')
-      .addEventListener('input', (e) => saveInput('editDestination', e));
+    return parcelHTML;
   }
 
   render() {
@@ -178,7 +189,7 @@ export default class ParcelEntryEdit {
       
                 <div class="main-content">
                   <div class="container" id="parcel-view">
-                    <!-- parcel view -->
+                    ${this.renderParcel()}
                   </div>
                 </div>
               </div>

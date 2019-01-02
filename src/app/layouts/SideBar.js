@@ -39,6 +39,12 @@ const SideBar = () => {
           </li>
           <li>
             ${Link({
+              to:'/cancelled-orders', 
+              text:`<i class=""></i>Cancelled Orders`, 
+            })}
+          </li>
+          <li>
+            ${Link({
               to:'/user-profile', 
               text:`<i class=""></i>My Profile`, 
             })}

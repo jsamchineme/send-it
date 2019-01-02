@@ -89,6 +89,32 @@ export default class MakeOrder {
                                   </div>
                                 </div>
                                 <div class="item">
+                                  <div class="field">Receiver's phone</div>
+                                  <div id='contactPhone-error-box' class='error-box'></div>
+                                  <div class="value">
+                                    <input 
+                                      class='line-input' 
+                                      type="text" 
+                                      name='contactPhone'
+                                      value=""
+                                      placeholder="Receiver's phone" 
+                                    />
+                                  </div>
+                                </div>
+                                <div class="item">
+                                  <div class="field">Receiver's email</div>
+                                  <div id='contactEmail-error-box' class='error-box'></div>
+                                  <div class="value">
+                                    <input 
+                                      class='line-input' 
+                                      type="text" 
+                                      name='contactEmail'
+                                      value=""
+                                      placeholder="Receiver's email" 
+                                    />
+                                  </div>
+                                </div>
+                                <div class="item">
                                   <div class="field">Parcel Description</div>
                                   <div id='description-error-box' class='error-box'></div>
                                   <div class="value">

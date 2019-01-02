@@ -21,128 +21,167 @@ export default class ParcelEntry {
 
     events.on(subscriptions.FETCH_PARCEL_SUCCESS, this.renderParcel);
     events.on(subscriptions.CANCEL_PARCEL_ORDER_SUCCESS, this.renderParcel);
+    events.on(subscriptions.MAP_SCRIPT_READY, this.renderParcel);
   }
 
   renderParcel(parcel) {
-    let {
-      description, 
-      status, 
-      sentOn, 
-      deliveredOn,
-      cost,
-      currentLocation,
-      from,
-      to,
-      weight,
-      weightmetric,
-      presentMapPointer,
-      id,
-    } = parcel;
+    if (window.app.state['selectedParcel'] !== undefined 
+      && window.app.state['selectedParcel'] !== null) {
+      parcel = window.app.state['selectedParcel'];
+    }
 
-    
-    let mapViewButton = '';
-    if(!window.mapReady) {
-      mapViewButton = status !== 'cancelled' ? 
-        `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
+    let parcelHTML = 'Loading Data...';
+    if(parcel) {
+      let {
+        description, 
+        status, 
+        sentOn, 
+        deliveredOn,
+        cost,
+        currentLocation,
+        from,
+        to,
+        weight,
+        weightmetric,
+        presentMapPointer,
+        id,
+        contactEmail = '',
+        contactPhone = ''
+      } = parcel;
+  
+      
+      let mapViewButton = '';
+      if(!window.mapReady) {
+        mapViewButton = status !== 'cancelled' ? 
+          `<button class="btn medium-btn bg-light-orange" id="map-load-btn">View on the map</button>`
+          : '';
+      }
+      
+      // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
+      let cancelOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
+        `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
         : '';
-    }
-    
-    // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
-    let cancelOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
-      `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
-      : '';
-    
-    // allow editing destination only if status is neither 'cancelled' nor 'delivered'
-    let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
-        `${Link({
-            to:`/orders/edit/${id}`, 
-            text:`Edit Order`,
-            className: 'btn medium-btn bg-light-orange'
-          })}
-        `
-      : '';
-    
-    let parcelStatus = parcelStatuses[status];
+      
+      // allow editing destination only if status is neither 'cancelled' nor 'delivered'
+      let editOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
+          `${Link({
+              to:`/orders/edit/${id}`, 
+              text:`Edit Order`,
+              className: 'btn medium-btn bg-light-orange'
+            })}
+          `
+        : '';
+      
+      let parcelStatus = parcelStatuses[status];
+      sentOn = DateFormater.formatDate(sentOn);
+      contactEmail = contactEmail === null || contactEmail === undefined ? 'Not Provided' : contactEmail;
+      contactPhone = contactPhone === null || contactPhone === undefined ? 'Not Provided' : contactPhone;
 
-    sentOn = DateFormater.formatDate(sentOn);
-
-    let parcelHTML = `
-      <section class="page-section single">
-        <div class="header">
-          <div class="order-info heading">
-            <span>Order ID <span class="inset-text">#${id}</span></span>
+      parcelHTML = `
+        <section class="page-section single">
+          <div class="header">
+            <div class="order-info heading">
+              <span>Order ID <span class="inset-text">#${id}</span></span>
+            </div>
           </div>
-        </div>
-        <div class="single-view">
-          <div class="container">
-            <div class="header">
-              <span class='title'>${description}</span>
-              <div class="stats-info">
-                <div>
-                  Created on <span class="inset-text">${sentOn}</span>
+          <div class="single-view">
+            <div class="container">
+              <div class="header">
+                <span class='title'>${description}</span>
+                <div class="stats-info">
+                  <div>
+                    Created on <span class="inset-text">${sentOn}</span>
+                  </div>
+                  <div>
+                    Status on <span class="inset-text">${parcelStatus}</span>
+                  </div>
                 </div>
-                <div>
-                  Status on <span class="inset-text">${parcelStatus}</span>
+              </div>
+              <div class="body row">
+                <div class="info-sections column col-5">
+                  <div class="item">
+                    <div class="field">Present Location</div>
+                    <div class="value">
+                      ${currentLocation}
+                    </div>
+                    <div class="actions">
+                      ${mapViewButton}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Delivery Location</div>
+                    <div class="value">
+                      ${to}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Pickup Location</div>
+                    <div class="value">
+                      ${from}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Delivery Charge</div>
+                    <div class="value">
+                      ${cost}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Receiver's Email</div>
+                    <div class="value">
+                      ${contactEmail}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Receiver's Phone</div>
+                    <div class="value">
+                      ${contactPhone}
+                    </div>
+                  </div>
+                  <div class="item actions">
+                    ${cancelOrderButton}
+                    ${editOrderButton}
+                  </div>
+                </div>
+                <div class="map-view column col-7">
+                  <div class='info-sections'>
+                    <div class="item" id="output"></div>
+                  </div>
+                  <div id="map"></div>
                 </div>
               </div>
             </div>
-            <div class="body row">
-              <div class="info-sections column col-5">
-                <div class="item">
-                  <div class="field">Present Location</div>
-                  <div class="value">
-                    ${currentLocation}
-                  </div>
-                  <div class="actions">
-                    ${mapViewButton}
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="field">Delivery Location</div>
-                  <div class="value">
-                    ${to}
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="field">Pickup Location</div>
-                  <div class="value">
-                    ${from}
-                  </div>
-                </div>
-                <div class="item actions">
-                  ${cancelOrderButton}
-                  ${editOrderButton}
-                </div>
-              </div>
-              <div class="map-view column col-7">
-                <div class='info-sections'>
-                  <div class="item" id="output"></div>
-                </div>
-                <div id="map"></div>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-    `;
+        </section>
+      `;
 
-    let target = document.getElementById('parcel-view');
-    target.innerHTML = parcelHTML;
+      let target = document.getElementById('parcel-view');
+      target.innerHTML = parcelHTML;
 
-    if(window.mapReady) {
-      Map.initMap(from, to);
+      if(window.mapReady) {
+        Map.initMap(from, to);
+      }
+  
+      window.app.bindClassNames('cancel-order', 'click', 
+        (e) => {
+          let parcelId = e.target.dataset.parcelId;
+          confirmModalBox({ title: 'Cancel Order', yesAction: () => cancelOrder(parcelId),
+          description: 'This action cannot be undone. Do you wish to continue?',
+        })
+      });
+
+      if(mapViewButton) {
+        document
+          .querySelector('#map-load-btn')
+          .addEventListener('click', (e) => Map.setup());
+      }
     }
 
-    window.app.bindClassNames('cancel-order', 'click', 
-      (e) => {
-        let parcelId = e.target.dataset.parcelId;
-        confirmModalBox({ title: 'Cancel Order', yesAction: () => cancelOrder(parcelId),
-        description: 'This action cannot be undone. Do you wish to continue?',
-      })
-    });
+    return parcelHTML;
   }
 
   render() {
+    
     return (`
       <div>
         <div class="wrapper">
@@ -162,7 +201,7 @@ export default class ParcelEntry {
       
                 <div class="main-content">
                   <div class="container" id="parcel-view">
-                    <!-- parcel view -->
+                    ${this.renderParcel()}
                   </div>
                 </div>
               </div>

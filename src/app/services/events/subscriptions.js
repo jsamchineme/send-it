@@ -29,7 +29,7 @@ const subscriptions = {
 
   PAGINATION_TARGET_SELECTED: 'PAGINATION_TARGET_SELECTED',
 
-  MAP_SCRIPT_READY: 'MAP_SCRIPT_READY'
+  MAP_SCRIPT_READY: 'MAP_SCRIPT_READY',
 }
 
 export default subscriptions;

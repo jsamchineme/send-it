@@ -3,6 +3,14 @@ import subscriptions from './events/subscriptions';
 import Toast from '../components/Toast';
 
 export default class Map {
+  static setup() {
+    var resource = document.createElement('script');
+    resource.async = "true";
+    resource.defer = "true";
+    resource.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4ITGsCxJfcerDzfxMf4it_jClp_44PKE&callback=window.initMap";
+    var script = document.getElementsByTagName('script')[0];
+    script.parentNode.insertBefore(resource, script);
+  }
   static init() {
     window.mapReady = true;
     events.emit(subscriptions.MAP_SCRIPT_READY);
@@ -147,4 +155,5 @@ export default class Map {
   }
 }
 
+window.initMap = () => Map.init();
 window.map = Map;
