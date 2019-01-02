@@ -74,9 +74,7 @@ export default class UserProfile {
       `;
 
       let summaryCardContainer = document.getElementById('summary-card-container');
-      if (summaryCardContainer) {
-        summaryCardContainer.innerHTML = summaryHTML;
-      }
+      summaryCardContainer ? summaryCardContainer.innerHTML = summaryHTML : null;
     }
 
     return summaryHTML;

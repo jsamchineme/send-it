@@ -59,7 +59,7 @@ export default class ParcelEntry {
       
       // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
       let cancelOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
-        `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
+        `<a href='#map' class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</a>`
         : '';
       
       // allow editing destination only if status is neither 'cancelled' nor 'delivered'
@@ -156,9 +156,9 @@ export default class ParcelEntry {
       `;
 
       let target = document.getElementById('parcel-view');
-      target.innerHTML = parcelHTML;
+      target ? target.innerHTML = parcelHTML : null;
 
-      if(window.mapReady) {
+      if (window.mapReady) {
         Map.initMap(from, to);
       }
   

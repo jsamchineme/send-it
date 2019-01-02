@@ -133,18 +133,17 @@ export default class ParcelEntry {
     `;
 
     let target = document.getElementById('parcel-view');
-    target.innerHTML = parcelHTML;
+    target ? target.innerHTML = parcelHTML : null;
 
     if(window.mapReady) {
       Map.initMap(from, to);
     }
 
     let statusSelect = document.querySelector('.status-change');
-    statusSelect.addEventListener('change', (e) => changeStatus(id, e.target.value));
+    statusSelect ? statusSelect.addEventListener('change', (e) => changeStatus(id, e.target.value)) : null;
 
-    document
-      .querySelector('.info-sections')
-      .addEventListener('input', (e) => saveInput('editPresentLocation', e));
+    let infoSection = document.querySelector('.info-sections');
+    infoSection ? infoSection.addEventListener('input', (e) => saveInput('editPresentLocation', e)) : null;
     
     window.app.bindClassNames('save-edit', 'click', 
       (e) => {
