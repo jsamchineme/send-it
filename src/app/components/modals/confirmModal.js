@@ -65,11 +65,11 @@ const confirmModalBox = ({title, description, yesAction, noAction}) => {
 }
 
 const attachEventListeners = () => {
-  let yesBtn = document.getElementById('yes-btn') || {};
-  yesBtn.addEventListener('click', modalConfirmAction);
+  let yesBtn = document.getElementById('yes-btn');
+  yesBtn ? yesBtn.addEventListener('click', modalConfirmAction) : null;
 
-  let noBtn = document.getElementById('no-btn') || {};
-  noBtn.addEventListener('click', modalCancelAction);
+  let noBtn = document.getElementById('no-btn');
+  noBtn ? noBtn.addEventListener('click', modalCancelAction) : null;
 
 }
 

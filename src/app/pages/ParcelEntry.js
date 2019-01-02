@@ -53,13 +53,13 @@ export default class ParcelEntry {
       let mapViewButton = '';
       if(!window.mapReady) {
         mapViewButton = status !== 'cancelled' ? 
-          `<button class="btn medium-btn bg-light-orange" id="map-load-btn">View on the map</button>`
+          `<a href='#map' class="btn medium-btn bg-light-orange" id="map-load-btn">View on the map</a>`
           : '';
       }
       
       // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
       let cancelOrderButton = status !== 'cancelled' && status !== 'delivered' ? 
-        `<a href='#map' class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</a>`
+        `<button class="btn danger medium-btn cancel-order" data-parcel-id='${id}'>Cancel Order</button>`
         : '';
       
       // allow editing destination only if status is neither 'cancelled' nor 'delivered'
@@ -171,9 +171,8 @@ export default class ParcelEntry {
       });
 
       if(mapViewButton) {
-        document
-          .querySelector('#map-load-btn')
-          .addEventListener('click', (e) => Map.setup());
+        let mapBtn = document.querySelector('#map-load-btn');
+        mapBtn ? mapBtn.addEventListener('click', (e) => Map.setup()) : null;
       }
     }
 
