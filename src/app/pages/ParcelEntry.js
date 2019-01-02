@@ -171,9 +171,8 @@ export default class ParcelEntry {
       });
 
       if(mapViewButton) {
-        document
-          .querySelector('#map-load-btn')
-          .addEventListener('click', (e) => Map.setup());
+        let mapBtn = document.querySelector('#map-load-btn');
+        mapBtn ? mapBtn.addEventListener('click', (e) => Map.setup()) : null;
       }
     }
 
