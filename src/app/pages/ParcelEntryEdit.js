@@ -139,7 +139,8 @@ export default class ParcelEntryEdit {
       `;
   
       let target = document.getElementById('parcel-view');
-      target.innerHTML = parcelHTML;
+      target ? target.innerHTML = parcelHTML : null;
+
   
       window.app.bindClassNames('cancel-order', 'click', 
         (e) => {
@@ -161,9 +162,8 @@ export default class ParcelEntryEdit {
         })
       });
   
-      document
-        .querySelector('.info-sections')
-        .addEventListener('input', (e) => saveInput('editDestination', e));
+      let infoSection = document.querySelector('.info-sections');
+      infoSection ? infoSection.addEventListener('input', (e) => saveInput('editDestination', e)) : null;
     } 
 
     return parcelHTML;
