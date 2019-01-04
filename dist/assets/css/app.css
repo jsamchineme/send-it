@@ -565,6 +565,7 @@ a {
   font-family: 'LatoLig';
   font-weight: bold;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .btn.submit {
@@ -1301,7 +1302,7 @@ label {
 }
 .toast-box.active {
   opacity: 1;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 /* Toast styles end here */

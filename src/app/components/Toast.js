@@ -26,14 +26,16 @@ class Toast {
     `;
 
     let toastBox = document.getElementById('toast-place-holder');
-    toastBox.style.padding = '20px';
-    toastBox.innerHTML = toastHTML;
-
-    Toast.animateToastIn();
-    if(autoHide !== false) {
-      Toast.initiateToastHide();
+    if(toastBox) {
+      toastBox.style.padding = '20px';
+      toastBox.innerHTML = toastHTML;
+  
+      Toast.animateToastIn();
+      if(autoHide !== false) {
+        Toast.initiateToastHide();
+      }
+      Toast.attachClickEvent();
     }
-    Toast.attachClickEvent();
   }
 
   static attachClickEvent() {
@@ -46,9 +48,11 @@ class Toast {
 
   static toastHide() {
     let toastBox = document.querySelector('#toast-place-holder .toast-box');
-    toastBox.className = `toast-box ${Toast.typeClassName}`;
-    let toastBoxContainer = document.getElementById('toast-place-holder');
-    toastBoxContainer.style.padding = '0px';
+    if(toastBox) {
+      toastBox.className = `toast-box ${Toast.typeClassName}`;
+      let toastBoxContainer = document.getElementById('toast-place-holder');
+      toastBoxContainer.style.padding = '0px';
+    }
   }
 
   static animateToastIn() {
@@ -56,7 +60,9 @@ class Toast {
     let timeout = 100;
     this.timeToAppear = setTimeout(() => {
       let toastBox = document.querySelector('#toast-place-holder .toast-box');
-      toastBox.className =  `toast-box ${Toast.typeClassName} active`;
+      if(toastBox) {
+        toastBox.className =  `toast-box ${Toast.typeClassName} active`;
+      }
     }, timeout);
   }
 

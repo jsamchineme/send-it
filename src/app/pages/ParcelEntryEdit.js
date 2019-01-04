@@ -9,6 +9,8 @@ import stackRequests from '../services/utils/stackRequests';
 import confirmModalBox from '../components/modals/confirmModal';
 import Map from '../services/Map';
 import Link from '../components/Link';
+import DateFormater from '../services/DateFormater';
+import parcelStatuses from '../constants/parcelStatuses';
 
 export default class ParcelEntryEdit {
   constructor() {
@@ -45,6 +47,8 @@ export default class ParcelEntryEdit {
         weightmetric,
         presentMapPointer,
         id,
+        contactEmail,
+        contactPhone,
       } = parcel;
   
   
@@ -54,7 +58,6 @@ export default class ParcelEntryEdit {
           `<a href="#map-modal" class="btn medium-btn bg-light-orange">View on the map</a>`
           : '';
       }
-      
       
       // allow order cancelling only if status is neither 'cancelled' nor 'delivered'
       let cancelOrderButton = status !== 'cancelled' && status !== 'delivered'  ? 
@@ -78,8 +81,13 @@ export default class ParcelEntryEdit {
           })}
         `
         : `${to}`;
+
+      let parcelStatus = parcelStatuses[status];
+      sentOn = DateFormater.formatDate(sentOn);
+      contactEmail = contactEmail === null || contactEmail === undefined ? 'Not Provided' : contactEmail;
+      contactPhone = contactPhone === null || contactPhone === undefined ? 'Not Provided' : contactPhone;
   
-      let parcelHTML = `
+      parcelHTML = `
         <section class="page-section single">
           <div class="header">
             <div class="order-info heading">
@@ -95,7 +103,7 @@ export default class ParcelEntryEdit {
                     Created on <span class="inset-text">${sentOn}</span>
                   </div>
                   <div>
-                    Status on <span class="inset-text">${status}</span>
+                    Status on <span class="inset-text">${parcelStatus}</span>
                   </div>
                 </div>
               </div>
@@ -122,6 +130,30 @@ export default class ParcelEntryEdit {
                       ${from}
                     </div>
                   </div>
+                  <div class="item">
+                    <div class="field">Delivery Charge</div>
+                    <div class="value">
+                      ${cost}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Parcel Weight</div>
+                    <div class="value">
+                      ${weight}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Receiver's Email</div>
+                    <div class="value">
+                      ${contactEmail}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Receiver's Phone</div>
+                    <div class="value">
+                      ${contactPhone}
+                    </div>
+                  </div>
                   <div class="item actions">
                     ${cancelOrderButton}
                   </div>
@@ -141,7 +173,6 @@ export default class ParcelEntryEdit {
       let target = document.getElementById('parcel-view');
       target ? target.innerHTML = parcelHTML : null;
 
-  
       window.app.bindClassNames('cancel-order', 'click', 
         (e) => {
           let parcelId = e.target.dataset.parcelId;

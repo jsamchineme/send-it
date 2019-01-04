@@ -14,8 +14,11 @@ const adminHeader = () => {
   return (`
     <div class="mobile-header hide-for-large">
       <div class="top-bar">
-        <div class="text">
+        <div class="text" style='padding-left: 0px'>
           <div class="name"></div>
+          <span href="#" class="icon-group" id="toggle-mobile-menu">
+            <span class="fa fa-navicon"></span>
+          </span>
         </div>
         <div class="icons">
           <span href="#" class="drop-down-container">
@@ -32,9 +35,6 @@ const adminHeader = () => {
                 </li>
               </ul>
             </div>
-          </span>
-          <span href="#" class="icon-group" id="toggle-mobile-menu">
-            <span class="fa fa-navicon"></span>
           </span>
         </div>
       </div>
@@ -137,6 +137,13 @@ const userHeader = () => {
             ${Link({
               to:'/delivered-orders', 
               text:`<i class=""></i>Delivered Orders`, 
+              noAction: true,
+            })}
+          </li>
+          <li class='mobile-side-link' data-link-to='/cancelled-orders'>
+            ${Link({
+              to:'/cancelled-orders', 
+              text:`<i class=""></i>Cancelled Orders`, 
               noAction: true,
             })}
           </li>

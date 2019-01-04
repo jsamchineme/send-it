@@ -24,7 +24,7 @@ export default class AllOrders {
 
   listOrders(props = {}) {
     let currentPage = props.currentPage || 1;
-    let parcels = window.app.state['allUserParcels'] || []; 
+    let parcels = window.app.state['allUserParcels'] || [];
     let parcelHTML = PaginatedParcelList({ numberPerPage: 8, parcels, currentPage });
     let target = document.getElementById('orders-list');
     target ? target.innerHTML = parcelHTML : null;
