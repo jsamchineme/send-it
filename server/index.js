@@ -4,9 +4,6 @@ import app from './app';
 // setting up the port to be used for creating a server
 const port = parseInt(process.env.PORT, 10) || 8001;
 
-// apply the port
-app.set('port', port);
-
 // create the server
 const server = http.createServer(app);
 

@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
-import path from 'path';
+// import path from 'path';
 import routes from './v1/routes';
 import swaggerDocument from './swagger';
 
@@ -47,6 +47,7 @@ const swaggerOptions = {
 };
 
 // apply the route for the swagger
+swaggerDocument.schemes = 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
 
