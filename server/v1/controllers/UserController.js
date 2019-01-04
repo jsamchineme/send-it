@@ -18,10 +18,10 @@ class UserController {
   static async getProfile(req, res) {
     const { userId } = req.params;
     const user = await User.findById(userId);
-    const transitingParcels = await Parcel.where({ userId, status: 'transiting' }).count();
-    const deliveredParcels = await Parcel.where({ userId, status: 'delivered' }).count();
-    const placedParcels = await Parcel.where({ userId, status: 'placed' }).count();
-    const cancelledParcels = await Parcel.where({ userId, status: 'cancelled' }).count();
+    const transitingParcels = await Parcel.where({ placedBy: userId, status: 'transiting' }).count();
+    const deliveredParcels = await Parcel.where({ placedBy: userId, status: 'delivered' }).count();
+    const placedParcels = await Parcel.where({ placedBy: userId, status: 'placed' }).count();
+    const cancelledParcels = await Parcel.where({ placedBy: userId, status: 'cancelled' }).count();
 
     delete user.password;
     delete user.isAdmin;
