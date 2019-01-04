@@ -46,7 +46,7 @@ export default class UserProfile {
       if(parcels.transiting !== undefined) {
         numberDelivered = parcels.delivered.count;
         numberCancelled = parcels.cancelled.count;
-        numberPending = parcels.placed.count + parcels.transiting.count;
+        numberPending = parseInt(parcels.placed.count) + parseInt(parcels.transiting.count);
       }
   
       summaryHTML += `

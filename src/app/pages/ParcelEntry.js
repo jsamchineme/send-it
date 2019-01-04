@@ -53,7 +53,7 @@ export default class ParcelEntry {
       let mapViewButton = '';
       if(!window.mapReady) {
         mapViewButton = status !== 'cancelled' ? 
-          `<a href='#map' class="btn medium-btn bg-light-orange" id="map-load-btn">View on the map</a>`
+          `<button class="btn medium-btn bg-light-orange" id="map-load-btn">View on the map</button>`
           : '';
       }
       
@@ -124,6 +124,12 @@ export default class ParcelEntry {
                     <div class="field">Delivery Charge</div>
                     <div class="value">
                       ${cost}
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="field">Parcel Weight</div>
+                    <div class="value">
+                      ${weight}
                     </div>
                   </div>
                   <div class="item">
