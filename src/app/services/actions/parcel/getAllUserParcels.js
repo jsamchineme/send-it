@@ -5,9 +5,12 @@ import subscriptions from '../../events/subscriptions';
 
 const getAllUserParcels = async () => {
   const authUser = retrieveAuthUser();
+  let token = 'xxx';
+  if (authUser !== null) 
+    token = authUser.token 
 
   let data = {
-    token: authUser.token,
+    token,
     userId: authUser.id
   };
   

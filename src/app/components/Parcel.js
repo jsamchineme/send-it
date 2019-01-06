@@ -18,7 +18,8 @@ const Parcel = ({
   scope
 }) => {
 
-  let caption = description.slice(0, 30);
+
+  let caption = description !== undefined && description !== null ? description.slice(0, 30) : 'No description';
   let productLink = scope === 'admin' ? `/admin-dashboard/orders/${id}` : `/orders/${id}`;
   let dotLink = `
     ${Link({
