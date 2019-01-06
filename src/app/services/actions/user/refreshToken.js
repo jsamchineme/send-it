@@ -45,13 +45,13 @@ class TokenRefresh {
         if(TokenRefresh.failedTrialsCount > 3) {
           window.app.funcs.changeRoute('/admin-login');
         }
-        window.app.funcs.changeRoute('/admin-login');
+        // window.app.funcs.changeRoute('/admin-login');
       } else {
         // Redirect to login if failed refresh trails is up to 3
         if(TokenRefresh.failedTrialsCount > 3) {
           window.app.funcs.changeRoute('/login');
         }
-        window.app.funcs.changeRoute('/login');
+        // window.app.funcs.changeRoute('/login');
       }
     }
 
