@@ -1455,6 +1455,7 @@ label {
     display: flex;
     margin: auto;
     max-width: 600px;
+    justify-content: center;
   }
 
   .landing-intro .image {
