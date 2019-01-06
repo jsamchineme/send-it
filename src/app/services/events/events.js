@@ -1,4 +1,4 @@
-//events - a super-basic Javascript (publish subscribe) pattern
+// events - a super-basic Javascript (publish subscribe) pattern
 
 var events = {
   events: {},

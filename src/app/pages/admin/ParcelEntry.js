@@ -3,7 +3,7 @@ import MobileHeader from '../../layouts/MobileHeader';
 import MainPageHeader from '../../layouts/MainPageHeader';
 import { 
   fetchParcel, 
-  changeStatus, 
+  changeStatus,
   editPresentLocation
 } from '../../services/actions/parcel';
 import events from '../../services/events';

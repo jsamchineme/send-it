@@ -7,4 +7,4 @@ export default class ResponseException {
     this.status = response.status;
     return this;
   }
-} 
+}
