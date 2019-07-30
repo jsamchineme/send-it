@@ -79,6 +79,23 @@ class AuthController {
    * @param {Object} res - response object
    * @returns {Object} response object
    */
+  static async socialLogin(req, res) {
+    const { user: { id, email, isAdmin } } = req;
+    const payload = {
+      id,
+      email,
+      isAdmin,
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRES_IN });
+    const URI = encodeURI(`http://demofrontendapp.com?userId=${id}&email=${email}&token=${token}&isAdmin=${isAdmin}`);
+    return res.redirect(URI);
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
   static async refreshToken(req, res) {
     const refreshedToken = req.headers['x-access-token'] || req.query.token;
     const { decoded } = req;

@@ -32,6 +32,7 @@ app.get('/api/v1', (req, res) => {
   });
 });
 
+
 // load all api v1 routes
 app.use('/api/v1', routes);
 
@@ -47,7 +48,6 @@ const swaggerOptions = {
 };
 
 // apply the route for the swagger
-swaggerDocument.schemes = 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
 
