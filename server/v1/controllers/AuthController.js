@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
@@ -8,6 +9,7 @@ import UserEmitter, {
   PASSWORD_RESET_COMPLETE,
 } from '../helpers/events/UserEmitter';
 
+dotenv.config();
 
 const User = new UserModel();
 
@@ -87,7 +89,7 @@ class AuthController {
       isAdmin,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRES_IN });
-    const URI = encodeURI(`http://demofrontendapp.com?userId=${id}&email=${email}&token=${token}&isAdmin=${isAdmin}`);
+    const URI = encodeURI(`${process.env.SITE_URL}/login?callback=facebook&userId=${id}&email=${email}&token=${token}&isAdmin=${isAdmin}`);
     return res.redirect(URI);
   }
 
