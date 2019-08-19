@@ -37,6 +37,5 @@
       "url": "heroku/nodejs"
     }
   ],
-  "stack": "heroku-18",
-  "continuous-integration/travis-ci": true
+  "stack": "heroku-18"
 }

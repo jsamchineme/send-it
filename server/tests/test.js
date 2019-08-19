@@ -3,8 +3,10 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import app from '../app';
 
-// import and run the units tests for the Model class
+// import and run the units tests
 import './units/model';
+import './units/passport';
+import './units/socialLogin';
 
 const request = supertest(app);
 

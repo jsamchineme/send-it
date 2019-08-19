@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import UserModel from '../../models/User';
@@ -8,6 +9,7 @@ import UserEmitter, {
   PASSWORD_RESET_COMPLETE,
 } from '../helpers/events/UserEmitter';
 
+dotenv.config();
 
 const User = new UserModel();
 
@@ -72,6 +74,23 @@ class AuthController {
     data.token = token;
 
     return Response.success(res, data);
+  }
+
+  /**
+   * @param {Object} req - request received
+   * @param {Object} res - response object
+   * @returns {Object} response object
+   */
+  static async socialLogin(req, res) {
+    const { user: { id, email, isAdmin } } = req;
+    const payload = {
+      id,
+      email,
+      isAdmin,
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: EXPIRES_IN });
+    const URI = encodeURI(`${process.env.SITE_URL}/login?callback=facebook&userId=${id}&email=${email}&token=${token}&isAdmin=${isAdmin}`);
+    return res.redirect(URI);
   }
 
   /**

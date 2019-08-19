@@ -32,6 +32,7 @@ app.get('/api/v1', (req, res) => {
   });
 });
 
+
 // load all api v1 routes
 app.use('/api/v1', routes);
 
