@@ -1,0 +1,42 @@
+{
+  "name": "send-it",
+  "scripts": {},
+  "env": {
+    "FACEBOOK_APP_ID": {
+      "required": true
+    },
+    "FACEBOOK_APP_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_CALLBACK_URL": {
+      "required": true
+    },
+    "HEROKU_POSTGRESQL_TEAL_URL": {
+      "required": true
+    },
+    "JWT_SECRET_KEY": {
+      "required": true
+    },
+    "SENDGRID_API_KEY": {
+      "required": true
+    },
+    "SITE_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "stack": "heroku-18",
+  "continuous-integration/travis-ci": true
+}
